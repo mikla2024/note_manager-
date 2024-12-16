@@ -11,6 +11,7 @@ print ('имя пользователя: ',username)
 print ('название: ',title)
 print ('содержание: ',content)
 print ('текущий статус: ',status)
-print ('дата создания: ',created_date.day, 				'.',created_date.month,'.',created_date.year)
+print ('дата создания: ',created_date.day, 
+	'.',created_date.month,'.',created_date.year)
 print ('дата истечения: ',issued_date.day,
-				'.',issued_date.month,'.',issued_date.year)
+	'.',issued_date.month,'.',issued_date.year)
