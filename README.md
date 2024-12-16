@@ -1,4 +1,5 @@
-<h1 align="center"> Учебный проект пользователя mikla2024.>
+<h1 align="center"> Учебный проект пользователя mikla2024
+<img src="831BD29C-6953-4535-9F2B-AB29057E5185.jpeg" href="http://skillplace.io"/></h1>
 
 # Note Manager
 ## Описание
