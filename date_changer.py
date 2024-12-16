@@ -12,6 +12,6 @@ print ('название: ',title)
 print ('содержание: ',content)
 print ('текущий статус: ',status)
 print('дата создания:',created_date.day,
-				'.',created_date.month)	#show creat. date in 'dd.mm' form.
+	'.',created_date.month)	#show creat. date in 'dd.mm' form.
 print ('дата истечения: ',issued_date.day,
-				'.',issued_date.month)	#show issued date in 'dd.mm' form.
+	'.',issued_date.month)	#show issued date in 'dd.mm' form.
