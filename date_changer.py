@@ -4,7 +4,7 @@ username = 'mikla' # define username
 title = 'Note 1'	# def. name of note
 content = 'Conference call' # content of note
 status = 'open' # current status of the note
-created_date: date = date.today() # date of creation with time stamp
+created_date: date = date.today() # date of creation
 issued_date: datetime = datetime(2024,12,18,15,45) # deadline date with time
 
 print ('имя пользователя: ',username)
