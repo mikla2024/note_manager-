@@ -1,21 +1,23 @@
 # import classes 'date', 'datetime' from 'datetime' module
 from datetime import datetime
-
-username = input('input your name')		# define username
-title = input('input title of note')		# def. name of note
-content = input("input the note's content")		# content of note
-status = 'open'		# current status of the note
-created_date: datetime = datetime.today()		# date of creation
+# main variables entered by user
+username = input('Enter your name: ')
+title = input('Enter title of note: ')
+content = input("Enter the note's content: ")
+status = input('Enter the status: ')
+created_date: datetime = datetime.today()
+# date format check and err handler
 while True:
 	try:
 		parsed_issue_date: datetime =  \
-			datetime.strptime(input('input deadline in dd.mm.yyyy format'),
+			datetime.strptime(input('Enter deadline in dd.mm.yyyy format: '),
 																					'%d.%m.%Y')
 	except ValueError:
-		print('wrong date format, try one more time')
+		print('Wrong date format, try one more time!')
 	else:
 		break
-print("\nYou inserted next data:")
+# output of variables
+print("\nYou entered:")
 print('имя пользователя: ', username)
 print('название: ', title)
 print('содержание: ', content)
