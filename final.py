@@ -5,9 +5,8 @@ from datetime import datetime
 # check unique title when add
 def f_uni(list_, title_):
 	if list_ is not None:
-		for title in list_:
-			if title_ == title:
-				return False
+		if title_ in list_:
+			return False
 	return True
 
 
