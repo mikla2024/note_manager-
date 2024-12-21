@@ -1,8 +1,8 @@
-# import classes 'date', 'datetime' from 'datetime' module
-from datetime import datetime
+# import classes 'datetime' from 'datetime' module
+from datetime import datetime as dt
 
 
-# check unique title when add
+# check unique title when add: if title exists returns False
 def f_uni(list_, title_):
 	if list_ is not None:
 		if title_ in list_:
@@ -15,13 +15,13 @@ notes = {}
 notes['username'] = input('Enter your name: ')
 notes['content'] = input("Enter the note's content: ")
 notes['status'] = input('Enter status: ')
-notes['created_date'] = datetime.today()
+notes['created_date'] = dt.today()
 # check input date format and err handler
 while True:
 	try:
-		parsed_issue_date: datetime =  \
-			datetime.strptime(input('Enter deadline in DD.MM.YYYY format: '),
-																					'%d.%m.%Y')
+		parsed_issue_date: dt = \
+			dt.strptime(input('Enter deadline in DD.MM.YYYY format: '),
+															'%d.%m.%Y')
 	except ValueError:
 		print('Wrong date format, try one more time!')
 	else:
@@ -52,7 +52,7 @@ print('\nNote data:')
 # output all values from dictionary
 for key, value in notes.items():
 	# additional format of dates
-	if type(value) == datetime:
+	if type(value) == dt:
 		print(f'{key}: {value:%-d %b}')
 		continue
 	print(f'{key}: {value}')
