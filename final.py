@@ -48,12 +48,15 @@ while True:
 # через строку с разделителем вместо ввода друг за другом
 # notes['titles'] = input('введите заголовки через запятую:').split(',')
 
-print('\nNote data:')
+print('\nData you entered:')
 # output all values from dictionary
 for key, value in notes.items():
 	# additional format of dates
 	if type(value) == dt:
-		print(f'{key}: {value:%-d %b}')
+		print(f'***{key.capitalize()}: {value:%-d %b}')
 		continue
-	print(f'{key}: {value}')
+	elif type(value) == list:
+		print(f'***{key.capitalize()}: {", ".join(value)}')
+		continue
+	print(f'***{key.capitalize()}: {value}')
 	
