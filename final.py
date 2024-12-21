@@ -40,9 +40,12 @@ while True:
 			print('This title already exists')
 	else:
 		print('\nYour titles are:')
-		for title in notes.get('titles'):
-			print(title)
-		break
+		if notes.get('titles') is not None:
+			for title in notes.get('titles'):
+				print(title)
+			break
+		else:
+			print("You should choose at least one title...")
 
 # как вариант, можно сделать ввод заголовков
 # через строку с разделителем вместо ввода друг за другом
