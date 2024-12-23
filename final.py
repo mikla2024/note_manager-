@@ -20,7 +20,7 @@ notes['created_date'] = dt.today()
 while True:
 	user_date = input('Enter deadline in DD.MM.YYYY format '
 		'---leave this field empty for default value (7 days from today---)')
-	if user_date == '' : 
+	if user_date == '' :
 		parsed_issue_date = dt.today() + timedelta(days=7)
 		break
 	else:
@@ -35,16 +35,16 @@ notes['issue_date'] = parsed_issue_date
 # user can input any amounts of titles or exit if press enter with empty field
 while True:
 	title_str = input('\nEnter title or leave this field empty '
-				'if you complete your titles. '
-				'To continue press Enter: ')
+										'if you complete your titles. '
+										'To continue press Enter: ')
 	if title_str != '':
 		# check repetitive titles in function
-			if f_uni(notes.get('titles'), title_str):
-				# if key doesnt exist in dict it will be added as list
-				notes.setdefault('titles', []).append(title_str)
-				print(f'\n{notes.get("titles")} will be added')
-			else:
-				print('\nThe note with such title already exists!'
+		if f_uni(notes.get('titles'), title_str):
+			# if key doesnt exist in dict it will be added as list
+			notes.setdefault('titles', []).append(title_str)
+			print(f'\n{notes.get("titles")} will be added')
+		else:
+			print('\nThe note with such title already exists!'
 							' Titles should be unique')
 	else:
 		if notes.get('titles') is not None:
@@ -67,4 +67,3 @@ for key, value in notes.items():
 		print(f'***{key.capitalize()}: {", ".join(value)}')
 		continue
 	print(f'***{key.capitalize()}: {value}')
-	
