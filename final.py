@@ -23,7 +23,7 @@ while True:
     'today---)')
   if user_date == '' :
     parsed_issue_date = dt.today() + timedelta(days=7)
-  break
+    break
   else:
     try:
       parsed_issue_date = dt.strptime(user_date, '%d.%m.%Y')
