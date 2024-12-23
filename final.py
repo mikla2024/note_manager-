@@ -1,5 +1,5 @@
 # import classes 'datetime' from 'datetime' module
-from datetime import datetime as dt
+from datetime import datetime as dt, timedelta
 
 
 # check unique title when add: if title exists returns False
@@ -18,20 +18,25 @@ notes['status'] = input('Enter status: ')
 notes['created_date'] = dt.today()
 # check input date format and err handler
 while True:
-	try:
-		parsed_issue_date: dt = \
-			dt.strptime(input('Enter deadline in DD.MM.YYYY format: '),
-															'%d.%m.%Y')
-	except ValueError:
-		print('Wrong date format, try one more time!')
-	else:
+	user_date = input('Enter deadline in DD.MM.YYYY format '
+		'---leave this field empty for default value (7 days from today---)')
+	if user_date == '' : 
+		parsed_issue_date = dt.today() + timedelta(days=7)
 		break
+	else:
+		try:
+			parsed_issue_date = dt.strptime(user_date, '%d.%m.%Y')
+			break
+		except ValueError:
+			print('Wrong date format, try one more time!')
+			continue
 notes['issue_date'] = parsed_issue_date
 
 # user can input any amounts of titles or exit if press enter with empty field
 while True:
-	title_str = input('\nEnter title or leave this field empty.'
-																			'To continue press Enter: ')
+	title_str = input('\nEnter title or leave this field empty '
+												'if you complete your titles. '
+												'To continue press Enter: ')
 	if title_str != '':
 		if f_uni(notes.get('titles'), title_str):
 			# if key doesnt exist in dict it will be added as list
