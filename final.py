@@ -35,8 +35,8 @@ notes['issue_date'] = parsed_issue_date
 # user can input any amounts of titles or exit if press enter with empty field
 while True:
 	title_str = input('\nEnter title or leave this field empty '
-												'if you complete your titles. '
-												'To continue press Enter: ')
+				'if you complete your titles. '
+				'To continue press Enter: ')
 	if title_str != '':
 		# check repetitive titles in function
 			if f_uni(notes.get('titles'), title_str):
