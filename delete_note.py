@@ -19,7 +19,7 @@ def f_uni(list_title, title_):
 # update current status.
 def f_status_update(note):
 	print('\nChoose new status of your note then press Enter...:'
-	      '\n1. In progress \n2. Postponed \n3. Done')
+				'\n1. In progress \n2. Postponed \n3. Done')
 	while True:
 		ans = input()
 		if ans == '1':
@@ -34,7 +34,7 @@ def f_status_update(note):
 		else:
 			print('Wrong status. Try one more time')
 	print(f'\nStatus is updated. New status is: '
-	      f'{note.get("status").upper()}')
+				f'{note.get("status").upper()}')
 	input("\nTo continue press Enter...")
 	return True
 
@@ -57,7 +57,7 @@ def f_print_note_data(note):
 		print(f'\nYou missed your deadline {deadline_delta_days} days ago')
 	elif deadline_delta_days < 0:
 		print(f'\nYour deadline is in '
-		      f'{str(deadline_delta_days)[1:]} days')
+					f'{str(deadline_delta_days)[1:]} days')
 	elif deadline_delta_days == 0:
 		print('\nYour deadline is TODAY!!!')
 
@@ -79,20 +79,26 @@ def f_add_new_note():
 	note['created_date'] = dt.today()
 	# date parser and err handler
 	while True:
-		try:
-			parsed_issue_date = \
-    dt.strptime(input('Enter deadline in DD.MM.YYYY format: '),
-			             '%d.%m.%Y')
-		except ValueError:
-			print('Wrong date format, try one more time!')
-		else:
+		user_date = input('Enter deadline in DD.MM.YYYY format '
+											'---leave this field empty for default '
+											'value (7 days from today---)')
+		if user_date == '':
+			parsed_issue_date = dt.today() + timedelta(days=7)
 			break
+		else:
+			try:
+				parsed_issue_date = dt.strptime(user_date, '%d.%m.%Y')
+				break
+			except ValueError:
+				print('Wrong date format, try one more time!')
+				continue
 	note['issue_date'] = parsed_issue_date
 
 	# user can input any amounts of titles or exit if press enter with empty field
 	while True:
-		title_str = input('\nEnter title or leave this field empty.'
-		                  'To continue press Enter: ')
+		title_str = input('\nEnter title or leave this field empty '
+												'if you complete your titles. '
+												'To continue press Enter: ')
 		if title_str != '':
 			# check repetitive titles in function
 			if f_uni(note.get('titles'), title_str):
@@ -101,7 +107,7 @@ def f_add_new_note():
 				print(f'\n{note.get("titles")} will be added')
 			else:
 				print('\nThe note with such title already exists!'
-				      ' Titles should be unique')
+							' Titles should be unique')
 		else:
 			# doesn't allow add the note without at least one title'
 			if note.get('titles') is not None:
@@ -116,7 +122,7 @@ def f_add_new_note():
 	# ask to change the status
 	while True:
 		choice = input('\nDo you want to change the status of your '
-		               'note (yes/no)').lower()
+										'note (yes/no)').lower()
 		if choice in ['yes', 'y'] and f_status_update(note):
 			f_print_note_data(note)
 			# break
@@ -150,7 +156,7 @@ def f_del_note(my_list_notes, srch_str=None):
 		del_confrm = input(f'\n{i} notes will be deleted..Yes/No ').lower()
 		if del_confrm in ['Yes', 'y']:
 			new_list_notes=[a for a in my_list_notes \
-            if not (a.get('del_flag'))]
+													if not (a.get('del_flag'))]
 			print('\nThe choosen note(s) is(are) deleted')
 			return new_list_notes
 		elif del_confrm in ['No', 'n']:
@@ -181,10 +187,10 @@ f_print_all()
 while True:
 	if len(list_notes) > 0:
 		choice = input('\nIf you want to delete some notes '
-		               'press (D)el, to Add new press (A)dd').lower()
+										'press (D)el, to Add new press (A)dd').lower()
 		if choice in ['del', 'd']:
 			del_str = input('\nEnter username or title of the note you '
-			                'want to delete...')
+											'want to delete...')
 			updt_list = f_del_note(list_notes, srch_str=del_str)
 			if updt_list is not None:
 				list_notes = updt_list
