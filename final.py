@@ -38,19 +38,19 @@ while True:
 												'if you complete your titles. '
 												'To continue press Enter: ')
 	if title_str != '':
-		if f_uni(notes.get('titles'), title_str):
-			# if key doesnt exist in dict it will be added as list
-			notes.setdefault('titles', []).append(title_str)
-		else:
-			print('This title already exists')
+		# check repetitive titles in function
+			if f_uni(notes.get('titles'), title_str):
+				# if key doesnt exist in dict it will be added as list
+				notes.setdefault('titles', []).append(title_str)
+				print(f'\n{notes.get("titles")} will be added')
+			else:
+				print('\nThe note with such title already exists!'
+							' Titles should be unique')
 	else:
-		print('\nYour titles are:')
 		if notes.get('titles') is not None:
-			for title in notes.get('titles'):
-				print(title)
 			break
 		else:
-			print("You should choose at least one title...")
+			print("\nYou should choose at least one title...")
 
 # как вариант, можно сделать ввод заголовков
 # через строку с разделителем вместо ввода друг за другом
