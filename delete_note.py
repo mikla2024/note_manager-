@@ -140,15 +140,9 @@ def f_del_note(my_list_notes, srch_str=None):
 		print('\nThe note with such parameters can not be found')
 		input('\nTo continue press Enter...')
 		return
+	# search user keyword in titles and other values of notes
 	for my_note in my_list_notes:
-		for t in my_note.get('titles'):
-			if srch_str in t:
-				i += 1
-				my_note.setdefault('del_flag', True)
-		if '999' in my_note.values():
-			i += 1
-			my_note.setdefault('del_flag', True)
-		elif srch_str in my_note.values():
+		if srch_str.lower() in str(my_note.values()).lower():
 			i += 1
 			my_note.setdefault('del_flag', True)
 
