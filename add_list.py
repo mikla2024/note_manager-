@@ -7,14 +7,14 @@ status = input('Enter status of the note: ')
 created_date: datetime = datetime.today()
 # date format check with err handler
 while True:
-	try:
-		parsed_issue_date: datetime =  \
-			datetime.strptime(input('Enter deadline in dd.mm.yyyy format: '),
+  try:
+    parsed_issue_date: datetime =  \
+      datetime.strptime(input('Enter deadline in dd.mm.yyyy format: '),
 																					'%d.%m.%Y')
-	except ValueError:
-		print('Wrong date format, try one more time!')
-	else:
-		break
+  except ValueError:
+    print('Wrong date format, try one more time!')
+  else:
+    break
 title1 = input("input note's title 1: ")
 title2 = input("input note's title 2: ")
 title3 = input("input note's title 3: ")
