@@ -8,14 +8,14 @@ status = input('Enter the status: ')
 created_date: datetime = datetime.today()
 # date format check and err handler
 while True:
-  try:
-    parsed_issue_date: datetime =  \
-     datetime.strptime(input('Enter deadline in dd.mm.yyyy format: '),
+	try:
+		parsed_issue_date: datetime =  \
+			datetime.strptime(input('Enter deadline in dd.mm.yyyy format: '),
 																					'%d.%m.%Y')
-  except ValueError:
-    print('Wrong date format, try one more time!')
-  else:
-    break
+	except ValueError:
+		print('Wrong date format, try one more time!')
+	else:
+		break
 # output of variables
 print("\nYou entered:")
 print('имя пользователя: ', username)
