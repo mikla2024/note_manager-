@@ -1,1 +1,1 @@
-[{"note_id": 1, "username": "mikla", "content": "con1", "status": "In progress", "created_date": "24.12.2024", "issue_date": "31.12.2024", "titles": ["cat", "dog"]}, {"note_id": 2, "username": "amikla", "content": "con2", "status": "In progress", "created_date": "24.12.2024", "issue_date": "12.01.2025", "titles": ["fish", "parrot"]}]
+[{"note_id": 2, "username": "amikla", "content": "con2", "status": "In progress", "created_date": "24.12.2024", "issue_date": "12.01.2025", "titles": ["fish", "parrot"]}]
