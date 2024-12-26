@@ -19,7 +19,7 @@ def f_uni(list_title, title_):
 # update current status.
 def f_status_update(note):
 	print(
-		'\nChoose new status of your note then press Enter...:'
+		'nChoose new status of your note then press Enter...:'
 		'\n1. In progress \n2. Postponed \n3. Done'
 		)
 	while True:
@@ -97,11 +97,13 @@ def f_add_new_note():
 	
 	# date parser and err handler
 	while True:
+		
 		user_date = input(
-			'Enter deadline in DD.MM.YYYY format '
-			'---leave this field empty for default '
+			'Enter deadline in DD.MM.YYYY format or'
+			'\n---leave this field empty for default'
 			'value (7 days from today---)'
 			)
+		
 		if user_date == '':
 			parsed_issue_date = dt.today() + timedelta(days=7)
 			break
@@ -132,8 +134,8 @@ def f_add_new_note():
 			else:
 				
 				print(
-					'\nThe note with such title already exists!'
-					' Titles should be unique'
+					'\nThe note with such title already exists! '
+					'Titles should be unique'
 							)
 		else:
 			# doesn't allow add the note without at least one title'
@@ -199,17 +201,23 @@ def f_del_note(my_list_notes, srch_str=None):
 			print('\nThe choosen note(s) is(are) deleted')
 			return new_list_notes
 		elif del_confrm in ['No', 'n']:
-			return my_list_notes
+			new_list_notes = []
+			for d in my_list_notes:
+				d.pop('del_flag', None)
+				new_list_notes.append(d)
+			return new_list_notes
 	print('\nThe note with such parameters can not be found')
 	input('\nTo continue press Enter...')
 	return
 
 
-def f_print_all():
+def f_print_all(my_list_notes):
 	print('\nYour notes:')
-	for note in list_notes:
+	for note in my_list_notes:
 		f_print_note_data(note)
 		print('*************************')
+
+
 
 
 # make list with notes, every note as dict
@@ -217,7 +225,7 @@ list_notes = []
 print('Hi there! Welcome to Note Manager!')
 input('\nTo start your first note press Enter...')
 list_notes.append(f_add_new_note())
-f_print_all()
+f_print_all(list_notes)
 
 # dialog with options for delete or Add new notes
 while True:
@@ -225,7 +233,8 @@ while True:
 		
 		choice = input(
 			'\nIf you want to delete some notes '
-			'press (D)el, to Add new press (A)dd'
+			'press (D)el, to Add new note press (A)dd'
+			'\nFor eXit press (X) '
 			).lower()
 		
 		if choice in ['del', 'd']:
@@ -240,7 +249,7 @@ while True:
 				list_notes = updt_list
 			
 			if len(list_notes) > 0:
-				f_print_all()
+				f_print_all(list_notes)
 			
 			else:
 				print('\nAll notes deleted')
@@ -248,18 +257,25 @@ while True:
 		
 		elif choice in ['add', 'a']:
 			list_notes.append(f_add_new_note())
-			f_print_all()
-		
+			f_print_all(list_notes)
+		elif choice in ['exit','e','x']:
+			print(
+				'\nThank you for using note manager!'
+				'\nSee you next time!'
+				)
+			break
 		else:
 			print('\nUnknown command, try more time...')
 			continue
 	
 	else:
-		choice = input('\nTo add new note press (A)dd').lower()
+		choice = input(
+		'\nTo add new note press (A)dd'
+		).lower()
 		
 		if choice in ['a', 'add']:
 			list_notes.append(f_add_new_note())
-			f_print_all()
+			f_print_all(list_notes)
 		else:
 			print('\nUnknown command, try more time...')
 			continue
