@@ -45,7 +45,7 @@ def f_status_update(note):
     return True
 
 
-# print all note's data
+# print all note's data' Arguments: note - dict
 def f_print_note_data(note,count):
     print(f'\nNote #{count+1}:')
     # output all values from dictionary
@@ -80,7 +80,7 @@ def f_print_note_data(note,count):
 
     elif deadline_delta_days == 0:
         print('\nYour deadline is TODAY!!!')
-# ******************** end print note ********************
+
 
 # check how many days to deadline
 def f_deadline_check(note):
@@ -88,12 +88,11 @@ def f_deadline_check(note):
     return day_delta.days
 
 
-# make new dict. with note
+# make dict. with note
 def f_add_new_note():
-    
-    
+    my_id = len(list_notes) + 1
     note = {}
-    note['note_id'] = str(uuid.uuid4())
+    note['note_id'] = my_id
     note['username'] = input('\nEnter your name: ')
     note['content'] = input("Enter the note's content: ")
     note['status'] = 'In progress'
@@ -104,8 +103,8 @@ def f_add_new_note():
 
         user_date = input(
                 'Enter deadline in DD.MM.YYYY format or'
-                '\n---leave this field empty for default'
-                'value (7 days from today---)'
+                '\n--- leave this field empty for default '
+                'value (7 days from today) ---'
                                         )
 
         if user_date == '':
@@ -147,7 +146,6 @@ def f_add_new_note():
                 break
             else:
                 print("\nYou should choose at least one title...")
-    
     # output note's data
     f_print_note_data(note,0)
     # ask to change the status
@@ -167,7 +165,6 @@ def f_add_new_note():
         else:
             print('\nUnknown command, try more time...')
     return note
-# ******************** end add new note ******************
 
 
 def f_del_note(my_list_notes, srch_str=None):
@@ -215,18 +212,13 @@ def f_del_note(my_list_notes, srch_str=None):
     print('\nThe note with such parameters can not be found')
     input('\nTo continue press Enter...')
     return
-# *********************** end del note ***********************
 
 
-# show all notes in list on screen
 def f_print_all(my_list_notes):
     print('\nYour notes:')
     for i, note in enumerate(my_list_notes):
         f_print_note_data(note,i)
         print('*************************')
-
-
-# main module
 
 note1 = {
     'username':'mikla',
@@ -243,7 +235,6 @@ note1 = {
 list_notes = [note1]
 print('Hi there! Welcome to Note Manager!')
 input('\nTo start your first note press Enter...')
-
 list_notes.append(f_add_new_note())
 f_print_all(list_notes)
 
@@ -251,11 +242,12 @@ f_print_all(list_notes)
 while True:
     if len(list_notes) > 0:
 
-        choice = input(
-                '\nIf you want to delete some notes '
-                'press (D)el, to Add new note press (A)dd'
-                '\nFor eXit press (X) '
-                ).lower()
+        print(
+        	'\nIf you want to delete some notes '
+          'press (D)el, to Add new note press (A)dd'
+          '\nFor eXit press (X) '
+             )
+        choice = input('Ваш выбор: ').lower()
 
         if choice in ['del', 'd']:
             del_str = input(
@@ -299,4 +291,3 @@ while True:
         else:
             print('\nUnknown command, try more time...')
             continue
-
