@@ -69,7 +69,6 @@ def f_update_note (my_list_notes, srch_str):
         
     print('\nНичего не найдено. Поробуйте изменить поиск')
     input('\nДля продолжения нажмите Enter...')
-    
         
     return my_list_notes
 
@@ -286,8 +285,19 @@ note1 = {
         (dt.today()+timedelta(days=7)),'%d.%m.%Y'),
      'titles':['bread','butter','sugar']
                 }
+                
+note2 = {
+     'note_id':str(uuid.uuid4()),
+    'username':'mikla',
+    'content':'list to do',
+    'status':'in progress',
+    'created_date':dt.strftime(dt.today(),'%d.%m.%Y'),
+    'issue_date':dt.strftime(
+        (dt.today()+timedelta(days=7)),'%d.%m.%Y'),
+     'titles':['learn math','english classes','gym']
+           }
 
-my_list_notes = [note1]
+my_list_notes = [note1,note2]
 
 f_print_all(my_list_notes)
 
