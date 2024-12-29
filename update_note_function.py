@@ -1,34 +1,20 @@
 # import classes 'datetime' from 'datetime' module
 from datetime import datetime as dt, timedelta
-from copy import deepcopy
-import json
-import requests
-import base64
 import uuid
-from requests.adapters import HTTPAdapter
-import os
 import sys
-import colorama
-from colorama import Fore, Back, Style, init
-init(convert=True)
+
 
 
 def f_update_note (my_list_notes, srch_str):
 
-    if srch_str == '':
-        print('\nВы ничего не выбрали')
-        input('\nДля возврата в главное меню нажмите Enter...')
-        print('заглушка для меню')
-        sys.exit(1)
-
+    
     # search user keyword in titles and other values of notes
     for my_note in my_list_notes:
         
-        # search in dict.values regardless of capital letters
-        x = [a.lower() for a in my_note.get('titles')]
-        if srch_str in x:
+        # search in dict. values
+        
+        if srch_str in [a.lower() for a in my_note.get('titles')]:
             print('\nNote is found \n*********************')
-            #f_print_note_data(my_note,0)
             
             while True:
                 f_print_note_data(my_note, 0)
@@ -39,16 +25,18 @@ def f_update_note (my_list_notes, srch_str):
                     'полей. Для возврата введите "X"')
                 
                 ans = input('Ваш выбор: ').lower()
+                
                 if ans == '':
-                    x = [
+                    
+                    upd_list_notes = [
                         a for a in my_list_notes
                         if a.get('note_id') != my_note.get('note_id')
                                     ]
-                    my_note = f_add_new_note(x, my_note)
+                    my_note = f_add_new_note(upd_list_notes, my_note)
 
-                    x.append(my_note)
+                    upd_list_notes.append(my_note)
 
-                    return x
+                    return upd_list_notes
                 
                 elif ans == 'x':
                     return my_list_notes
@@ -56,19 +44,26 @@ def f_update_note (my_list_notes, srch_str):
                 
                 else:
                     if ans in [a for a in my_note.keys()]:
-                        x = [
+                        
+                        upd_list_notes = [
                         a for a in my_list_notes
                         if a.get('note_id') != my_note.get('note_id')
                                     ]
-                        my_note = f_add_new_note(x, my_note, ans)
-                        x.append(my_note)
+                        
+                        my_note = f_add_new_note(
+                        	upd_list_notes, my_note, ans)
+                        upd_list_notes.append(my_note)
+                        return upd_list_notes
+                    
                     else:    
                         print('поле с таким названием не найдено...')
                         input('для продолжения нажмите Enter')
                         continue
         
-    print('\nНичего не найдено. Поробуйте изменить поиск')
-    input('\nДля продолжения нажмите Enter...')
+    print(
+        '\nНичего не найдено. Поробуйте изменить поиск'
+        '\nДля продолжения нажмите Enter...')
+    input()
     
         
     return my_list_notes
@@ -132,6 +127,7 @@ def f_print_note_data(my_note, my_count):
     elif deadline_delta_days == 0:
         print('\nYour deadline is TODAY!!!')
     print ('****************************')
+    
 # *********** end print note data *********************
 
 
@@ -296,9 +292,17 @@ srch_str = input(
     'для обновления...Оставьте поле пустым для возврата '
     'в главное меню...'
         ).lower()
-        
+
+if srch_str == '':
+    print('\nВы ничего не выбрали')
+    input('\nДля возврата в главное меню нажмите Enter...')
+    print('заглушка для меню')
+    sys.exit(1)        
+
+
 my_list_notes =  f_update_note(
     my_list_notes, srch_str)
+
 
 f_print_all(my_list_notes)
 

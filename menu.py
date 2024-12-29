@@ -372,6 +372,8 @@ def f_del_note(my_list_notes, srch_str = None):
 
 def f_update_note (my_list_notes, srch_str):
 
+    
+    
     if srch_str == '':
         print('\nВы ничего не выбрали')
         input('\nДля возврата в главное меню нажмите Enter...')
@@ -414,11 +416,13 @@ def f_update_note (my_list_notes, srch_str):
                     # if key is found
                     if ans in [a for a in my_note.keys()]:
                         new_list = [
-                        a for a in my_list_notes
-                        if a.get('note_id') != my_note.get('note_id')
+                            a for a in my_list_notes 
+                            if a.get('note_id') !=
+                            my_note.get('note_id')  
                                     ]
                         my_note = f_add_new_note(
                             new_list, my_note, ans)
+                        
                         new_list.append(my_note)
                         return new_list
                     # key is not found
@@ -435,35 +439,40 @@ def f_update_note (my_list_notes, srch_str):
 
 # ******************* end of update note ******************
 
-def search_note(my_list_notes,srch_str):
+def search_note(my_list_notes,srch_str,srch_status):
     
-    if srch_str == '':
+    if srch_str == '' and srch_status == '':
         print(
-            'Вы ничего не выбрали и будете '
-            'перенаправлены в главное меню...')
-        return my_list_notes
-    i = 0
-    show_list_notes = []
-    for my_note in my_list_notes:
+            '\nВы ничего не выбрали и будете '
+            'перенаправлены в главное меню. '
+            'Нажмите Enter для продолжения...')
+        input()
+        main_menu(my_list_notes)
+    
+    elif srch_str == '' and srch_status != '':
+        	  
+        found_list_notes = [a for a in my_list_notes
+            if a.get('status')==srch_status] 
+            
+        return found_list_notes   
+        
+    found_list_notes = []
+        
+    for my_note in my_list_notes:           
+            
+        if srch_str in [a for a in 
+            {k:v.lower() for k,v in my_note.items() 
+                     if k!='status' and type(v)!=list}.values() ] or \
+             srch_str in [a.lower() for b in my_note.values() for
+               	a in b if type(b)==list]:
+               
+            found_list_notes.append(my_note)
 
-                #x= [   str(a.lower()) for a in my_note.get('titles')]
-                #print(x)
-        if srch_str in str(
-            [a for a in my_note.values()]).lower():
-            i += 1
-            show_list_notes.append(my_note)
-
-        if i > 0:
-            print(f'\nНайдено заметок: {i}')
-            f_print_all(show_list_notes)
-            my_list_notes = context_menu(my_list_notes)
-
-        else:
-            print(
-                '\nНичего не нашлось, попробуйте '
-                'поискать с другими параметрами...')
-            continue
-    return show_list_notes
+    if len(found_list_notes) > 0 and srch_status != '':
+        
+        found_list_notes = [a for a in found_list_notes if str(a.get('status')).lower() == srch_status]
+            
+    return found_list_notes
 # ****************** end search note **********************
 
 def f_print_all(my_list_notes):
@@ -476,8 +485,7 @@ def f_print_all(my_list_notes):
     for index_, note in enumerate(my_list_notes):
         if isinstance(note, dict) :
             f_print_note_data(note, index_)
-            #print('*************************')
-    return my_list_notes
+            
 # ******************** end f_print_all *******************
 
 
@@ -503,19 +511,19 @@ def save_chg_cloud(my_list_note):
 def f_empty_list():
 
     my_list_notes = []
-    ans = input('\nTo add new note press (A)dd '
-    'or press e(X)it...'
-    ).lower()
-
+    
     while True:
+        ans = input(
+        	'\nTo add new note press (A)dd '
+          'or press e(X)it...').lower()
+        
         if ans.lower() in ['a', 'add']:
             my_list_notes.append(f_add_new_note(my_list_notes))
             f_print_all(my_list_notes)
 
         elif ans.lower() in ['x', 'exit']:
-            main_menu()
-
-            return
+            main_menu(my_list_notes)
+            #return my_list_notes
         else:
             print('Command is unknown')
             continue
@@ -537,27 +545,23 @@ def context_menu(my_list_notes):
             )
             my_list_notes = f_del_note(
                 my_list_notes, srch_str=del_str)
-
-            if len(my_list_notes) > 0:
-                f_print_all(my_list_notes)
-            else:
-                print('\nAll notes deleted')
-            continue  #add/delete dialog
+            f_print_all(my_list_notes)
+            continue
 
         elif choice in ['add', 'a']:
             my_list_notes.append(
                 f_add_new_note(my_list_notes))
-
             f_print_all(my_list_notes)
+            continue
 
         elif choice in ['x','exit']:
-            #return my_list_notes
+            
             main_menu(my_list_notes)
+        
         else:
             print('\nUnknown command, try more time...')
             continue
-      # add/delete dialog
-
+#   ******************** end of context menu *************
 
 
 def main_menu(my_list_notes=None):
@@ -600,6 +604,7 @@ def main_module(my_choice, list_notes_local):
     if my_list_notes is None or len(my_list_notes) == 0:
              my_list_notes = f_empty_list()
     
+    # show all
     if my_choice == '2':
 
         f_print_all(my_list_notes)
@@ -611,12 +616,12 @@ def main_module(my_choice, list_notes_local):
 
         return list_notes_local
 
+    # create new
     if my_choice == '1':
 
         print('\nStart new note')
         my_list_notes.append(
             f_add_new_note(my_list_notes))
-        f_print_all(my_list_notes)
 
         if my_list_notes != list_notes_local:
             list_notes_local = save_chg_cloud(my_list_notes)
@@ -624,16 +629,19 @@ def main_module(my_choice, list_notes_local):
 
         return list_notes_local
 
-
+    # update
     if my_choice == '3':
 
         f_print_all(my_list_notes)
-
-        srch_str = input(
-        '\n Укажите заголовок для поиска заметки '
-        'для обновления...Оставьте поле пустым для возврата '
-        'в главное меню...'
-        ).lower()
+        print(
+            '\n Укажите заголовок для поиска заметки '
+            'для обновления. Оставьте поле пустым для возврата '
+            'в главное меню...')
+        
+        srch_str = input('Ваш выбор: ').lower()
+        
+       
+        
         my_list_notes =  f_update_note(
             my_list_notes, srch_str)
 
@@ -644,16 +652,19 @@ def main_module(my_choice, list_notes_local):
 
         return list_notes_local
 
+    # delete
     if my_choice == '4':
 
         f_print_all(my_list_notes)
 
-        srch_str = input(
-        '\n Укажите заголовок или имя пользователя '
-        'для поиска заметки для удаления... '
-        'Оставьте поле пустым для возврата '
-        'в главное меню'
-        ).lower()
+        print(
+            '\n Укажите заголовок или имя пользователя '
+            'для поиска заметки для удаления... '
+            'Оставьте поле пустым для возврата '
+            'в главное меню')
+        
+        srch_str = input('\nВаш выбор: ').lower()
+        
         my_list_notes =  f_del_note(
             my_list_notes, srch_str)
 
@@ -665,26 +676,34 @@ def main_module(my_choice, list_notes_local):
 
         return list_notes_local
 
+    
+    # search
     if my_choice == '5':
         
         srch_str = input(
              '\n Укажите заголовок для поиска заметки '
              'для обновления... Оставьте поле пустым для возврата '
              'в главное меню...').lower()
-         
-        my_list_notes = search_note(
-            my_list_notes, srch_str)
              
-        my_list_notes = context_menu(my_list_notes)
-        
-        if my_list_notes != list_notes_local and \
-            online_mode:
+        srch_status = input(
+	          '\nВведите статус для поиска ' 
+            '(или оставьте пустым): ').lower()
+                  
+         
+        found_list_notes = search_note(
+            my_list_notes, srch_str, srch_status)
+             
+        if len(found_list_notes) > 0:
+            f_print_all(found_list_notes)
+            my_list_notes = context_menu(my_list_notes)
+        else:
+            print(
+                '\nПохоже, что ничего не нашлось. '
+                'Постарайтесь изменить параметры поиска. '
+                'Для продолжения нажмите Enter...')
+            input()
+        if my_list_notes != list_notes_local:
             list_notes_local = save_chg_cloud(my_list_notes)
-
-            return list_notes_local
-
-
-            
 
     return list_notes_local
 # ************* end of main module***************
