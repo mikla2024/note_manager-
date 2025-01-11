@@ -12,8 +12,8 @@ print('название: ', title)
 print('содержание: ', content)
 print('текущий статус: ', status)
 # returns string from date object
-print('дата создания: ', created_date.strftime('%-d %b %Y'))
-print('дата истечения: ', issued_date.strftime('%-d %b %Y'))
+print('дата создания: ', created_date.strftime('%d %b %Y'))
+print('дата истечения: ', issued_date.strftime('%d %b %Y'))
 
 
 

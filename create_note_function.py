@@ -56,7 +56,7 @@ def f_print_note_data(note,count):
             continue 
         
         if type(value) == dt:
-            print(f'***{key.capitalize()}: {value:%-d %b}')
+            print(f'***{key.capitalize()}: {value:%d %b}')
             continue
 
         elif type(value) == list:

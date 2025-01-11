@@ -73,7 +73,7 @@ print('\nData you entered:')
 for key, value in notes.items():
 	# additional format of dates
 	if type(value) == dt:
-		print(f'***{key.capitalize()}: {value:%-d %b}')
+		print(f'***{key.capitalize()}: {value:%d %b}')
 		continue
 
 	elif type(value) == list:

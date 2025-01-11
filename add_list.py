@@ -25,6 +25,6 @@ print(f'имя пользователя: {username}')
 print(f'заголовки заметки: {titles}')
 print(f'содержание: {content}')
 print(f'текущий статус: {status}')
-print(f'дата создания: {created_date:%-d %b}')
-print(f'дата истечения: {parsed_issue_date:%-d %b}')
+print(f'дата создания: {created_date:%d %b}')
+print(f'дата истечения: {parsed_issue_date:%d %b}')
 

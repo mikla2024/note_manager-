@@ -44,7 +44,7 @@ def f_print_note_data(notes):
     for key, value in notes.items():
         # additional format of dates
         if type(value) == dt:
-            print(f'***{key.capitalize()}: {value:%-d %b}')
+            print(f'***{key.capitalize()}: {value:%d %b}')
             continue
         elif type(value) == list:
             print(f'***{key.capitalize()}: {", ".join(value)}')
@@ -53,7 +53,7 @@ def f_print_note_data(notes):
     deadline_delta_days = f_deadline_check()
     if deadline_delta_days > 0:
         print(
-            f'\nYou missed your deadline'
+            f'\nYou missed your deadline '
             f'{deadline_delta_days} days ago'
         )
     elif f_deadline_check() < 0:

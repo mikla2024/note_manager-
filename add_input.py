@@ -22,7 +22,7 @@ print('имя пользователя: ', username)
 print('название: ', title)
 print('содержание: ', content)
 print('текущий статус: ', status)
-print('дата создания:', created_date.strftime('%-d %b'))
-print('дата истечения:', parsed_issue_date.strftime('%-d %b'))
+print('дата создания:', created_date.strftime('%d %b'))
+print('дата истечения:', parsed_issue_date.strftime('%d %b'))
 
 

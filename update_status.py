@@ -45,7 +45,7 @@ def f_print_note_data(notes):
     for key, value in notes.items():
         # additional format of dates
         if type(value) == dt:
-            print(f'***{key.capitalize()}: {value:%-d %b}')
+            print(f'***{key.capitalize()}: {value:%d %b}')
             continue
         elif type(value) == list:
             print(f'***{key.capitalize()}: {", ".join(value)}')

@@ -174,7 +174,7 @@ def f_print_note_data(my_note, my_count):
         # additional format of dates
         if key == 'created_date' or key == 'issue_date':
             print(f'***{key.capitalize()}: '
-            f'{dt.strptime(value,"%d.%m.%Y").strftime("%-d %b")}')
+            f'{dt.strptime(value,"%d.%m.%Y").strftime("%d %b")}')
             continue
         elif type(value) == list:
             print(f'***{key.capitalize()}: {", ".join(value)}')
