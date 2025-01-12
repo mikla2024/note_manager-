@@ -706,6 +706,9 @@ def main_module(my_choice, list_notes_local):
         if my_list_notes != list_notes_local:
             list_notes_local = save_chg_cloud(my_list_notes)
 
+    if my_choice == '6':
+        sys.exit(1)
+
     return list_notes_local
 # ************* end of main module***************
 
