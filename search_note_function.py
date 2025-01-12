@@ -45,7 +45,7 @@ def f_print_all(my_list_notes):
         print(
         	'There is no notes yet. But you can '
         	'always add some...')
-        my_list_notes = f_empty_list()
+        print('заглушка f_empty_list')
     for index_, note in enumerate(my_list_notes):
         if isinstance(note, dict) :
             f_print_note_data(note, index_)

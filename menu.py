@@ -141,12 +141,13 @@ def f_uni(my_list_notes, my_list_title, srch_str):
 def f_status_update(my_note):
 
     while True:
-        ans = input(
+        print(
         '\nChoose new status of your note then press Enter...:'
         '\n1. In progress'
         '\n2. Postponed'
         '\n3. Done'
                 )
+        ans = input('Ваш выбор: ')
         if ans == '1':
             my_note['status'] = 'In progress'
             break
@@ -290,7 +291,7 @@ def f_add_new_note(my_list_notes, my_note=None, upd_key=None):
             #print(len(new_value))
             while True:
                 user_value = input(
-                    f'\nEnter any amount of new titles.'
+                    f'\nEnter any amount of new titles. '
                     f'For finish leave field empty {new_value}: '
                                 )
 

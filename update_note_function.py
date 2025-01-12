@@ -75,12 +75,13 @@ def f_update_note (my_list_notes, srch_str):
 def f_status_update(my_note):
 
     while True:
-        ans = input(
+        print(
         '\nChoose new status of your note then press Enter...:'
         '\n1. In progress'
         '\n2. Postponed'
         '\n3. Done'
                 )
+        ans = input('Ваш выбор: ')
         if ans == '1':
             my_note['status'] = 'In progress'
             break
@@ -226,7 +227,7 @@ def f_add_new_note(my_list_notes, my_note=None, upd_key=None):
             #print(len(new_value))
             while True:
                 user_value = input(
-                    f'\nEnter any amount of new titles.'
+                    f'\nEnter any amount of new titles. '
                     f'For finish leave field empty {new_value}: '
                                 )
 
@@ -243,7 +244,7 @@ def f_add_new_note(my_list_notes, my_note=None, upd_key=None):
                     break
 
                 else:
-                    print('\n Item should be unique')
+                    print('\n Item should be unique (there should be at least one item')
                     continue
 
         upd_note[key] = new_value
@@ -264,7 +265,7 @@ def f_print_all(my_list_notes):
         print(
         	'There is no notes yet. But you can '
         	'always add some...')
-        my_list_notes = f_empty_list()
+        print('заглушка функция empty list')
     for index_, note in enumerate(my_list_notes):
         if isinstance(note, dict) :
             f_print_note_data(note, index_)
@@ -300,8 +301,7 @@ if srch_str == '':
     sys.exit(1)        
 
 
-my_list_notes =  f_update_note(
-    my_list_notes, srch_str)
+my_list_notes =  f_update_note(my_list_notes, srch_str)
 
 
 f_print_all(my_list_notes)
