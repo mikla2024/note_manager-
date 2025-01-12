@@ -68,7 +68,7 @@ def f_print_note_data(note,count):
 
     if deadline_delta_days > 0:
         print(
-             f'\nYou missed your deadline'
+             f'\nYou missed your deadline '
              f'{deadline_delta_days} days ago'
                            )
 

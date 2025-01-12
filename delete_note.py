@@ -132,7 +132,7 @@ def f_add_new_note():
             # check repetitive titles in function
 
             if f_uni(note.get('titles'), title_str):
-                # if key doesnt exist in dict it will be added as list
+                # if key doesn't exist in dict it will be added as list
                 note.setdefault('titles', []).append(title_str)
                 print(f'\n{note.get("titles")} will be added')
             else:
@@ -142,7 +142,7 @@ def f_add_new_note():
                     'Titles should be unique'
                                         )
         else:
-            # doesn't allow add the note without at least one title'
+            # doesn't allow to add the note without at least one title
             if note.get('titles') is not None:
                 break
             else:
