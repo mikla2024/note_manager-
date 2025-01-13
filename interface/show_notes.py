@@ -1,10 +1,14 @@
+from datetime import datetime as dt, timedelta
+from utils.date_handler import f_deadline_check
+
 def f_print_all(my_list_notes):
     print('\nYour notes:')
-    if my_list_notes is None or len(my_list_notes) == 0:
-        print(
-            'There is no notes yet. But you can '
-            'always add some...')
-        my_list_notes = f_empty_list()
+    # if my_list_notes is None or len(my_list_notes) == 0:
+    #     print(
+    #         'There is no notes yet. But you can '
+    #         'always add some...')
+    #     my_list_notes = f_empty_list()
+
     for index_, note in enumerate(my_list_notes):
         if isinstance(note, dict):
             f_print_note_data(note, index_)

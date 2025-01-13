@@ -1,7 +1,7 @@
 import sys
 from data.cloud_sync import get_json_cloud
-import menus
-import note_handler
+import interface.menu as menus
+
 
 print(
     'Hi there! Welcome to Note Manager! '
