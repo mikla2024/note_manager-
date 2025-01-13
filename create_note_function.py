@@ -23,7 +23,7 @@ def f_status_update(note):
         '\n1. In progress \n2. Postponed \n3. Done'
         )
     while True:
-        ans = input(Ваш выбор: )
+        ans = input('Ваш выбор: ')
         if ans == '1':
             note['status'] = 'In progress'
             break
