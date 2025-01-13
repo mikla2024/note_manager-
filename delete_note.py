@@ -104,7 +104,7 @@ def f_add_new_note():
 
         user_date = input(
                 'Enter deadline in DD.MM.YYYY format or'
-                '\n---leave this field empty for default'
+                '\n---leave this field empty for default '
                 'value (7 days from today---)'
                                         )
 
