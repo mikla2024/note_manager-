@@ -138,7 +138,7 @@ def f_add_new_note():
             else:
 
                 print(
-                    '\nThe note with such title already exists! '
+                    '\nTitle already exists! '
                     'Titles should be unique'
                                         )
         else:
