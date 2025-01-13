@@ -260,7 +260,7 @@ while True:
 
         if choice in ['del', 'd']:
             del_str = input(
-                    '\nEnter username, note id or title of the note '
+                    '\nEnter username or title of the note '
                     'you want to delete...'
                     )
 
