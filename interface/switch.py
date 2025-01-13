@@ -110,7 +110,7 @@ def distrib_func(my_choice, list_notes_local):
             list_notes_local = cloud_sync.save_chg_cloud(my_list_notes)
 
     if my_choice == '6':
-        sys.exit(1)
+        sys.exit(0)
 
     return list_notes_local
 

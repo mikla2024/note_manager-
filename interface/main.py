@@ -20,7 +20,7 @@ if (my_list_notes := get_json_cloud()) is None:
             my_list_notes = []
             break
         elif ans.lower() in ['no','n']:
-            sys.exit(1)
+            sys.exit(0)
         else:
             print('Неизвестная команда, попробуйте еще раз')
             continue
