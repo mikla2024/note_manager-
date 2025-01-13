@@ -9,10 +9,10 @@ def f_uni(list_title, title_):
         if title_ in list_title:
             return False
     # check repetitive title in another notes
-    if list_notes is not None:
-        for note_loc in list_notes:
-            if title_ in note_loc.get('titles'):
-                return False
+    # if list_notes is not None:
+    #     for note_loc in list_notes:
+    #         if title_ in note_loc.get('titles'):
+    #             return False
     return True
 
 
