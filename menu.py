@@ -295,11 +295,11 @@ def f_add_new_note(my_list_notes, my_note=None, upd_key=None):
                     f'For finish leave field empty {new_value}: '
                                 )
 
-                if user_value not in [
-                        a for n in my_list_notes if
-                        isinstance(n,dict) for a in n.get('titles')
-                        ] and \
-                        user_value != '' and \
+                # if user_value not in [
+                #         a for n in my_list_notes if
+                #         isinstance(n,dict) for a in n.get('titles')
+                #         ] and \
+                if user_value != '' and \
                         user_value not in new_value:
 
                     new_value.append(user_value)
@@ -348,13 +348,13 @@ def f_del_note(my_list_notes, srch_str = None):
             del_confrm = input(
                     f'\n{i} notes will be deleted..Yes/No ').lower()
 
-            if del_confrm in ['Yes', 'y']:
+            if del_confrm in ['yes', 'y']:
                 new_list_notes=[a for a in my_list_notes
                 if not (a.get('del_flag'))]
                 print('\nThe choosen note(s) is(are) deleted')
                 return new_list_notes
 
-            elif del_confrm in ['No', 'n']:
+            elif del_confrm in ['no', 'n']:
                 new_list_notes = []
                 for d in my_list_notes:
                     d.pop('del_flag', None)
@@ -493,7 +493,7 @@ def f_print_all(my_list_notes):
 def save_chg_cloud(my_list_note):
     while True:
 
-        ans = input('Do you want to save change'
+        ans = input('Do you want to sync changes with cloud'
                     '---(y/n)...').lower()
 
         if ans.lower() in ['y','yes']:
@@ -541,7 +541,7 @@ def context_menu(my_list_notes):
 
         if choice in ['del', 'd']:
             del_str = input(
-            '\nEnter username, note id or title of the note '
+            '\nEnter username or title of the note '
             'you want to delete...'
             )
             my_list_notes = f_del_note(
@@ -557,7 +557,7 @@ def context_menu(my_list_notes):
 
         elif choice in ['x','exit']:
             
-            main_menu(my_list_notes)
+            return my_list_notes
         
         else:
             print('\nUnknown command, try more time...')

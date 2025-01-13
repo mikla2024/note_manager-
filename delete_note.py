@@ -207,7 +207,7 @@ def f_del_note(my_list_notes, srch_str=None):
             print('\nThe choosen note(s) is(are) deleted')
             return new_list_notes
 
-        elif del_confrm in ['No', 'n']:
+        elif del_confrm in ['no', 'n']:
             new_list_notes = []
             for d in my_list_notes:
                 d.pop('del_flag', None)

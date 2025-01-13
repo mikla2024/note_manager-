@@ -231,11 +231,11 @@ def f_add_new_note(my_list_notes, my_note=None, upd_key=None):
                     f'For finish leave field empty {new_value}: '
                                 )
 
-                if user_value not in [
-                        a for n in my_list_notes if
-                        isinstance(n,dict) for a in n.get('titles')
-                        ] and \
-                        user_value != '' and \
+                # if user_value not in [
+                #         a for n in my_list_notes if
+                #         isinstance(n,dict) for a in n.get('titles')
+                #         ] and \
+                if user_value != '' and \
                         user_value not in new_value:
 
                     new_value.append(user_value)

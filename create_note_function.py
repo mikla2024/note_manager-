@@ -9,10 +9,10 @@ def f_uni(list_title, title_):
         if title_ in list_title:
             return False
     # check repetitive title in another notes
-    if list_notes is not None:
-        for note_loc in list_notes:
-            if title_ in note_loc.get('titles'):
-                return False
+    # if list_notes is not None:
+    #     for note_loc in list_notes:
+    #         if title_ in note_loc.get('titles'):
+    #             return False
     return True
 
 
@@ -23,7 +23,7 @@ def f_status_update(note):
         '\n1. In progress \n2. Postponed \n3. Done'
         )
     while True:
-        ans = input()
+        ans = input(Ваш выбор: )
         if ans == '1':
             note['status'] = 'In progress'
             break
@@ -195,7 +195,7 @@ def f_del_note(my_list_notes, srch_str=None):
     if i > 0:
         del_confrm = input(
                 f'\n{i} notes will be deleted..Yes/No ').lower()
-        if del_confrm in ['Yes', 'y']:
+        if del_confrm in ['yes', 'y']:
 
             new_list_notes = [
                     a for a in my_list_notes if not (a.get('del_flag'))
@@ -203,7 +203,7 @@ def f_del_note(my_list_notes, srch_str=None):
 
             print('\nThe choosen note(s) is(are) deleted')
             return new_list_notes
-        elif del_confrm in ['No', 'n']:
+        elif del_confrm in ['no', 'n']:
             new_list_notes = []
             for d in my_list_notes:
                 d.pop('del_flag', None)
