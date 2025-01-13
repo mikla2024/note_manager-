@@ -196,23 +196,30 @@ def f_del_note(my_list_notes, srch_str=None):
             my_note.setdefault('del_flag', True)
     # if something is founded
     if i > 0:
-        del_confrm = input(
-                f'\n{i} notes will be deleted..Yes/No ').lower()
-        if del_confrm in ['yes', 'y']:
+        while True:
+            del_confrm = input(
+                    f'\n{i} notes will be deleted..Yes/No ').lower()
+            if del_confrm in ['yes', 'y']:
 
-            new_list_notes = [
-                    a for a in my_list_notes if not (a.get('del_flag'))
-                    ]
+                new_list_notes = [
+                        a for a in my_list_notes if not (a.get('del_flag'))
+                        ]
 
-            print('\nThe choosen note(s) is(are) deleted')
-            return new_list_notes
+                print('\nThe choosen note(s) is(are) deleted')
+                return new_list_notes
 
-        elif del_confrm in ['no', 'n']:
-            new_list_notes = []
-            for d in my_list_notes:
-                d.pop('del_flag', None)
-                new_list_notes.append(d)
-            return new_list_notes
+            elif del_confrm in ['no', 'n']:
+                new_list_notes = []
+                for d in my_list_notes:
+                    d.pop('del_flag', None)
+                    new_list_notes.append(d)
+                return new_list_notes
+            else:
+                print(
+                    'Неизвестная комманда, попробуйте еще раз'
+                )
+                continue
+
     print('\nThe note with such parameters can not be found')
     input('\nTo continue press Enter...')
     return
