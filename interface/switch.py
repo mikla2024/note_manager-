@@ -20,7 +20,7 @@ def distrib_func(my_choice, list_notes_local):
         my_list_notes = context_menu(my_list_notes)
 
         if my_list_notes != list_notes_local:
-            list_notes_local = d.save_chg_cloud(my_list_notes)
+            list_notes_local = save_chg_cloud(my_list_notes)
 
         return list_notes_local
 
@@ -32,7 +32,7 @@ def distrib_func(my_choice, list_notes_local):
             d.f_add_new_note(my_list_notes))
 
         if my_list_notes != list_notes_local:
-            list_notes_local = d.save_chg_cloud(my_list_notes)
+            list_notes_local = save_chg_cloud(my_list_notes)
 
         return list_notes_local
 
@@ -53,7 +53,7 @@ def distrib_func(my_choice, list_notes_local):
         iface.f_print_all(my_list_notes)
 
         if my_list_notes != list_notes_local:
-            list_notes_local = d.save_chg_cloud(my_list_notes)
+            list_notes_local = save_chg_cloud(my_list_notes)
 
         return list_notes_local
 
@@ -76,7 +76,7 @@ def distrib_func(my_choice, list_notes_local):
         iface.f_print_all(my_list_notes)
 
         if my_list_notes != list_notes_local:
-            list_notes_local = d.save_chg_cloud(my_list_notes)
+            list_notes_local = save_chg_cloud(my_list_notes)
 
         return list_notes_local
 
@@ -105,14 +105,15 @@ def distrib_func(my_choice, list_notes_local):
                 'Для продолжения нажмите Enter...')
             input()
         if my_list_notes != list_notes_local:
-            list_notes_local = d.save_chg_cloud(my_list_notes)
+            list_notes_local = save_chg_cloud(my_list_notes)
 
     if my_choice == '6':
         sys.exit(0)
 
     return list_notes_local
+# ****************** end distrib func *****************
 
-
+# context menu *************************************
 def context_menu(my_list_notes):
     while True:
 
@@ -145,3 +146,23 @@ def context_menu(my_list_notes):
             print('\nUnknown command, try more time...')
             continue
 #   ******************** end of context menu *************
+
+# save change dialog
+def save_chg_cloud(my_list_note):
+    while True:
+
+        ans = input('Do you want to sync changes with cloud'
+                    '---(y/n)...').lower()
+
+        if ans.lower() in ['y','yes']:
+            new_list = d.save_to_json_git(my_list_note)
+            return new_list
+
+        elif ans in ['n','no']:
+            return my_list_note
+        else:
+            print('\nUnknown command, try more time...')
+            continue  # saving notes dialog
+    return False
+
+# ******************* end of save_chd_cloud *************

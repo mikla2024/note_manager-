@@ -8,8 +8,6 @@ ACCESS_TOKEN = 'github_pat_11BNS6T2Q0xo1KfeeMGoYb_'\
 USERNAME = 'mikla2024'
 REPO_NAME = 'note_manager-'
 PATH = 'data.json'
-sha_put = ''
-sha_get = ''
 
 def load_from_json_git():
     try:
@@ -94,22 +92,3 @@ def save_to_json_git(json_content):
         print ('\nno internet connection')
         input('Press any key...')
         return json_content
-
-
-def save_chg_cloud(my_list_note):
-    while True:
-
-        ans = input('Do you want to sync changes with cloud'
-                    '---(y/n)...').lower()
-
-        if ans.lower() in ['y','yes']:
-            new_list = save_to_json_git(my_list_note)
-            return new_list
-
-        elif ans in ['n','no']:
-            return my_list_note
-        else:
-            print('\nUnknown command, try more time...')
-            continue  # saving notes dialog
-    return False
-# ******************* end of save_chd_cloud *************
