@@ -7,7 +7,7 @@ import interface as iface
 
 def f_empty_list():
     my_list_notes = []
-
+    print ('Сохраненные заметки не найдены...')
     while True:
         ans = input(
             '\nTo add new note press (A)dd '
@@ -18,6 +18,8 @@ def f_empty_list():
             iface.f_print_all(my_list_notes)
 
         elif ans.lower() in ['x', 'exit']:
+            if len(my_list_notes) > 0:
+                iface.save_chg_cloud(my_list_notes)
             iface.main_menu(my_list_notes)
             # return my_list_notes
         else:

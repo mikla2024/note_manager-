@@ -6,6 +6,7 @@ import interface as iface
 
 
 def distrib_func(my_choice, list_notes_local):
+
     my_list_notes = deepcopy(list_notes_local)
 
     # show all notes
