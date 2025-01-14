@@ -11,7 +11,6 @@ PATH = 'data.json'
 sha_put = ''
 sha_get = ''
 
-
 def get_json_cloud():
     try:
         # check internet connection

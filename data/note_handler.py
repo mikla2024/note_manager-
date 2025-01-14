@@ -11,7 +11,7 @@ def f_empty_list():
     while True:
         ans = input(
             '\nTo add new note press (A)dd '
-            'or press e(X)it...').lower()
+            'or press e(X)it... ').lower()
 
         if ans.lower() in ['a', 'add']:
             my_list_notes.append(f_add_new_note(my_list_notes))
@@ -66,7 +66,7 @@ def f_add_new_note(my_list_notes, my_note=None, upd_key=None):
                 else:
                     user_value = input(
                         f'\nEnter new value or leave the original one [{key}]: '
-                        f'[{value}]...'
+                        f'[{value}]... '
                     )
 
                 if key in ['create_date', 'issue_date']:
@@ -146,7 +146,7 @@ def f_status_update(my_note):
 
     print(f'\nStatus is updated. New status is: '
     f'{my_note.get("status").upper()}')
-    input("\nTo continue press Enter...")
+    input("\nTo continue press Enter... ")
     return my_note
 # ****************** end status update *************
 
@@ -157,7 +157,7 @@ def f_del_note(my_list_notes, srch_str = None):
 
     if srch_str == '':
         print('\nВы ничего не выбрали')
-        input('\nДля возврата в главное меню нажмите Enter...')
+        input('\nДля возврата в главное меню нажмите Enter... ')
         return my_list_notes
 
     # search user keyword in titles and other values of notes
@@ -196,7 +196,7 @@ def f_del_note(my_list_notes, srch_str = None):
                 continue
 
     print('\nThe note with such parameters can not be found')
-    input('\nTo continue press Enter...')
+    input('\nTo continue press Enter... ')
     return my_list_notes
 # ******************* end of del_note *********************
 
@@ -204,7 +204,7 @@ def f_del_note(my_list_notes, srch_str = None):
 def f_update_note(my_list_notes, srch_str):
     if srch_str == '':
         print('\nВы ничего не выбрали')
-        input('\nДля возврата в главное меню нажмите Enter...')
+        input('\nДля возврата в главное меню нажмите Enter... ')
         return my_list_notes
 
     # search user keyword in titles and other values of notes
@@ -254,11 +254,11 @@ def f_update_note(my_list_notes, srch_str):
                     # key is not found
                     else:
                         print('\nполе с таким названием не найдено...')
-                        input('для продолжения нажмите Enter')
+                        input('для продолжения нажмите Enter ')
                         continue
 
     print('\nНичего не найдено. Поробуйте изменить поиск')
-    input('\nДля продолжения нажмите Enter...')
+    input('\nДля продолжения нажмите Enter... ')
 
     return my_list_notes
 

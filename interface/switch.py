@@ -1,28 +1,27 @@
 import sys
+
 from copy import deepcopy
+from data import f_empty_list, f_add_new_note, f_update_note, \
+    f_del_note, search_note, save_chg_cloud
+from interface import f_print_all
 
-import data.note_handler as nh
-
-
-import interface.show_notes as shn
-import data.cloud_sync as cloud_sync
 
 def distrib_func(my_choice, list_notes_local):
     my_list_notes = deepcopy(list_notes_local)
-    # show all notes
 
+    # show all notes
     if my_list_notes is None or len(my_list_notes) == 0:
-        my_list_notes = nh.f_empty_list()
+        my_list_notes = f_empty_list()
 
     # show all
     if my_choice == '2':
 
-        shn.f_print_all(my_list_notes)
+        f_print_all(my_list_notes)
 
         my_list_notes = context_menu(my_list_notes)
 
         if my_list_notes != list_notes_local:
-            list_notes_local = cloud_sync.save_chg_cloud(my_list_notes)
+            list_notes_local = save_chg_cloud(my_list_notes)
 
         return list_notes_local
 
@@ -31,17 +30,17 @@ def distrib_func(my_choice, list_notes_local):
 
         print('\nStart new note')
         my_list_notes.append(
-            nh.f_add_new_note(my_list_notes))
+            f_add_new_note(my_list_notes))
 
         if my_list_notes != list_notes_local:
-            list_notes_local = cloud_sync.save_chg_cloud(my_list_notes)
+            list_notes_local = save_chg_cloud(my_list_notes)
 
         return list_notes_local
 
     # update
     if my_choice == '3':
 
-        shn.f_print_all(my_list_notes)
+        f_print_all(my_list_notes)
         print(
             '\n Укажите заголовок для поиска заметки '
             'для обновления. Оставьте поле пустым для возврата '
@@ -49,20 +48,20 @@ def distrib_func(my_choice, list_notes_local):
 
         srch_str = input('Ваш выбор: ').lower()
 
-        my_list_notes = nh.f_update_note(
+        my_list_notes = f_update_note(
             my_list_notes, srch_str)
 
-        shn.f_print_all(my_list_notes)
+        f_print_all(my_list_notes)
 
         if my_list_notes != list_notes_local:
-            list_notes_local = cloud_sync.save_chg_cloud(my_list_notes)
+            list_notes_local = save_chg_cloud(my_list_notes)
 
         return list_notes_local
 
     # delete
     if my_choice == '4':
 
-        shn.f_print_all(my_list_notes)
+        f_print_all(my_list_notes)
 
         print(
             '\n Укажите заголовок или имя пользователя '
@@ -72,13 +71,13 @@ def distrib_func(my_choice, list_notes_local):
 
         srch_str = input('\nВаш выбор: ').lower()
 
-        my_list_notes = nh.f_del_note(
+        my_list_notes = f_del_note(
             my_list_notes, srch_str)
 
-        shn.f_print_all(my_list_notes)
+        f_print_all(my_list_notes)
 
         if my_list_notes != list_notes_local:
-            list_notes_local = cloud_sync.save_chg_cloud(my_list_notes)
+            list_notes_local = save_chg_cloud(my_list_notes)
 
         return list_notes_local
 
@@ -88,17 +87,17 @@ def distrib_func(my_choice, list_notes_local):
         srch_str = input(
             '\n Укажите заголовок для поиска заметки '
             'для обновления... Оставьте поле пустым для возврата '
-            'в главное меню...').lower()
+            'в главное меню... ').lower()
 
         srch_status = input(
             '\nВведите статус для поиска '
             '(или оставьте пустым): ').lower()
 
-        found_list_notes = nh.search_note(
+        found_list_notes = search_note(
             my_list_notes, srch_str, srch_status)
 
         if len(found_list_notes) > 0:
-            shn.f_print_all(found_list_notes)
+            f_print_all(found_list_notes)
             my_list_notes = context_menu(my_list_notes)
         else:
             print(
@@ -107,7 +106,7 @@ def distrib_func(my_choice, list_notes_local):
                 'Для продолжения нажмите Enter...')
             input()
         if my_list_notes != list_notes_local:
-            list_notes_local = cloud_sync.save_chg_cloud(my_list_notes)
+            list_notes_local = save_chg_cloud(my_list_notes)
 
     if my_choice == '6':
         sys.exit(0)
@@ -120,23 +119,23 @@ def context_menu(my_list_notes):
 
         choice = input(
             '\nIf you want to delete some notes '
-            'press (D)el, to Add new press (A)dd'
-            '\nFor exit to main menu press X...').lower()
+            'press (D)el, to Add new press (A)dd '
+            '\nFor exit to main menu press X... ').lower()
 
         if choice in ['del', 'd']:
             del_str = input(
                 '\nEnter username or title of the note '
-                'you want to delete...'
+                'you want to delete... '
             )
-            my_list_notes = nh.f_del_note(
+            my_list_notes = f_del_note(
                 my_list_notes, srch_str=del_str)
-            shn.f_print_all(my_list_notes)
+            f_print_all(my_list_notes)
             continue
 
         elif choice in ['add', 'a']:
             my_list_notes.append(
-                nh.f_add_new_note(my_list_notes))
-            shn.f_print_all(my_list_notes)
+                f_add_new_note(my_list_notes))
+            f_print_all(my_list_notes)
             continue
 
         elif choice in ['x', 'exit']:

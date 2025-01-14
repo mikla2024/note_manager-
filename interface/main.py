@@ -1,19 +1,20 @@
 import sys
-from data.cloud_sync import get_json_cloud
-import interface.menu as menus
+from data import get_json_cloud
+from interface import main_menu
 
 
 print(
     'Hi there! Welcome to Note Manager! '
     'For correct work you need connection to internet! '
     )
+
 input('\nTo start press Enter...')
 if (my_list_notes := get_json_cloud()) is None:
     while True:
 
         ans = input(
         '\nПрограмма не может получить доступ к серверу. Вы можете ' 'продолжить работать с локальной версией, при этом любые ' 'изменения не смогут быть сохранены. '
-        'Желаете продолжить? \n(yes/no)...'
+        'Желаете продолжить? \n(yes/no)... '
         )
         if ans.lower() in ['yes','y']:
             online_mode = False
@@ -27,4 +28,4 @@ if (my_list_notes := get_json_cloud()) is None:
 
 # main menu endless cycle
 while True:
-    menus.main_menu(my_list_notes)
+    main_menu(my_list_notes)

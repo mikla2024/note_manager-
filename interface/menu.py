@@ -1,4 +1,4 @@
-import switch
+from interface import distrib_func
 
 def main_menu(my_list_notes=None):
 
@@ -25,7 +25,7 @@ def main_menu(my_list_notes=None):
 
 ''')
 
-        my_list_notes = switch.distrib_func(
+        my_list_notes = distrib_func(
         input('Ваш выбор: '), my_list_notes
         )
 
