@@ -41,7 +41,7 @@ if __name__ == '__main__':
         )
 
     input('\nTo start press Enter...')
-    if (my_list_notes := d.get_json_cloud()) is None:
+    if (my_list_notes := d.load_from_json_git()) is None:
         while True:
 
             ans = input(

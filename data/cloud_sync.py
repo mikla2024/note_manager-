@@ -11,7 +11,7 @@ PATH = 'data.json'
 sha_put = ''
 sha_get = ''
 
-def get_json_cloud():
+def load_from_json_git():
     try:
         # check internet connection
         url = 'http://google.com'
@@ -41,7 +41,7 @@ def get_json_cloud():
         return None
 # **************** end of json get ************************
 
-def update_json_git(json_content):
+def save_to_json_git(json_content):
 
     try:
 
@@ -50,23 +50,17 @@ def update_json_git(json_content):
         f'{REPO_NAME}/contents/{PATH}'
         )
 
-        #print(r.status_code)
-
         if r.status_code == 200:
             my_sha = r.json().get('sha')
-            serv_byte_data = r.json().get('content')
-            serv_json = base64.b64decode(serv_byte_data)
-            serv_res = json.loads(serv_json.decode('utf-8'))
-            # print('\nnew file downloaded')
 
         else:
             print("couldn't find a file'")
             return json_content
 
-        data_to_server = json_content
-        json_str = json.dumps(data_to_server)
+        json_str = json.dumps(json_content)
         byte_data = json_str.encode('utf-8')
         encoded_data = base64.b64encode(byte_data)
+        data_to_serv = encoded_data.decode(encoding='utf-8')
 
         r = requests.put(
         f'https://api.github.com/repos/{USERNAME}/'
@@ -78,7 +72,7 @@ def update_json_git(json_content):
 
         json = {
         'message': 'update file by API',
-        'content': encoded_data.decode(),
+        'content': data_to_serv,
         'sha': my_sha
         }
         )
@@ -86,13 +80,6 @@ def update_json_git(json_content):
         #print(r.status_code)
         if r.status_code == 200:
             print('\nall notes saved succesfully')
-            #print(f'\nold_sha: {my_sha}')
-            #print(f'\nupd_sha: {r.json().get("content").get("sha")}')
-
-            #for k,v in r.json().items():
-
-                    #print(f'\n{k}: {v}')
-                    #print('***********************')
             input('press Enter to continue...')
             return json_content
 
@@ -116,7 +103,7 @@ def save_chg_cloud(my_list_note):
                     '---(y/n)...').lower()
 
         if ans.lower() in ['y','yes']:
-            new_list = update_json_git(my_list_note)
+            new_list = save_to_json_git(my_list_note)
             return new_list
 
         elif ans in ['n','no']:
