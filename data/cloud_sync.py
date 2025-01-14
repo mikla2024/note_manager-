@@ -24,9 +24,9 @@ def load_from_json_git():
 
         if r.status_code == 200:
             sha_get = r.json().get('sha')
-            serv_byte_data = r.json().get('content')
-            serv_json = base64.b64decode(serv_byte_data)
-            serv_res = json.loads(serv_json.decode('utf-8'))
+            serv_byte_data = r.json().get('content') # base64 string
+            serv_json = base64.b64decode(serv_byte_data) # base 64 bytes
+            serv_res = json.loads(serv_json.decode('utf-8')) # json string
             print('connection established...')
             return serv_res
         else:
@@ -59,8 +59,8 @@ def save_to_json_git(json_content):
 
         json_str = json.dumps(json_content)
         byte_data = json_str.encode('utf-8')
-        encoded_data = base64.b64encode(byte_data)
-        data_to_serv = encoded_data.decode(encoding='utf-8')
+        encoded_data = base64.b64encode(byte_data) # base64 bytes
+        data_to_serv = encoded_data.decode(encoding='utf-8') # base64 string
 
         r = requests.put(
         f'https://api.github.com/repos/{USERNAME}/'
