@@ -1,5 +1,5 @@
 from datetime import datetime as dt, timedelta
-from utils import f_deadline_check
+import utils
 
 def f_print_all(my_list_notes):
     print('\nYour notes:')
@@ -29,7 +29,7 @@ def f_print_note_data(my_note, my_count):
         elif key == 'note_id':
             continue
         print(f'***{key.capitalize()}: {value}')
-    deadline_delta_days = f_deadline_check(my_note)
+    deadline_delta_days = utils.f_deadline_check(my_note)
     if deadline_delta_days > 0:
         print(
             f'\nYou missed your deadline '

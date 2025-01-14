@@ -1,8 +1,8 @@
 import uuid
-import interface.menu as menus
-import interface.show_notes as shn
+
 from datetime import datetime as dt, timedelta
-from utils.date_handler import f_parser_date
+import utils
+import interface as iface
 
 
 def f_empty_list():
@@ -15,10 +15,10 @@ def f_empty_list():
 
         if ans.lower() in ['a', 'add']:
             my_list_notes.append(f_add_new_note(my_list_notes))
-            shn.f_print_all(my_list_notes)
+            iface.f_print_all(my_list_notes)
 
         elif ans.lower() in ['x', 'exit']:
-            menus.main_menu(my_list_notes)
+            iface.main_menu(my_list_notes)
             # return my_list_notes
         else:
             print('Command is unknown')
@@ -70,7 +70,7 @@ def f_add_new_note(my_list_notes, my_note=None, upd_key=None):
                     )
 
                 if key in ['create_date', 'issue_date']:
-                    new_value = f_parser_date(user_value)
+                    new_value = utils.f_parser_date(user_value)
                     if not new_value:
                         print(
                             'Неправильный формат даты, '
@@ -216,7 +216,7 @@ def f_update_note(my_list_notes, srch_str):
             print('\nNote is found \n*********************')
 
             while True:
-                shn.f_print_note_data(my_note, 0)
+                iface.f_print_note_data(my_note, 0)
 
                 print(
                     '\nВведите название поля для обновления, '
@@ -272,7 +272,7 @@ def search_note(my_list_notes, srch_str, srch_status):
             'перенаправлены в главное меню. '
             'Нажмите Enter для продолжения...')
         input()
-        menus.main_menu(my_list_notes)
+        iface.main_menu(my_list_notes)
 
     elif srch_str == '' and srch_status != '':
 
