@@ -33,11 +33,6 @@ def main_menu(my_list_notes=None):
         continue
 
 
-
-
-
-
-
 if __name__ == '__main__':
 
     print(
