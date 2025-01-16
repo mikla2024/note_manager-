@@ -3,19 +3,13 @@ import utils
 
 def f_print_all(my_list_notes):
     print('\nYour notes:')
-    # if my_list_notes is None or len(my_list_notes) == 0:
-    #     print(
-    #         'There is no notes yet. But you can '
-    #         'always add some...')
-    #     my_list_notes = f_empty_list()
-
-    for index_, note in enumerate(my_list_notes):
+    for index_, note in enumerate(my_list_notes,start=1):
         if isinstance(note, dict):
             f_print_note_data(note, index_)
 
 
-def f_print_note_data(my_note, my_count):
-    print(f'\nNote #{my_count+1}:')
+def f_print_note_data(my_note, index_):
+    print(f'\nNote #{index_}:')
     # output all values from dictionary
     for key, value in my_note.items():
         # additional format of dates

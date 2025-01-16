@@ -5,13 +5,14 @@ import data as d
 import interface as iface
 
 
+
 def distrib_func(my_choice, list_notes_local):
 
     my_list_notes = deepcopy(list_notes_local)
 
     # show all notes
     if my_list_notes is None or len(my_list_notes) == 0:
-        my_list_notes = d.f_empty_list()
+        iface.f_empty_list()
 
     # show all
     if my_choice == '2':
@@ -39,17 +40,28 @@ def distrib_func(my_choice, list_notes_local):
 
     # update
     if my_choice == '3':
-
         iface.f_print_all(my_list_notes)
-        print(
-            '\n Укажите заголовок для поиска заметки '
-            'для обновления. Оставьте поле пустым для возврата '
-            'в главное меню...')
+        search_input = get_search_input()
+        list_for_update = d.search_note(my_list_notes,srch_str=search_input.get('s_str'),
+                      srch_status=search_input.get('s_sts'))
+        iface.f_print_all(list_for_update)
 
-        srch_str = input('Ваш выбор: ').lower()
 
-        my_list_notes = d.f_update_note(
-            my_list_notes, srch_str)
+        print ('Укажите номер # заметки, которую хотите обновить')
+        srch_index = int(input('Ваш выбор: '))
+
+        while srch_index not in range(1,len(list_for_update)+1):
+            print(len(list_for_update))
+            print('Заметки с таким номером не существует. '
+                  'Попробуйте еще раз')
+            srch_index = int(input('Ваш выбор: '))
+
+        for i,n in enumerate(list_for_update,start=1):
+            if srch_index == i:
+                my_list_notes.remove(n)
+                my_list_notes.append(d.f_update_note(n))
+                break
+
 
         iface.f_print_all(my_list_notes)
 
@@ -84,14 +96,9 @@ def distrib_func(my_choice, list_notes_local):
     # search
     if my_choice == '5':
 
-        srch_str = input(
-            '\n Укажите заголовок для поиска заметки '
-            'для обновления... Оставьте поле пустым для возврата '
-            'в главное меню... ').lower()
-
-        srch_status = input(
-            '\nВведите статус для поиска '
-            '(или оставьте пустым): ').lower()
+        srch_input = get_search_input()
+        srch_str = srch_input.get('s_str')
+        srch_status = srch_input.get('s_sts')
 
         found_list_notes = d.search_note(
             my_list_notes, srch_str, srch_status)
@@ -156,7 +163,7 @@ def save_chg_cloud(my_list_note):
                     '---(y/n)...').lower()
 
         if ans.lower() in ['y','yes']:
-            new_list = d.save_to_json_git(my_list_note)
+            new_list: list = d.save_to_json_git(my_list_note)
             return new_list
 
         elif ans in ['n','no']:
@@ -167,3 +174,44 @@ def save_chg_cloud(my_list_note):
     return False
 
 # ******************* end of save_chd_cloud *************
+
+def f_empty_list():
+    my_list_notes: list = []
+    print ('Сохраненные заметки не найдены...')
+    while True:
+        ans = input(
+            '\nTo add new note press (A)dd '
+            'or press e(X)it... ').lower()
+
+        if ans.lower() in ['a', 'add']:
+            my_list_notes.append(d.f_add_new_note(my_list_notes))
+            iface.f_print_all(my_list_notes)
+
+        elif ans.lower() in ['x', 'exit']:
+            if len(my_list_notes) > 0:
+                iface.save_chg_cloud(my_list_notes)
+            iface.main_menu(my_list_notes)
+            # return my_list_notes
+        else:
+            print('Command is unknown')
+            continue
+# ***************** end of empty list *********************
+
+
+def get_search_input():
+    print(
+        '\n Укажите ключевое слово для поиска заметки '
+        'для обновления... Оставьте поле пустым для возврата '
+        'в главное меню... ')
+
+    srch_str: str = input('Ваш выбор: ').lower()
+
+    print(
+        '\nВведите статус для поиска '
+        '(или оставьте пустым): ')
+
+    srch_status: str = input('Ваш выбор: ').lower()
+    d = dict()
+    d['s_str'] = srch_str
+    d['s_sts'] = srch_status
+    return d

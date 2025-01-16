@@ -18,7 +18,7 @@ ACCESS_TOKEN = 'github_pat_11BNS6T2Q0xo1KfeeMGoYb_'\
 
 USERNAME = 'mikla2024'
 REPO_NAME = 'note_manager-'
-PATH = '../data.json'
+PATH = 'data/data.json'
 sha_put = ''
 sha_get = ''
 

@@ -3,32 +3,11 @@ import uuid
 from datetime import datetime as dt, timedelta
 import utils
 import interface as iface
+import data
 
 
-def f_empty_list():
-    my_list_notes = []
-    print ('Сохраненные заметки не найдены...')
-    while True:
-        ans = input(
-            '\nTo add new note press (A)dd '
-            'or press e(X)it... ').lower()
+def f_add_new_note(my_list_notes, my_note=None, upd_index=None):
 
-        if ans.lower() in ['a', 'add']:
-            my_list_notes.append(f_add_new_note(my_list_notes))
-            iface.f_print_all(my_list_notes)
-
-        elif ans.lower() in ['x', 'exit']:
-            if len(my_list_notes) > 0:
-                iface.save_chg_cloud(my_list_notes)
-            iface.main_menu(my_list_notes)
-            # return my_list_notes
-        else:
-            print('Command is unknown')
-            continue
-# ***************** end of empty list *********************
-
-
-def f_add_new_note(my_list_notes, my_note=None, upd_key=None):
     if my_note is None:
         my_note = {
             'note_id': '',
@@ -46,16 +25,16 @@ def f_add_new_note(my_list_notes, my_note=None, upd_key=None):
         'Даты вводить в формате ДД.ММ.ГГГГ'
     )
 
-    if upd_key is not None:
+    if upd_index is not None:
         upd_note = {
-            k: v for k, v in my_note.items() if k == upd_key}
+            k: v for k, v in my_note.items() if k == upd_index}
     else:
         upd_note = {
             k: v for k, v in my_note.items()
         }
 
     for key, value in upd_note.items():
-        # print(type(value))
+
         if not isinstance(value, list):
 
             if key == 'note_id':
@@ -63,7 +42,7 @@ def f_add_new_note(my_list_notes, my_note=None, upd_key=None):
 
             while True:
                 if key == 'status':
-                    user_value = f_status_update(my_note).get('status')
+                    user_value = data.get_status_input()
 
                 else:
                     user_value = input(
@@ -124,35 +103,6 @@ def f_add_new_note(my_list_notes, my_note=None, upd_key=None):
 # **************** end of add new_note ******************
 
 
-def f_status_update(my_note):
-
-    while True:
-        print(
-        '\nChoose new status of your note then press Enter...:'
-        '\n1. In progress'
-        '\n2. Postponed'
-        '\n3. Done'
-                )
-        ans = input('Ваш выбор: ')
-        if ans == '1':
-            my_note['status'] = 'In progress'
-            break
-        elif ans == '2':
-            my_note['status'] = 'Postponed'
-            break
-        elif ans == '3':
-            my_note['status'] = 'Done'
-            break
-        else:
-            print('Wrong status. Try one more time')
-
-    print(f'\nStatus is updated. New status is: '
-    f'{my_note.get("status").upper()}')
-    input("\nTo continue press Enter... ")
-    return my_note
-# ****************** end status update *************
-
-
 def f_del_note(my_list_notes, srch_str = None):
 
     i = 0  # amount of notes for delete
@@ -203,99 +153,70 @@ def f_del_note(my_list_notes, srch_str = None):
 # ******************* end of del_note *********************
 
 
-def f_update_note(my_list_notes, srch_str):
-    if srch_str == '':
-        print('\nВы ничего не выбрали')
-        input('\nДля возврата в главное меню нажмите Enter... ')
-        return my_list_notes
+def f_update_note(my_note:dict):
 
-    # search user keyword in titles and other values of notes
-    for my_note in my_list_notes:
+    while True:
+        iface.f_print_note_data(my_note, 1)
 
-        # search in titles
-        x = [a.lower() for a in my_note.get('titles')]
-        if srch_str in x:
-            print('\nNote is found \n*********************')
+        print(
+            '\nВведите название поля для обновления, '
+            'или оставьте пустым для обновления нескольких '
+            'полей. Для возврата введите "X"')
+        # choosing the key for update
+        ans = input('Ваш выбор: ').lower()
+        if ans == '':
 
-            while True:
-                iface.f_print_note_data(my_note, 0)
+            my_note = f_add_new_note([], my_note)
+            return my_note
 
-                print(
-                    '\nВведите название поля для обновления, '
-                    'или оставьте пустым для обновления нескольких '
-                    'полей. Для возврата введите "X"')
-                # choosing the key for update
-                ans = input('Ваш выбор: ').lower()
-                if ans == '':
-                    new_list = [
-                        a for a in my_list_notes
-                        if a.get('note_id') != my_note.get('note_id')
-                    ]
-                    my_note = f_add_new_note(new_list, my_note)
-
-                    new_list.append(my_note)
-                    return new_list
-
-                elif ans == 'x':
-                    return my_list_notes
+        elif ans == 'x':
+            return my_note
 
 
-                else:
-                    # if key is found
-                    if ans in [a for a in my_note.keys()]:
-                        new_list = [
-                            a for a in my_list_notes
-                            if a.get('note_id') !=
-                               my_note.get('note_id')
-                        ]
-                        my_note = f_add_new_note(
-                            new_list, my_note, ans)
 
-                        new_list.append(my_note)
-                        return new_list
-                    # key is not found
-                    else:
-                        print('\nполе с таким названием не найдено...')
-                        input('для продолжения нажмите Enter ')
-                        continue
+        elif ans in [a for a in my_note.keys()]:
+
+            my_note = f_add_new_note(
+                [], my_note, ans)
+
+
+            return my_note
+        # key is not found
+        else:
+            print('\nполе с таким названием не найдено...')
+            input('для продолжения нажмите Enter ')
+            continue
 
     print('\nНичего не найдено. Поробуйте изменить поиск')
     input('\nДля продолжения нажмите Enter... ')
 
-    return my_list_notes
+    return my_note
 
 # ******************* end of update note ******************
 
 
 def search_note(my_list_notes, srch_str, srch_status):
-    if srch_str == '' and srch_status == '':
-        print(
-            '\nВы ничего не выбрали и будете '
-            'перенаправлены в главное меню. '
-            'Нажмите Enter для продолжения...')
-        input()
-        iface.main_menu(my_list_notes)
 
-    elif srch_str == '' and srch_status != '':
+    if srch_str == '':
+        list_notes_found = [a for a in my_list_notes]
 
-        found_list_notes = [a for a in my_list_notes
-                            if a.get('status') == srch_status]
 
-        return found_list_notes
+    else:
+        list_notes_found = [a for a in my_list_notes if srch_str in
+                           [b.lower() for b in a.get('titles')]
+                           or srch_str in
+                           [c.lower() for c in a.values() if type(c) != list]
+                           ]
 
-    found_list_notes = []
+    if srch_status != '':
+        list_notes_found = [a for a in list_notes_found if
+                           srch_status == str(a.get('status')).lower()]
 
-    for my_note in my_list_notes:
+    if len(list_notes_found) == 0:
+        print('Ничего не нашлось. Попробуйте изменить поиск')
+        input('Для продолжения нажмите Enter... ')
+        return my_list_notes
 
-        if srch_str in [a for a in
-                        {k: v.lower() for k, v in my_note.items()
-                         if k != 'status' and type(v) != list}.values()] or \
-                srch_str in [a.lower() for b in my_note.values() for
-                             a in b if type(b) == list]:
-            found_list_notes.append(my_note)
-
-    if len(found_list_notes) > 0 and srch_status != '':
-        found_list_notes = [a for a in found_list_notes if str(a.get('status')).lower() == srch_status]
-
-    return found_list_notes
+    #iface.f_print_all(list_notes_found)
+    return list_notes_found
 # ****************** end search note **********************
