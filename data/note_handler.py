@@ -47,7 +47,7 @@ def f_add_new_note(my_note=None, upd_field=None):
 
                 else:
                     user_value = input(
-                        f'\nEnter new value or leave the original one [{key}]: '
+                        f'\nВведите новое значение или оставьте существующее [{key}]: '
                         f'[{value}]... '
                     )
 
@@ -74,8 +74,8 @@ def f_add_new_note(my_note=None, upd_field=None):
             # print(len(new_value))
             while True:
                 user_value = input(
-                    f'\nEnter any amount of new titles. '
-                    f'For finish leave field empty {new_value}: '
+                    f'\nВведите любое количество заметок. '
+                    f'Для завершения оставьте поле пустым {new_value}: '
                 )
 
                 if user_value != '' and \

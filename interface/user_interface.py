@@ -58,7 +58,7 @@ def distrib_func(my_choice, list_notes_local):
     # create new
     if my_choice == '1':
 
-        print('\nStart new note')
+        print('\nНачало новой заметки')
         my_list_notes.append(
             d.f_add_new_note(my_list_notes))
 
@@ -72,7 +72,7 @@ def distrib_func(my_choice, list_notes_local):
 
         iface.f_print_all(my_list_notes)
 
-        print('\nЕсли хотите применить фильтр, введите F. '
+        print('\nЕсли хотите применить фильтр, введите F или f. '
               'Для продолжения нажмите Enter...')
 
         if input('Ваш выбор: ').lower() == 'f':
@@ -100,7 +100,7 @@ def distrib_func(my_choice, list_notes_local):
     if my_choice == '4':
 
         iface.f_print_all(my_list_notes)
-        print('Если хотите применить фильтр, введите F. '
+        print('\nЕсли хотите применить фильтр, введите F или f. '
               'Для продолжения нажмите Enter...')
 
         if input('Ваш выбор: ').lower() == 'f':
@@ -152,9 +152,9 @@ def context_menu(my_list_notes):
     while True:
 
         choice = input(
-            '\nIf you want to delete some notes '
-            'press (D)el, to Add new press (A)dd '
-            '\nFor exit to main menu press X... ').lower()
+            '\nДля удаления заметок '
+            'введите (D)el, для добавления новой заметки - (A)dd '
+            '\nДля выхода в главное меню введите X... ').lower()
 
         if choice in ['del', 'd']:
 
@@ -180,7 +180,7 @@ def context_menu(my_list_notes):
             return my_list_notes
 
         else:
-            print('\nUnknown command, try more time...')
+            print('\nНеизвестная команда. Попробуйте еще раз...')
             continue
 #   ******************** end of context menu *************
 
@@ -188,7 +188,7 @@ def context_menu(my_list_notes):
 def save_chg_cloud(my_list_note):
     while True:
 
-        ans = input('Do you want to sync changes with cloud'
+        ans = input('Хотите синхронизировать изменения с облаком'
                     '---(y/n)...').lower()
 
         if ans.lower() in ['y','yes']:
@@ -198,7 +198,7 @@ def save_chg_cloud(my_list_note):
         elif ans in ['n','no']:
             return my_list_note
         else:
-            print('\nUnknown command, try more time...')
+            print('\nНеизвестная команда, попробуйте еще раз...')
             continue  # saving notes dialog
     return False
 
@@ -209,8 +209,8 @@ def f_empty_list():
     print ('Сохраненные заметки не найдены...')
     while True:
         ans = input(
-            '\nTo add new note press (A)dd '
-            'or press e(X)it... ').lower()
+            '\nЧтобы добавить новую заметку введите (A)dd '
+            'Для выхода - e(X)it... ').lower()
 
         if ans.lower() in ['a', 'add']:
             my_list_notes.append(d.f_add_new_note(my_list_notes))
@@ -249,7 +249,7 @@ def get_search_input():
 def get_only_note(my_list_notes: list, action_str: str):
 
     iface.f_print_all(my_list_notes)
-    print(f'Укажите номер # заметки, которую хотите {action_str}. '
+    print(f'\nУкажите номер # заметки, которую хотите {action_str}. '
           'Для возврата в главное меню, введите X')
 
     if (srch_index := input('Ваш выбор: ').lower()) == 'x':
