@@ -129,8 +129,14 @@ def context_menu(my_list_notes):
 
         if choice in ['del', 'd']:
 
+            if my_note := (get_only_note(my_list_notes,'удалить')) is None:
+                return my_list_notes
+
+
+
             my_list_notes = d.f_del_note(
-                my_list_notes, get_only_note(my_list_notes,'удалить'))
+                my_list_notes, my_note)
+
             iface.f_print_all(my_list_notes)
             continue
 
