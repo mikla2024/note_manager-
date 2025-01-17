@@ -43,7 +43,7 @@ def distrib_func(my_choice, list_notes_local):
 
         iface.f_print_all(my_list_notes)
 
-        print('Если хотите применить фильтр, введите F. '
+        print('\nЕсли хотите применить фильтр, введите F. '
               'Для продолжения нажмите Enter...')
 
         if input('Ваш выбор: ').lower() == 'f':
