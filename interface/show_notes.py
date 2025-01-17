@@ -1,4 +1,4 @@
-from datetime import datetime as dt, timedelta
+from datetime import datetime as dt
 import utils
 
 def f_print_all(my_list_notes):

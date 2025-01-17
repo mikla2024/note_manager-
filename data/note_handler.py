@@ -7,7 +7,7 @@ import interface as iface
 import data
 
 
-def f_add_new_note(my_list_notes, my_note=None, upd_field=None):
+def f_add_new_note(my_note=None, upd_field=None):
 
     if my_note is None:
         my_note = {
@@ -78,10 +78,6 @@ def f_add_new_note(my_list_notes, my_note=None, upd_field=None):
                     f'For finish leave field empty {new_value}: '
                 )
 
-                # if user_value not in [
-                #         a for n in my_list_notes if
-                #         isinstance(n,dict) for a in n.get('titles')
-                #         ] and \
                 if user_value != '' and \
                         user_value not in new_value:
 
@@ -109,6 +105,7 @@ def f_del_note(my_list_notes, note_for_delete):
     try:
         my_list_notes.remove(note_for_delete)
         return my_list_notes
+
     except:
         print ('f_del_note is fail')
         sys.exit(1)
@@ -130,7 +127,7 @@ def f_update_note(my_note:dict):
 
         if ans == '':
 
-            my_note = f_add_new_note([], my_note)
+            my_note = f_add_new_note(my_note)
             return my_note
 
         elif ans == 'x':
@@ -140,8 +137,7 @@ def f_update_note(my_note:dict):
 
         elif ans in [a for a in my_note.keys()]:
 
-            my_note = f_add_new_note(
-                [], my_note, ans)
+            my_note = f_add_new_note(my_note, ans)
 
 
             return my_note
