@@ -1,11 +1,9 @@
 from datetime import datetime as dt, timedelta
 
 
-def f_parser_date(date_str):
+def f_parser_date(date_str:str):
+
     while True:
-        #user_date = input('Enter deadline in DD.MM.YYYY format '
-        #'---leave this field empty for default '
-        #'value (7 days from today---)')
         if date_str == '':
             parsed_issue_date = dt.today() + timedelta(days=7)
             break

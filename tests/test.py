@@ -1,16 +1,6 @@
 import unittest
 import data as d
-
-class Note(object):
-    def __init__(self, username, content, status, created_date, issue_date, titles):
-        self.username = str(username)
-        self.content = str(content)
-        self.status = status
-        self.created_date = created_date
-        self.issue_date = issue_date
-        self.titles = titles
-
-
+import utils
 
 
 class TestNoteManager(unittest.TestCase):
@@ -53,8 +43,10 @@ class TestNoteManager(unittest.TestCase):
         found_note = d.search_note(test_list, srch_str='test2', srch_status='')
         self.assertEqual(found_note, [my_test_note2])
 
-    def test_unique_id(self):
-        pass
+    @unittest.expectedFailure
+    def test_validate_date_fail(self):
+        test_date_str: str = '01.31.2025'
+        self.assertEqual(utils.f_parser_date(date_str=test_date_str),'31.01.2025')
 
 
 if __name__ == '__main__':

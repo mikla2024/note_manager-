@@ -40,28 +40,25 @@ def distrib_func(my_choice, list_notes_local):
 
     # update
     if my_choice == '3':
+
         iface.f_print_all(my_list_notes)
-        search_input = get_search_input()
-        list_for_update = d.search_note(my_list_notes,srch_str=search_input.get('s_str'),
-                      srch_status=search_input.get('s_sts'))
+
+        print('Если хотите применить фильтр, введите F. '
+              'Для продолжения нажмите Enter...')
+
+        if input('Ваш выбор: ').lower() == 'f':
+            list_for_update = filter_list_input(my_list_notes)
+
+        else:
+            list_for_update = [a for a in my_list_notes]
+
         iface.f_print_all(list_for_update)
 
+        if (note_for_update := get_only_note(list_for_update)) is None:
+            return my_list_notes
 
-        print ('Укажите номер # заметки, которую хотите обновить')
-        srch_index = int(input('Ваш выбор: '))
-
-        while srch_index not in range(1,len(list_for_update)+1):
-            print(len(list_for_update))
-            print('Заметки с таким номером не существует. '
-                  'Попробуйте еще раз')
-            srch_index = int(input('Ваш выбор: '))
-
-        for i,n in enumerate(list_for_update,start=1):
-            if srch_index == i:
-                my_list_notes.remove(n)
-                my_list_notes.append(d.f_update_note(n))
-                break
-
+        my_list_notes.remove(note_for_update)
+        my_list_notes.append(d.f_update_note(note_for_update))
 
         iface.f_print_all(my_list_notes)
 
@@ -74,17 +71,14 @@ def distrib_func(my_choice, list_notes_local):
     if my_choice == '4':
 
         iface.f_print_all(my_list_notes)
-
-        print(
-            '\n Укажите заголовок или имя пользователя '
-            'для поиска заметки для удаления... '
-            'Оставьте поле пустым для возврата '
-            'в главное меню')
-
-        srch_str = input('\nВаш выбор: ').lower()
-
+        search_input = get_search_input()
+        list_for_delete = d.search_note(my_list_notes, srch_str=search_input.get('s_str'),
+                                        srch_status=search_input.get('s_sts'))
+        iface.f_print_all(list_for_delete)
+        print('Укажите номер # заметки, которую хотите обновить')
+        index_del = int(input('Ваш выбор: '))
         my_list_notes = d.f_del_note(
-            my_list_notes, srch_str)
+            list_for_delete, index_del)
 
         iface.f_print_all(my_list_notes)
 
@@ -136,7 +130,7 @@ def context_menu(my_list_notes):
                 'you want to delete... '
             )
             my_list_notes = d.f_del_note(
-                my_list_notes, srch_str=del_str)
+                my_list_notes, srch_str= del_str)
             iface.f_print_all(my_list_notes)
             continue
 
@@ -201,8 +195,8 @@ def f_empty_list():
 def get_search_input():
     print(
         '\n Укажите ключевое слово для поиска заметки '
-        'для обновления... Оставьте поле пустым для возврата '
-        'в главное меню... ')
+        'для обновления... '
+        )
 
     srch_str: str = input('Ваш выбор: ').lower()
 
@@ -215,3 +209,40 @@ def get_search_input():
     d['s_str'] = srch_str
     d['s_sts'] = srch_status
     return d
+
+
+def get_only_note(my_list_notes: list):
+
+    iface.f_print_all(my_list_notes)
+    print('Укажите номер # заметки, которую хотите обновить. '
+          'Для возврата в главное меню, введите X')
+
+    if (srch_index := input('Ваш выбор: ').lower()) == 'x':
+        return None
+    else:
+        try:
+            srch_index = int(srch_index)
+        except ValueError:
+            pass
+    while srch_index not in range(1, len(my_list_notes) + 1):
+        print('Заметки с таким номером не существует. '
+              'Попробуйте еще раз')
+        try:
+            srch_index = int(input('Ваш выбор: '))
+        except ValueError:
+            pass
+
+    for i, n in enumerate(my_list_notes, start=1):
+        if srch_index == i:
+            return n
+
+def filter_list_input(my_list_notes):
+
+    while len(
+            list_for_update := d.apply_filter_to_list(my_list_notes, get_search_input())
+    ) == 0:
+        if input('Для возврата введите X. '
+                 'Для продолжения нажмите Enter... ').lower() == 'x':
+            return my_list_notes
+
+    return list_for_update

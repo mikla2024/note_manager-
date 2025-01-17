@@ -6,7 +6,7 @@ import interface as iface
 import data
 
 
-def f_add_new_note(my_list_notes, my_note=None, upd_index=None):
+def f_add_new_note(my_list_notes, my_note=None, upd_field=None):
 
     if my_note is None:
         my_note = {
@@ -25,9 +25,9 @@ def f_add_new_note(my_list_notes, my_note=None, upd_index=None):
         'Даты вводить в формате ДД.ММ.ГГГГ'
     )
 
-    if upd_index is not None:
+    if upd_field is not None:
         upd_note = {
-            k: v for k, v in my_note.items() if k == upd_index}
+            k: v for k, v in my_note.items() if k == upd_field}
     else:
         upd_note = {
             k: v for k, v in my_note.items()
@@ -52,6 +52,7 @@ def f_add_new_note(my_list_notes, my_note=None, upd_index=None):
 
                 if key in ['create_date', 'issue_date']:
                     new_value = utils.f_parser_date(user_value)
+
                     if not new_value:
                         print(
                             'Неправильный формат даты, '
@@ -103,7 +104,7 @@ def f_add_new_note(my_list_notes, my_note=None, upd_index=None):
 # **************** end of add new_note ******************
 
 
-def f_del_note(my_list_notes, srch_str = None):
+def f_del_note(my_list_notes, index_del = None):
 
     i = 0  # amount of notes for delete
 
@@ -164,6 +165,7 @@ def f_update_note(my_note:dict):
             'полей. Для возврата введите "X"')
         # choosing the key for update
         ans = input('Ваш выбор: ').lower()
+
         if ans == '':
 
             my_note = f_add_new_note([], my_note)
@@ -195,7 +197,10 @@ def f_update_note(my_note:dict):
 # ******************* end of update note ******************
 
 
-def search_note(my_list_notes, srch_str, srch_status):
+def apply_filter_to_list(my_list_notes, search_keys: dict):
+
+    srch_str = search_keys.get('s_str')
+    srch_status = search_keys.get('s_sts')
 
     if srch_str == '':
         list_notes_found = [a for a in my_list_notes]
@@ -214,8 +219,7 @@ def search_note(my_list_notes, srch_str, srch_status):
 
     if len(list_notes_found) == 0:
         print('Ничего не нашлось. Попробуйте изменить поиск')
-        input('Для продолжения нажмите Enter... ')
-        return my_list_notes
+        return []
 
     #iface.f_print_all(list_notes_found)
     return list_notes_found
