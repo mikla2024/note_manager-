@@ -118,7 +118,7 @@ def distrib_func(my_choice, list_notes_local):
     return list_notes_local
 # ****************** end distrib func *****************
 
-# context menu *************************************
+# ****************** context menu ******************
 def context_menu(my_list_notes):
     while True:
 
