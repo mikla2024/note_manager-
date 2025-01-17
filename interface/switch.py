@@ -54,7 +54,7 @@ def distrib_func(my_choice, list_notes_local):
 
         iface.f_print_all(list_for_update)
 
-        if (note_for_update := get_only_note(list_for_update)) is None:
+        if (note_for_update := get_only_note(list_for_update,'обновить')) is None:
             return my_list_notes
 
         my_list_notes.remove(note_for_update)
@@ -71,14 +71,22 @@ def distrib_func(my_choice, list_notes_local):
     if my_choice == '4':
 
         iface.f_print_all(my_list_notes)
-        search_input = get_search_input()
-        list_for_delete = d.search_note(my_list_notes, srch_str=search_input.get('s_str'),
-                                        srch_status=search_input.get('s_sts'))
+        print('Если хотите применить фильтр, введите F. '
+              'Для продолжения нажмите Enter...')
+
+        if input('Ваш выбор: ').lower() == 'f':
+            list_for_delete = filter_list_input(my_list_notes)
+
+        else:
+            list_for_delete = [a for a in my_list_notes]
+
         iface.f_print_all(list_for_delete)
-        print('Укажите номер # заметки, которую хотите обновить')
-        index_del = int(input('Ваш выбор: '))
+
+        if (note_for_delete := get_only_note(list_for_delete, 'удалить')) is None:
+            return my_list_notes
+
         my_list_notes = d.f_del_note(
-            list_for_delete, index_del)
+            list_for_delete, note_for_delete)
 
         iface.f_print_all(my_list_notes)
 
@@ -90,12 +98,7 @@ def distrib_func(my_choice, list_notes_local):
     # search
     if my_choice == '5':
 
-        srch_input = get_search_input()
-        srch_str = srch_input.get('s_str')
-        srch_status = srch_input.get('s_sts')
-
-        found_list_notes = d.search_note(
-            my_list_notes, srch_str, srch_status)
+        found_list_notes = filter_list_input(my_list_notes)
 
         if len(found_list_notes) > 0:
             iface.f_print_all(found_list_notes)
@@ -125,12 +128,9 @@ def context_menu(my_list_notes):
             '\nFor exit to main menu press X... ').lower()
 
         if choice in ['del', 'd']:
-            del_str = input(
-                '\nEnter username or title of the note '
-                'you want to delete... '
-            )
+
             my_list_notes = d.f_del_note(
-                my_list_notes, srch_str= del_str)
+                my_list_notes, get_only_note(my_list_notes,'удалить'))
             iface.f_print_all(my_list_notes)
             continue
 
@@ -211,10 +211,10 @@ def get_search_input():
     return d
 
 
-def get_only_note(my_list_notes: list):
+def get_only_note(my_list_notes: list, action_str: str):
 
     iface.f_print_all(my_list_notes)
-    print('Укажите номер # заметки, которую хотите обновить. '
+    print(f'Укажите номер # заметки, которую хотите {action_str}. '
           'Для возврата в главное меню, введите X')
 
     if (srch_index := input('Ваш выбор: ').lower()) == 'x':
