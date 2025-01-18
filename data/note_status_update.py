@@ -4,10 +4,10 @@ import utils
 def get_status_input():
     while True:
         print(
-        '\nChoose new status of your note then press Enter...:'
-        '\n1. In progress'
-        '\n2. Postponed'
-        '\n3. Done'
+        '\nВыберете один из предложенных статусов и нажмите Enter...:'
+        '\n1. Важно'
+        '\n2. На исполнении'
+        '\n3. Выполнено'
                 )
         user_input = input('Ваш выбор: ')
         try:

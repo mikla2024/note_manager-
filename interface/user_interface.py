@@ -171,7 +171,8 @@ def context_menu(my_list_notes):
 
         elif choice in ['add', 'a']:
             my_list_notes.append(
-                d.f_add_new_note(my_list_notes))
+                d.f_add_new_note())
+
             iface.f_print_all(my_list_notes)
             continue
 

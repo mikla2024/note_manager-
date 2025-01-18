@@ -14,7 +14,7 @@ def f_add_new_note(my_note=None, upd_field=None):
             'note_id': '',
             'username': 'mikla',
             'content': '',
-            'status': 'in progress',
+            'status': 'На исполнении',
             'create_date': dt.strftime(dt.today(), '%d.%m.%Y'),
             'issue_date': dt.strftime((dt.today() + timedelta(days=7)), '%d.%m.%Y'),
             'titles': []
