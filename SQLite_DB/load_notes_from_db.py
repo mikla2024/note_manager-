@@ -3,9 +3,8 @@ import interface
 def load_notes_from_db(db_path: str):
     connection = sqlite3.connect('note_manager.db')
     crsr = connection.cursor()
-    sql_str = str(
-        'SELECT * FROM notes'
-    )
+    sql_str = 'SELECT * FROM notes'
+
     crsr.execute(sql_str)
     rows = crsr.fetchall()
 
