@@ -251,16 +251,21 @@ def get_search_input():
 
     srch_status: str = input('Ваш выбор: ').lower()
 
-    # print(
-    #     '\nВведите дату (дд.мм.гггг) для поиска '
-    #     '(или оставьте пустым): ')
-    #
-    # srch_date: str = input('Ваш выбор: ')
+    while True:
+        print(
+            '\nВведите дату (дд.мм.гггг) для поиска '
+            '(или оставьте пустым): ')
+
+        try:
+            srch_date: str = utils.f_parser_date(input('Ваш выбор: '))
+            break
+        except ValueError:
+            utils.handle_error('invalid_input')
 
     d = dict()
     d['s_str'] = srch_str
     d['s_sts'] = srch_status
-    # d['s_dt'] = srch_date
+    d['s_dt'] = srch_date
     return d
 
 
