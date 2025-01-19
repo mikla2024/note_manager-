@@ -6,8 +6,8 @@ import utils
 if __name__ == '__main__':
 
     print(
-        'Hi there! Welcome to Note Manager! '
-        'For correct work you need connection to internet! '
+        '\nЗдравствуйте! Добро пожаловать в программу управления заметками! '
+        '\nДля нормальной работы необходимо подключение к интернет! '
         )
 
     input('\nTo start press Enter...')
