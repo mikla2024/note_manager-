@@ -31,11 +31,11 @@ def f_print_note_data(my_note, index_):
 
         # additional format of dates
         if key == 'created_date' or key == 'issue_date':
-            print(f'***{key.capitalize()}: '
+            print(f'*** {key.capitalize()}: '
             f'{dt.strptime(value,"%d.%m.%Y").strftime("%d %b")}')
             continue
         elif key == 'titles':
-            str_value = f'***{key.capitalize()}: {", ".join(value)}'
+            str_value = f'*** {key.capitalize()}: {", ".join(value)}'
             print(
                 str_format(str_value, text_color= status_colors.get(my_note['status'],'blue'))
             )
@@ -44,7 +44,7 @@ def f_print_note_data(my_note, index_):
         elif key == 'note_id':
             continue
 
-        print(f'***{key.capitalize()}: {value}')
+        print(f'*** {key.capitalize()}: {value}')
 
     try:
         deadline_delta_days = utils.f_deadline_check(my_note)

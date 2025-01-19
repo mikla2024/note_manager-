@@ -178,7 +178,7 @@ def apply_filter_to_list(my_list_notes, search_keys: dict):
 
     if srch_dt:
         list_notes_found = [a for a in list_notes_found if
-                            a['issue-date'] == srch_dt ]
+                            a.get('issue_date') == srch_dt ]
 
     if not list_notes_found:
         utils.handle_error('empty_list')
