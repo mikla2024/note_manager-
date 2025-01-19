@@ -7,7 +7,7 @@ import interface as iface
 import data
 
 
-def f_add_new_note(my_note=None, upd_field=None):
+def f_add_new_note(my_note: dict = None, upd_field=None):
 
     if my_note is None:
         my_note = {

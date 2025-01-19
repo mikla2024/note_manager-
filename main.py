@@ -10,7 +10,7 @@ if __name__ == '__main__':
         '\nДля нормальной работы необходимо подключение к интернет! '
         )
 
-    input('\nTo start press Enter...')
+    input('\nДля продолжения нажмите Enter...')
 
     if (my_list_notes := d.load_from_json_git()) is None:
         while True:

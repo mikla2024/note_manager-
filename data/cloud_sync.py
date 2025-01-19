@@ -96,7 +96,7 @@ def save_to_json_git(json_content,filename='data.json'):
         if r.status_code == 200:
             print('\nall notes saved successfully')
             input('press Enter to continue...')
-            json_content.append({'sha': r.json().get('content').get('sha')})
+            #json_content.append({'sha': r.json().get('content').get('sha')})
             CACHE_LIST = [a for a in json_content]
             return json_content
 
