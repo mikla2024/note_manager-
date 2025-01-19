@@ -46,17 +46,22 @@ def f_print_note_data(my_note, index_):
 
         print(f'***{key.capitalize()}: {value}')
 
-    deadline_delta_days = utils.f_deadline_check(my_note)
+    try:
+        deadline_delta_days = utils.f_deadline_check(my_note)
+        if deadline_delta_days > 0:
+            print(
+                f'\nYou missed your deadline '
+                f'{deadline_delta_days} days ago')
+        elif deadline_delta_days < 0:
+            print(f'\nYour deadline is in '
+                  f'{str(deadline_delta_days)[1:]} days')
+        elif deadline_delta_days == 0:
+            print('\nYour deadline is TODAY!!!')
 
-    if deadline_delta_days > 0:
-        print(
-            f'\nYou missed your deadline '
-            f'{deadline_delta_days} days ago')
-    elif deadline_delta_days < 0:
-        print(f'\nYour deadline is in '
-        f'{str(deadline_delta_days)[1:]} days')
-    elif deadline_delta_days == 0:
-        print('\nYour deadline is TODAY!!!')
+    except TypeError:
+        pass
+
+
     print('*' * 30)
 
 def str_format (str_text, text_color, style_= None):

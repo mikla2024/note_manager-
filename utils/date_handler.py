@@ -20,6 +20,9 @@ def f_parser_date(date_str:str):
 
 # check how many days to deadline
 def f_deadline_check(note):
-    day_delta = dt.today() - \
-    dt.strptime(note.get('issue_date'),'%d.%m.%Y')
-    return day_delta.days
+    try:
+        day_delta = dt.today() - \
+        dt.strptime(note.get('issue_date'),'%d.%m.%Y')
+        return day_delta.days
+    except:
+        raise TypeError
