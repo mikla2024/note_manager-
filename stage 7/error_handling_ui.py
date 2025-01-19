@@ -13,3 +13,8 @@ def handle_error(err_type: str):
 
 if __name__ == '__main__':
     handle_error('empty_list')
+    handle_error('invalid_input')
+    handle_error('note_not_found')
+    handle_error('unknown')
+
+    

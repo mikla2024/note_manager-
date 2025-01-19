@@ -104,6 +104,8 @@ def f_add_new_note(my_note=None, upd_field=None):
 def f_del_note(my_list_notes, note_for_delete):
     try:
         my_list_notes.remove(note_for_delete)
+        print('Заметка успешно удалена')
+        input('Для продолжения нажмите Enter... ')
         return my_list_notes
 
     except:
