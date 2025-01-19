@@ -162,21 +162,23 @@ def apply_filter_to_list(my_list_notes, search_keys: dict):
     srch_str = search_keys.get('s_str')
     srch_status = search_keys.get('s_sts')
     srch_dt = search_keys.get('s_dt')
+    list_notes_found = [a for a in my_list_notes]
 
-    if not srch_str:
-        list_notes_found = [a for a in my_list_notes]
-
-
-    else:
+    if srch_str:
         list_notes_found = [a for a in my_list_notes if srch_str in
-                           [b.lower() for b in a.get('titles')]
-                           or srch_str in
-                           [c.lower() for c in a.values() if type(c) != list]
-                           ]
+                            [b.lower() for b in a.get('titles')]
+                            or srch_str in
+                            [c.lower() for c in a.values() if type(c) != list]
+                            ]
+
 
     if srch_status:
         list_notes_found = [a for a in list_notes_found if
-                           srch_status == str(a.get('status')).lower()]
+                           str(a.get('status')).lower() == srch_status]
+
+    if srch_dt:
+        list_notes_found = [a for a in list_notes_found if
+                            a['issue-date'] == srch_dt ]
 
     if not list_notes_found:
         utils.handle_error('empty_list')

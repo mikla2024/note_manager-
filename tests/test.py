@@ -41,7 +41,8 @@ class TestNoteManager(unittest.TestCase):
         test_list=[my_test_note,my_test_note2]
         test_search_keys: dict = {
             's_str':'test2',
-            's_sts':''
+            's_sts':'',
+            's_dt':''
         }
         found_note = d.apply_filter_to_list(test_list, test_search_keys)
         self.assertEqual(found_note, [my_test_note2])
