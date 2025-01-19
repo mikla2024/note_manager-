@@ -77,7 +77,7 @@ def distrib_func(my_choice, list_notes_local):
               'Для продолжения нажмите Enter...')
 
         if input('Ваш выбор: ').lower() == 'f':
-            list_for_update = filter_list_input(my_list_notes)
+            list_for_update = filter_notes(my_list_notes)
 
         else:
             list_for_update = [a for a in my_list_notes]
@@ -105,7 +105,7 @@ def distrib_func(my_choice, list_notes_local):
               'Для продолжения нажмите Enter...')
 
         if input('Ваш выбор: ').lower() == 'f':
-            list_for_delete = filter_list_input(my_list_notes)
+            list_for_delete = filter_notes(my_list_notes)
 
         else:
             list_for_delete = [a for a in my_list_notes]
@@ -128,7 +128,7 @@ def distrib_func(my_choice, list_notes_local):
     # search
     if my_choice == '5':
 
-        found_list_notes = filter_list_input(my_list_notes)
+        found_list_notes = filter_notes(my_list_notes)
 
         if len(found_list_notes) > 0:
             iface.f_print_all(found_list_notes)
@@ -240,7 +240,7 @@ def f_empty_list():
 def get_search_input():
     print(
         '\n Укажите ключевое слово для поиска заметки '
-        'для обновления... '
+        'для обновления (или оставьте пустым)... '
         )
 
     srch_str: str = input('Ваш выбор: ').lower()
@@ -250,9 +250,17 @@ def get_search_input():
         '(или оставьте пустым): ')
 
     srch_status: str = input('Ваш выбор: ').lower()
+
+    print(
+        '\nВведите дату (дд.мм.гггг) для поиска '
+        '(или оставьте пустым): ')
+
+    srch_date: str = input('Ваш выбор: ')
+
     d = dict()
     d['s_str'] = srch_str
     d['s_sts'] = srch_status
+    d['s_dt'] = srch_date
     return d
 
 
@@ -274,6 +282,7 @@ def get_only_note(my_list_notes: list, action_str: str):
               'Попробуйте еще раз')
         try:
             srch_index = int(input('Ваш выбор: '))
+
         except ValueError:
             pass
 
@@ -281,11 +290,11 @@ def get_only_note(my_list_notes: list, action_str: str):
         if srch_index == i:
             return n
 
-def filter_list_input(my_list_notes):
+def filter_notes(my_list_notes):
 
-    while len(
+    while not (
             list_for_update := d.apply_filter_to_list(my_list_notes, get_search_input())
-    ) == 0:
+    ):
         if input('Для возврата введите X. '
                  'Для продолжения нажмите Enter... ').lower() == 'x':
             return my_list_notes

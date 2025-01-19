@@ -161,8 +161,9 @@ def apply_filter_to_list(my_list_notes, search_keys: dict):
 
     srch_str = search_keys.get('s_str')
     srch_status = search_keys.get('s_sts')
+    srch_dt = search_keys.get('s_dt')
 
-    if srch_str == '':
+    if not srch_str:
         list_notes_found = [a for a in my_list_notes]
 
 
@@ -173,7 +174,7 @@ def apply_filter_to_list(my_list_notes, search_keys: dict):
                            [c.lower() for c in a.values() if type(c) != list]
                            ]
 
-    if srch_status != '':
+    if srch_status:
         list_notes_found = [a for a in list_notes_found if
                            srch_status == str(a.get('status')).lower()]
 
