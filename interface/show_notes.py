@@ -14,12 +14,17 @@ def f_print_all(my_list_notes: list):
 def f_print_note_data(my_note, index_):
     print(f'\nNote #{index_}:')
 
-    if my_note['status'] == 'Важно':
-        text_color = 'red'
-    elif my_note['status'] == 'Выполнено':
-        text_color = 'green'
-    else:
-        text_color = 'blue'
+    status_colors = {
+        'Важно': 'red',
+        'Выполнено': 'green',
+    }
+
+    # if my_note['status'] == 'Важно':
+    #     text_color = 'red'
+    # elif my_note['status'] == 'Выполнено':
+    #     text_color = 'green'
+    # else:
+    #     text_color = 'blue'
 
     # output all values from dictionary
     for key, value in my_note.items():
@@ -31,7 +36,9 @@ def f_print_note_data(my_note, index_):
             continue
         elif key == 'titles':
             str_value = f'***{key.capitalize()}: {", ".join(value)}'
-            print(str_format(str_value, text_color= text_color))
+            print(
+                str_format(str_value, text_color= status_colors.get(my_note['status'],'blue'))
+            )
             continue
 
         elif key == 'note_id':

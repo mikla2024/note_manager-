@@ -12,6 +12,7 @@ def get_status_input():
         user_input = input('Ваш выбор: ')
         try:
             return utils.validate_user_status(user_input)
+
         except:
             print('Статус должен соответствовать одному из значений')
 

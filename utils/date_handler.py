@@ -4,15 +4,15 @@ from datetime import datetime as dt, timedelta
 def f_parser_date(date_str:str):
 
     while True:
-        if date_str == '':
+        if not date_str:
             parsed_issue_date = dt.today() + timedelta(days=7)
             break
         else:
             try:
                 parsed_issue_date = dt.strptime(date_str, '%d.%m.%Y')
                 break
-            except ValueError:
-                return False
+            except:
+                raise ValueError
     return parsed_issue_date.strftime('%d.%m.%Y')
 
 #****************** end parser date ***********************

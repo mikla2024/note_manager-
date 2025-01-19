@@ -1,14 +1,13 @@
 def validate_user_status(value):
     try:
         if value == '1':
-            return 'In progress'
+            return 'Важно'
         elif value == '2':
-            return 'Postponed'
+            return 'На исполнении'
         elif value == '3':
-            return 'Done'
+            return 'Выполнено'
         else:
-            raise Exception()
+            raise Exception
     except:
-        raise ValueError('Выберите статус из предложенных вариантов')
-
+        raise ValueError
 

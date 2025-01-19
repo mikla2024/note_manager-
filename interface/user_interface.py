@@ -3,6 +3,7 @@ import sys
 from copy import deepcopy
 import data as d
 import interface as iface
+import utils
 
 def main_menu(my_list_notes=None):
 
@@ -12,7 +13,7 @@ def main_menu(my_list_notes=None):
     while True:
         print('''
 
-Меню действий:
+*** Меню управления заметками ***:
 
 1. Создать новую заметку
 
@@ -150,58 +151,63 @@ def distrib_func(my_choice, list_notes_local):
 # ****************** context menu ******************
 def context_menu(my_list_notes):
     while True:
-
-        choice = input(
+        try:
+            choice = input(
             '\nДля удаления заметок '
             'введите (D)el, для добавления новой заметки - (A)dd '
             '\nДля выхода в главное меню введите X... ').lower()
 
-        if choice in ['del', 'd']:
+            if choice in ['del', 'd']:
 
-            if my_note := (get_only_note(my_list_notes,'удалить')) is None:
+                if my_note := (get_only_note(my_list_notes,'удалить')) is None:
+                    return my_list_notes
+
+
+
+                my_list_notes = d.f_del_note(
+                    my_list_notes, my_note)
+
+                iface.f_print_all(my_list_notes)
+                continue
+
+            elif choice in ['add', 'a']:
+                my_list_notes.append(
+                    d.f_add_new_note())
+
+                iface.f_print_all(my_list_notes)
+                continue
+
+            elif choice in ['x', 'exit']:
+
                 return my_list_notes
 
+            else:
+                raise ValueError
 
-
-            my_list_notes = d.f_del_note(
-                my_list_notes, my_note)
-
-            iface.f_print_all(my_list_notes)
-            continue
-
-        elif choice in ['add', 'a']:
-            my_list_notes.append(
-                d.f_add_new_note())
-
-            iface.f_print_all(my_list_notes)
-            continue
-
-        elif choice in ['x', 'exit']:
-
-            return my_list_notes
-
-        else:
-            print('\nНеизвестная команда. Попробуйте еще раз...')
-            continue
+        except ValueError:
+            utils.handle_error('invalid_input')
 #   ******************** end of context menu *************
 
 # save change dialog
 def save_chg_cloud(my_list_note):
+
     while True:
+        try:
 
-        ans = input('Хотите синхронизировать изменения с облаком'
-                    '---(y/n)...').lower()
+            ans = input('Хотите синхронизировать изменения с облаком'
+                        '---(y/n)...').lower()
 
-        if ans.lower() in ['y','yes']:
-            new_list: list = d.save_to_json_git(my_list_note)
-            return new_list
+            if ans.lower() in ['y','yes']:
+                new_list: list = d.save_to_json_git(my_list_note)
+                return new_list
 
-        elif ans in ['n','no']:
-            return my_list_note
-        else:
-            print('\nНеизвестная команда, попробуйте еще раз...')
-            continue  # saving notes dialog
-    return False
+            elif ans in ['n','no']:
+                return my_list_note
+
+            else:
+                raise ValueError
+        except ValueError:
+            utils.handle_error('invalid_input')
 
 # ******************* end of save_chd_cloud *************
 
@@ -209,22 +215,25 @@ def f_empty_list():
     my_list_notes: list = []
     print ('Сохраненные заметки не найдены...')
     while True:
-        ans = input(
-            '\nЧтобы добавить новую заметку введите (A)dd '
-            'Для выхода - e(X)it... ').lower()
+        try:
+            ans = input(
+                '\nЧтобы добавить новую заметку введите (A)dd '
+                'Для выхода - e(X)it... ').lower()
 
-        if ans.lower() in ['a', 'add']:
-            my_list_notes.append(d.f_add_new_note(my_list_notes))
-            iface.f_print_all(my_list_notes)
+            if ans.lower() in ['a', 'add']:
+                my_list_notes.append(d.f_add_new_note(my_list_notes))
+                iface.f_print_all(my_list_notes)
 
-        elif ans.lower() in ['x', 'exit']:
-            if len(my_list_notes) > 0:
-                iface.save_chg_cloud(my_list_notes)
-            iface.main_menu(my_list_notes)
-            # return my_list_notes
-        else:
-            print('Command is unknown')
-            continue
+            elif ans.lower() in ['x', 'exit']:
+                if len(my_list_notes) > 0:
+                    iface.save_chg_cloud(my_list_notes)
+                iface.main_menu(my_list_notes)
+                # return my_list_notes
+            else:
+                raise ValueError
+
+        except ValueError:
+            utils.handle_error('invalid_input')
 # ***************** end of empty list *********************
 
 

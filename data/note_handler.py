@@ -52,17 +52,16 @@ def f_add_new_note(my_note=None, upd_field=None):
                     )
 
                 if key in ['create_date', 'issue_date']:
-                    new_value = utils.f_parser_date(user_value)
+                    try:
+                        new_value = utils.f_parser_date(user_value)
 
-                    if not new_value:
-                        print(
-                            'Неправильный формат даты, '
-                            'попробуйте еще раз...'
-                        )
+                    except ValueError:
+                        utils.handle_error('invalid_input')
                         continue
 
-                if user_value == '':
+                if not user_value:
                     new_value = value
+
                 else:
                     new_value = user_value
 
@@ -78,16 +77,17 @@ def f_add_new_note(my_note=None, upd_field=None):
                     f'Для завершения оставьте поле пустым {new_value}: '
                 )
 
-                if user_value != '' and \
+                if user_value and \
                         user_value not in new_value:
 
                     new_value.append(user_value)
 
-                elif user_value == '' and len(new_value) > 0:
+                elif not user_value and new_value:
                     break
 
                 else:
-                    print('\n Item should be unique')
+                    print('\n Значение должно быть уникальным. '
+                          '(Хотя бы одно значение должно быть введено) ')
                     continue
 
         upd_note[key] = new_value
@@ -147,7 +147,7 @@ def f_update_note(my_note:dict):
             input('для продолжения нажмите Enter ')
             continue
 
-    print('\nНичего не найдено. Поробуйте изменить поиск')
+    utils.handle_error('note_not_found')
     input('\nДля продолжения нажмите Enter... ')
 
     return my_note
@@ -175,8 +175,8 @@ def apply_filter_to_list(my_list_notes, search_keys: dict):
         list_notes_found = [a for a in list_notes_found if
                            srch_status == str(a.get('status')).lower()]
 
-    if len(list_notes_found) == 0:
-        print('Ничего не нашлось. Попробуйте изменить поиск')
+    if not list_notes_found:
+        utils.handle_error('empty_list')
         return []
 
     #iface.f_print_all(list_notes_found)
