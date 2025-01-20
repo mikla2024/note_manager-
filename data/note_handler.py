@@ -97,7 +97,7 @@ def f_add_new_note(my_note: dict = None, upd_field=None):
     for k, v in my_note.items():
         my_note[k] = upd_note.get(k, v)
 
-    return my_note
+    # return my_note
 # **************** end of add new_note ******************
 
 
@@ -106,7 +106,6 @@ def f_del_note(my_list_notes, note_for_delete):
         my_list_notes.remove(note_for_delete)
         print('Заметка успешно удалена')
         input('Для продолжения нажмите Enter... ')
-        return my_list_notes
 
     except:
         print ('f_del_note is fail')
@@ -129,28 +128,27 @@ def f_update_note(my_note:dict):
 
         if ans == '':
 
-            my_note = f_add_new_note(my_note)
-            return my_note
+            # my_note = (
+            f_add_new_note(my_note)
+            #return my_note
 
         elif ans == 'x':
-            return my_note
+            break
 
 
 
         elif ans in [a for a in my_note.keys()]:
 
-            my_note = f_add_new_note(my_note, ans)
+            f_add_new_note(my_note, ans)
 
-
-            return my_note
         # key is not found
         else:
             print('\nполе с таким названием не найдено...')
             input('для продолжения нажмите Enter ')
             continue
 
-    utils.handle_error('note_not_found')
-    input('\nДля продолжения нажмите Enter... ')
+    # utils.handle_error('note_not_found')
+    # input('\nДля продолжения нажмите Enter... ')
 
     return my_note
 
