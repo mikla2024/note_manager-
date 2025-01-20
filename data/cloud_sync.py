@@ -98,26 +98,20 @@ def save_to_json_git(json_content,filename='data.json'):
             input('press Enter to continue...')
             #json_content.append({'sha': r.json().get('content').get('sha')})
             CACHE_LIST = [a for a in json_content]
-            return json_content
 
         elif r.status_code == 201:
             print('new file is created')
             input('press enter... ')
-            json_content.append({'sha': r.json().get('content').get('sha')})
+            # json_content.append({'sha': r.json().get('content').get('sha')})
             CACHE_LIST = [a for a in json_content]
-            return json_content
+
         else:
             print(f'something went wrong, code = {r.status_code}')
             input('press Enter....')
             CACHE_LIST = [a for a in json_content]
-            return json_content
 
 
     except requests.RequestException as e:
             #print(e)
         print ('\nsavings is fail')
         input('Press any key...')
-        return json_content
-
-# test_list = [{'username':'test3'},{'content':'test'}]
-# save_to_json_git(test_list,'raw_test.json')

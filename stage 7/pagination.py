@@ -14,7 +14,7 @@ def display_pages(my_list_notes, page_nr, notes_per_page=2):
 
 def paginate_notes (my_list_notes):
     page_nr = 1
-    notes_per_page = 2
+    notes_per_page = 3
     total_pages = (len(my_list_notes) + notes_per_page - 1) // notes_per_page
 
     while True:

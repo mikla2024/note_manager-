@@ -29,19 +29,19 @@ def main_menu(my_list_notes=None):
 
 ''')
 
-        my_list_notes = iface.distrib_func(
-        input('Ваш выбор: '), my_list_notes
+        my_list_notes = (
+        iface.distrib_func(input('Ваш выбор: '), my_list_notes)
         )
 
         continue
 
 
-def distrib_func(my_choice, list_notes_local):
+def distrib_func(my_choice, my_list_notes):
 
-    my_list_notes = deepcopy(list_notes_local)
+    list_notes_local = [a for a in my_list_notes]
 
     # show all notes
-    if my_list_notes is None or len(my_list_notes) == 0:
+    if not my_list_notes:
         iface.f_empty_list()
 
     # show all
@@ -49,12 +49,16 @@ def distrib_func(my_choice, list_notes_local):
 
         iface.f_print_all(my_list_notes)
 
-        my_list_notes = context_menu(my_list_notes)
+        context_menu(my_list_notes)
 
-        if my_list_notes != list_notes_local:
-            list_notes_local = save_chg_cloud(my_list_notes)
+        if my_list_notes != list_notes_local and \
+                save_chg_cloud(my_list_notes):
+                return my_list_notes
 
         return list_notes_local
+
+
+        # return
 
     # create new
     if my_choice == '1':
@@ -63,8 +67,9 @@ def distrib_func(my_choice, list_notes_local):
         my_list_notes.append(
             d.f_add_new_note())
 
-        if my_list_notes != list_notes_local:
-            list_notes_local = save_chg_cloud(my_list_notes)
+        if my_list_notes != list_notes_local and \
+                save_chg_cloud(my_list_notes):
+            return my_list_notes
 
         return list_notes_local
 
@@ -84,16 +89,13 @@ def distrib_func(my_choice, list_notes_local):
 
         iface.f_print_all(list_for_update)
 
-        if (note_for_update := get_only_note(list_for_update,'обновить')) is None:
+        if (note_for_update := get_only_note(list_for_update,'обновить')) is not None:
+            my_list_notes.remove(note_for_update)
+            my_list_notes.append(d.f_update_note(note_for_update))
+
+        if my_list_notes != list_notes_local and \
+                save_chg_cloud(my_list_notes):
             return my_list_notes
-
-        my_list_notes.remove(note_for_update)
-        my_list_notes.append(d.f_update_note(note_for_update))
-
-        iface.f_print_all(my_list_notes)
-
-        if my_list_notes != list_notes_local:
-            list_notes_local = save_chg_cloud(my_list_notes)
 
         return list_notes_local
 
@@ -120,8 +122,9 @@ def distrib_func(my_choice, list_notes_local):
 
         iface.f_print_all(my_list_notes)
 
-        if my_list_notes != list_notes_local:
-            list_notes_local = save_chg_cloud(my_list_notes)
+        if my_list_notes != list_notes_local and \
+                save_chg_cloud(my_list_notes):
+            return my_list_notes
 
         return list_notes_local
 
@@ -132,12 +135,15 @@ def distrib_func(my_choice, list_notes_local):
 
         if found_list_notes:
             iface.f_print_all(found_list_notes)
-            my_list_notes = context_menu(my_list_notes)
+            context_menu(my_list_notes)
         else:
             utils.handle_error('empty_list')
-        if my_list_notes != list_notes_local:
-            list_notes_local = save_chg_cloud(my_list_notes)
 
+        if my_list_notes != list_notes_local and \
+                save_chg_cloud(my_list_notes):
+            return my_list_notes
+
+        return list_notes_local
     if my_choice == '6':
         sys.exit(0)
 
@@ -156,12 +162,12 @@ def context_menu(my_list_notes):
             if choice in ['del', 'd']:
 
                 if (my_note := get_only_note(my_list_notes,'удалить')) is None:
-                    return my_list_notes
+                    return # my_list_notes
 
 
 
-                my_list_notes = d.f_del_note(
-                    my_list_notes, my_note)
+                # my_list_notes =
+                d.f_del_note(my_list_notes, my_note)
 
                 iface.f_print_all(my_list_notes)
                 continue
@@ -175,7 +181,7 @@ def context_menu(my_list_notes):
 
             elif choice in ['x', 'exit']:
 
-                return my_list_notes
+                return # my_list_notes
 
             else:
                 raise ValueError
@@ -190,15 +196,15 @@ def save_chg_cloud(my_list_note):
     while True:
         try:
 
-            ans = input('Хотите синхронизировать изменения с облаком'
+            ans = input('Хотите сохранить изменения'
                         '---(y/n)... ').lower()
 
             if ans.lower() in ['y','yes']:
-                new_list: list = d.save_to_json_git(my_list_note)
-                return new_list
+                d.save_to_json_git(my_list_note)
+                return True
 
             elif ans in ['n','no']:
-                return my_list_note
+                return False
 
             else:
                 raise ValueError

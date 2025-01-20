@@ -25,6 +25,5 @@ def f_status_update(my_note, new_status):
     print(f'\nStatus is updated. New status is: '
     f'{my_note.get("status").upper()}')
     input("\nTo continue press Enter... ")
-    return my_note
 
 # ****************** end status update *************

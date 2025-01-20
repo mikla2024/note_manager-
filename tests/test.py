@@ -38,7 +38,7 @@ class TestNoteManager(unittest.TestCase):
             'status': 'done'
         }
 
-        test_list=[my_test_note,my_test_note2]
+        test_list = [my_test_note, my_test_note2]
         test_search_keys: dict = {
             's_str':'test2',
             's_sts':'',
