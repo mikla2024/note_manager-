@@ -65,7 +65,8 @@ class TestNoteManager(unittest.TestCase):
         }
 
         test_list = [my_test_note, my_test_note2]
-        self.assertEqual(d.f_del_note(test_list,my_test_note), [my_test_note2])
+        d.f_del_note(test_list, my_test_note)
+        self.assertEqual(test_list, [my_test_note2])
 
 if __name__ == '__main__':
     unittest.main()
