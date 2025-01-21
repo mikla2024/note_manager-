@@ -38,7 +38,7 @@ def main_menu(my_list_notes=None):
 
 def distrib_func(my_choice, my_list_notes):
 
-    list_notes_local = [a for a in my_list_notes]
+    list_notes_local = deepcopy(my_list_notes)
 
     # show all notes
     if not my_list_notes:
@@ -90,8 +90,7 @@ def distrib_func(my_choice, my_list_notes):
         iface.f_print_all(list_for_update)
 
         if (note_for_update := get_only_note(list_for_update,'обновить')) is not None:
-            my_list_notes.remove(note_for_update)
-            my_list_notes.append(d.f_update_note(note_for_update))
+            d.f_update_note(note_for_update)
 
         if my_list_notes != list_notes_local and \
                 save_chg_cloud(my_list_notes):
@@ -114,11 +113,8 @@ def distrib_func(my_choice, my_list_notes):
 
         iface.f_print_all(list_for_delete)
 
-        if (note_for_delete := get_only_note(list_for_delete, 'удалить')) is None:
-            return my_list_notes
-
-        my_list_notes = d.f_del_note(
-            list_for_delete, note_for_delete)
+        if (note_for_delete := get_only_note(list_for_delete, 'удалить')) is not None:
+            d.f_del_note(my_list_notes, note_for_delete)
 
         iface.f_print_all(my_list_notes)
 
@@ -144,6 +140,7 @@ def distrib_func(my_choice, my_list_notes):
             return my_list_notes
 
         return list_notes_local
+
     if my_choice == '6':
         sys.exit(0)
 
@@ -161,21 +158,13 @@ def context_menu(my_list_notes):
 
             if choice in ['del', 'd']:
 
-                if (my_note := get_only_note(my_list_notes,'удалить')) is None:
-                    return # my_list_notes
-
-
-
-                # my_list_notes =
-                d.f_del_note(my_list_notes, my_note)
-
-                iface.f_print_all(my_list_notes)
-                continue
+                if (my_note := get_only_note(my_list_notes,'удалить')) is not None:
+                    d.f_del_note(my_list_notes, my_note)
+                    iface.f_print_all(my_list_notes)
+                    continue
 
             elif choice in ['new', 'n']:
-                my_list_notes.append(
-                    d.f_add_new_note())
-
+                my_list_notes.append(d.f_add_new_note())
                 iface.f_print_all(my_list_notes)
                 continue
 

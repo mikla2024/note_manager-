@@ -91,7 +91,7 @@ def f_add_new_note(my_note: dict = None, upd_field=None):
                     continue
 
         upd_note[key] = new_value
-    # generator of random value
+    # generator of unique value
     upd_note['note_id'] = str(uuid.uuid4())
 
     for k, v in my_note.items():
@@ -127,30 +127,19 @@ def f_update_note(my_note:dict):
         ans = input('Ваш выбор: ').lower()
 
         if ans == '':
-
-            # my_note = (
             f_add_new_note(my_note)
-            #return my_note
 
         elif ans == 'x':
             break
 
-
-
-        elif ans in [a for a in my_note.keys()]:
+        elif ans in my_note.keys():
 
             f_add_new_note(my_note, ans)
 
         # key is not found
         else:
             print('\nполе с таким названием не найдено...')
-            input('для продолжения нажмите Enter ')
             continue
-
-    # utils.handle_error('note_not_found')
-    # input('\nДля продолжения нажмите Enter... ')
-
-    return my_note
 
 # ******************* end of update note ******************
 
