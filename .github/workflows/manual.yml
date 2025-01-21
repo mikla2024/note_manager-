@@ -8,3 +8,5 @@ jobs:
     runs-on: ubuntu-latest
     env:
       USER_TOKEN: ${{ secrets.MIKLA_GRAINED_TOKEN }}
+    run: |
+      nbdev_test_nbs
