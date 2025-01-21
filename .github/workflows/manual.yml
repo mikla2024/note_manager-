@@ -1,0 +1,33 @@
+name: Workflow with secrets
+
+on:
+  workflow_dispatch:
+
+jobs:
+  show-secrets:
+    runs-on: ubuntu-latest
+    env:
+      USER_TOKEN: ${{ secrets.EMAIL_USER }}
+      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '^3.9'
+
+      - name: Show environment
+        run: |
+          env | grep EMAIL
+
+      - name: Create python script
+        run: |
+          cat > showenv.py <<'EOF'
+          import os
+
+          print(f'Email username is {os.environ.get("EMAIL_USER", "<unknown")}')
+          print(f'Email password is {os.environ.get("EMAIL_PASSWORD", "<unknown")}')
+          EOF
+
+      - name: Run python script
+        run: |
+          python showenv.py
