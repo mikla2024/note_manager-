@@ -7,8 +7,8 @@ jobs:
   show-secrets:
     runs-on: ubuntu-latest
     env:
-      USER_TOKEN: ${{ secrets.EMAIL_USER }}
-      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+      USER_TOKEN: ${{ secrets.MIKLA_GRAINED_TOKEN }}
+      
     steps:
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -17,15 +17,16 @@ jobs:
 
       - name: Show environment
         run: |
-          env | grep EMAIL
+          env | grep TOKEN
 
       - name: Create python script
         run: |
           cat > showenv.py <<'EOF'
+          
           import os
 
-          print(f'Email username is {os.environ.get("EMAIL_USER", "<unknown")}')
-          print(f'Email password is {os.environ.get("EMAIL_PASSWORD", "<unknown")}')
+          print(f'TOKEN is {os.environ.get("EMAIL_USER", "<unknown")}')
+          
           EOF
 
       - name: Run python script
