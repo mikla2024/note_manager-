@@ -214,7 +214,7 @@ def f_empty_list():
                 ).strip().lower()
 
             if ans.lower() in ['n', 'add']:
-                my_list_notes.append(d.f_add_new_note(my_list_notes))
+                my_list_notes.append(d.f_add_new_note())
                 iface.f_print_all(my_list_notes)
 
             elif ans.lower() in ['x', 'exit']:
