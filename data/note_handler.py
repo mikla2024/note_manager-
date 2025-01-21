@@ -97,7 +97,7 @@ def f_add_new_note(my_note: dict = None, upd_field=None):
     for k, v in my_note.items():
         my_note[k] = upd_note.get(k, v)
 
-    # return my_note
+    return my_note
 # **************** end of add new_note ******************
 
 

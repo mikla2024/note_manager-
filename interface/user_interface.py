@@ -65,7 +65,8 @@ def distrib_func(my_choice, my_list_notes):
 
         print('\nНачало новой заметки')
         my_list_notes.append(
-            d.f_add_new_note())
+            d.f_add_new_note()
+        )
 
         if my_list_notes != list_notes_local and \
                 save_chg_cloud(my_list_notes):
@@ -85,7 +86,7 @@ def distrib_func(my_choice, my_list_notes):
             list_for_update = filter_notes(my_list_notes)
 
         else:
-            list_for_update = [a for a in my_list_notes]
+            list_for_update = my_list_notes.copy()
 
         iface.f_print_all(list_for_update)
 
@@ -109,7 +110,7 @@ def distrib_func(my_choice, my_list_notes):
             list_for_delete = filter_notes(my_list_notes)
 
         else:
-            list_for_delete = [a for a in my_list_notes]
+            list_for_delete = my_list_notes.copy()
 
         iface.f_print_all(list_for_delete)
 

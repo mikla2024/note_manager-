@@ -71,7 +71,7 @@ def load_from_json_git(filename='data.json'):
 def save_to_json_git(json_content,filename='data.json'):
 
     global CACHE_LIST
-    json_str = json.dumps(json_content)
+    json_str = json.dumps(json_content, ensure_ascii= False)
     byte_data = json_str.encode('utf-8')
     encoded_data = base64.b64encode(byte_data) # base64 bytes
     data_to_serv = encoded_data.decode(encoding='utf-8') # base64 string
