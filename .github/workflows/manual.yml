@@ -8,27 +8,3 @@ jobs:
     runs-on: ubuntu-latest
     env:
       USER_TOKEN: ${{ secrets.MIKLA_GRAINED_TOKEN }}
-      
-    steps:
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '^3.9'
-
-      - name: Show environment
-        run: |
-          env | grep TOKEN
-
-      - name: Create python script
-        run: |
-          cat > showenv.py <<'EOF'
-          
-          import os
-
-          print(f'TOKEN is {os.environ.get("EMAIL_USER", "<unknown")}')
-          
-          EOF
-
-      - name: Run python script
-        run: |
-          python showenv.py
