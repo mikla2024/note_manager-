@@ -21,6 +21,7 @@ def search_note_by_keyword (keyword: str, db_path: str):
             'username': r[1],
             'title': r[2],
             'content': r[3],
+            'status': r[4],
             'created_date': r[5],
             'issue_date': r[6]
         })
@@ -42,6 +43,7 @@ def filter_notes_by_status(status, db_path):
             'username': r[1],
             'title': r[2],
             'content': r[3],
+            'status': r[4],
             'created_date': r[5],
             'issue_date': r[6]
         })

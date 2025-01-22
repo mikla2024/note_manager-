@@ -1,5 +1,5 @@
-from delete_note import delete_note_from_db
-from load_notes_from_db import load_notes_from_db
-from save_note_to_db import save_note_to_db
-from search_note_by_keyword import search_note_by_keyword
-from update_note_in_db import update_note_in_db
+from SQLite_DB.database.load_notes_from_db import load_notes_from_db
+from SQLite_DB.database.save_note_to_db import save_note_to_db
+from SQLite_DB.database.search_note_by_keyword import search_note_by_keyword, filter_notes_by_status
+from SQLite_DB.database.update_note_in_db import update_note_in_db
+from SQLite_DB.database.delete_note import delete_note_from_db

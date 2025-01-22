@@ -3,12 +3,12 @@ import json
 
 
 
-def save_note_to_db(note: dict, db_path: str):
+def save_note_to_db(note: dict, db_path: str, db_table='notes'):
 
     with sqlite3.connect(db_path) as cn:
         crsr = cn.cursor()
 
-    sql_str = ('INSERT INTO notes (username, title, content, status, '
+    sql_str = (f'INSERT INTO {db_table} (username, title, content, status, '
                    'created_date, issue_date) '
                    f'VALUES (?, ?, ?, ?, ?, ?)',
                [note['username'], json.dumps(note['title'], ensure_ascii= False),
