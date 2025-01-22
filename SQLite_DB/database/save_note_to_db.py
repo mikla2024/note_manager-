@@ -1,5 +1,5 @@
 import sqlite3
-
+import json
 
 
 
@@ -8,15 +8,15 @@ def save_note_to_db(note: dict, db_path: str):
     with sqlite3.connect(db_path) as cn:
         crsr = cn.cursor()
 
-    sql_str = str('INSERT INTO notes (username, title, content, status, '
+    sql_str = ('INSERT INTO notes (username, title, content, status, '
                    'created_date, issue_date) '
-                   f'VALUES ("{note['username']}", "{note['title']}", '
-                   f'"{note['content']}", "{note['status']}", "{note['created_date']}", '
-                   f'"{note['issue_date']}");'
-                  )
+                   f'VALUES (?, ?, ?, ?, ?, ?)',
+               [note['username'], json.dumps(note['title'], ensure_ascii= False),
+                note['content'], note['status'], note['created_date'],
+                note['issue_date']
+                ])
 
-
-    crsr.execute(sql_str)
+    crsr.execute(sql_str[0], sql_str[1])
     added_id = crsr.lastrowid if crsr.lastrowid else None
 
     cn.commit()

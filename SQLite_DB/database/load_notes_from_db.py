@@ -16,7 +16,7 @@ def load_notes_from_db(db_path: str):
         my_list_notes.append({
             "id": row[0],
             "username": row[1],
-            "title": eval(row[2]),
+            "title": json.loads(row[2]),
             "content": row[3],
             "status": row[4],
             "created_date": row[5],
