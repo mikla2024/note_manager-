@@ -1,0 +1,12 @@
+name: Workflow with secrets
+
+on:
+  workflow_dispatch:
+
+jobs:
+  show-secrets:
+    runs-on: ubuntu-latest
+    env:
+      USER_TOKEN: ${{ secrets.MIKLA_GRAINED_TOKEN }}
+    run: |
+      nbdev_test_nbs
