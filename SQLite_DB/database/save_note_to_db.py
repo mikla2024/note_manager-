@@ -4,19 +4,23 @@ import sqlite3
 
 
 def save_note_to_db(note: dict, db_path: str):
-    connection = sqlite3.connect(db_path)
-    cursor = connection.cursor()
+
+    with sqlite3.connect(db_path) as cn:
+        crsr = cn.cursor()
 
     sql_str = str('INSERT INTO notes (username, title, content, status, '
                    'created_date, issue_date) '
                    f'VALUES ("{note['username']}", "{note['title']}", '
                    f'"{note['content']}", "{note['status']}", "{note['created_date']}", '
-                   f'"{note['issue_date']}");')
+                   f'"{note['issue_date']}");'
+                  )
 
 
-    cursor.execute(sql_str)
-    connection.commit()
-    connection.close()
+    crsr.execute(sql_str)
+    added_id = crsr.lastrowid if crsr.lastrowid else None
+
+    cn.commit()
+    return added_id
 
 
 if __name__ == '__main__':

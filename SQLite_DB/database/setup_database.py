@@ -1,7 +1,7 @@
 import sqlite3
 
-connection = sqlite3.connect('../note_manager.db')
-cursor = connection.cursor()
+with sqlite3.connect('../note_manager.db') as cn:
+    cursor = cn.cursor()
 
 cursor.execute(
                'CREATE TABLE IF NOT EXISTS notes ('
@@ -13,6 +13,6 @@ cursor.execute(
                'created_date TEXT NOT NULL,'
                'issue_date TEXT NOT NULL);')
 
-connection.commit()
-connection.close()
+cn.commit()
+
 

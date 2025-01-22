@@ -3,8 +3,8 @@ import interface
 
 
 def search_note_by_keyword (keyword: str, db_path: str):
-    connection = sqlite3.connect(db_path)
-    crsr = connection.cursor()
+    with sqlite3.connect(db_path) as cn:
+        crsr = cn.cursor()
 
     sql_str = (
         'SELECT * FROM notes '
@@ -27,8 +27,8 @@ def search_note_by_keyword (keyword: str, db_path: str):
     return my_list_notes
 
 def filter_notes_by_status(status, db_path):
-    connection = sqlite3.connect(db_path)
-    crsr = connection.cursor()
+    with sqlite3.connect(db_path) as cn:
+        crsr = cn.cursor()
     sql_str = (
                'SELECT * FROM notes '
                f'WHERE status = "{status}"; '
@@ -48,6 +48,7 @@ def filter_notes_by_status(status, db_path):
     return my_list_notes
 
 if __name__ == '__main__':
+
     keyword = input('Введите ключевое слово для поиска: ')
     list_notes = search_note_by_keyword(keyword, '../note_manager.db')
     interface.f_print_all(list_notes)

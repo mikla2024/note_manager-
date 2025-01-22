@@ -3,7 +3,6 @@ import utils
 from colorama import Fore, Style
 
 
-
 def f_print_all(my_list_notes: list, start_=1):
     print('\nYour notes:')
     for index_, note in enumerate(my_list_notes, start=start_):

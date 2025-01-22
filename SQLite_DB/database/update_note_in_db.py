@@ -4,8 +4,8 @@ import sqlite3
 
 def update_note_in_db(note_id:int, updates: dict, db_path: str):
 
-    connection = sqlite3.connect(db_path)
-    crsr = connection.cursor()
+    with sqlite3.connect(db_path) as cn:
+        crsr = cn.cursor()
 
     sql_str = (
         'UPDATE notes '
@@ -15,8 +15,8 @@ def update_note_in_db(note_id:int, updates: dict, db_path: str):
     )
 
     crsr.execute(sql_str)
-    connection.commit()
-    connection.close()
+    cn.commit()
+
 
 if __name__ == '__main__':
 
