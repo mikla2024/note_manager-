@@ -5,10 +5,10 @@ import data as d
 import interface as iface
 import utils
 
-def main_menu(my_list_notes=None):
 
+def main_menu(my_list_notes=None):
     if my_list_notes is None:
-        my_list_notes=[]
+        my_list_notes = []
 
     while True:
         print('''
@@ -30,14 +30,13 @@ def main_menu(my_list_notes=None):
 ''')
 
         my_list_notes = (
-        iface.distrib_func(input('Ваш выбор: '), my_list_notes)
+            iface.distrib_func(input('Ваш выбор: '), my_list_notes)
         )
 
         continue
 
 
 def distrib_func(my_choice, my_list_notes):
-
     list_notes_local = deepcopy(my_list_notes)
 
     # show all notes
@@ -53,10 +52,9 @@ def distrib_func(my_choice, my_list_notes):
 
         if my_list_notes != list_notes_local and \
                 save_chg_cloud(my_list_notes):
-                return my_list_notes
+            return my_list_notes
 
         return list_notes_local
-
 
         # return
 
@@ -90,7 +88,7 @@ def distrib_func(my_choice, my_list_notes):
 
         iface.f_print_all(list_for_update)
 
-        if (note_for_update := get_only_note(list_for_update,'обновить')) is not None:
+        if (note_for_update := get_only_note(list_for_update, 'обновить')) is not None:
             d.f_update_note(note_for_update)
 
         if my_list_notes != list_notes_local and \
@@ -146,6 +144,8 @@ def distrib_func(my_choice, my_list_notes):
         sys.exit(0)
 
     return list_notes_local
+
+
 # ****************** end distrib func *****************
 
 # ****************** context menu ******************
@@ -154,12 +154,12 @@ def context_menu(my_list_notes):
         try:
             print('\n[D] Удаление | [N] Новая | [X] Выход в главное меню')
             choice = input(
-            'Ваш выбор: '
+                'Ваш выбор: '
             ).strip().lower()
 
             if choice in ['del', 'd']:
 
-                if (my_note := get_only_note(my_list_notes,'удалить')) is not None:
+                if (my_note := get_only_note(my_list_notes, 'удалить')) is not None:
                     d.f_del_note(my_list_notes, my_note)
                     iface.f_print_all(my_list_notes)
                     continue
@@ -171,29 +171,30 @@ def context_menu(my_list_notes):
 
             elif choice in ['x', 'exit']:
 
-                return # my_list_notes
+                return  # my_list_notes
 
             else:
                 raise ValueError
 
         except ValueError:
             utils.handle_error('invalid_input')
+
+
 #   ******************** end of context menu *************
 
 # save change dialog
 def save_chg_cloud(my_list_note):
-
     while True:
         try:
 
             ans = input('Хотите сохранить изменения'
                         '---(y/n)... ').lower()
 
-            if ans.lower() in ['y','yes']:
+            if ans.lower() in ['y', 'yes']:
                 d.save_to_json_git(my_list_note)
                 return True
 
-            elif ans in ['n','no']:
+            elif ans in ['n', 'no']:
                 return False
 
             else:
@@ -201,17 +202,18 @@ def save_chg_cloud(my_list_note):
         except ValueError:
             utils.handle_error('invalid_input')
 
+
 # ******************* end of save_chd_cloud *************
 
 def f_empty_list():
     my_list_notes: list = []
-    print ('Сохраненные заметки не найдены...')
+    print('Сохраненные заметки не найдены...')
     while True:
         try:
             print('\n[N] Добавить новую заметку | [X] Выход')
             ans = input(
                 'Ваш выбор: '
-                ).strip().lower()
+            ).strip().lower()
 
             if ans.lower() in ['n', 'add']:
                 my_list_notes.append(d.f_add_new_note())
@@ -227,6 +229,8 @@ def f_empty_list():
 
         except ValueError:
             utils.handle_error('invalid_input')
+
+
 # ***************** end of empty list *********************
 
 
@@ -234,7 +238,7 @@ def get_search_input():
     print(
         '\n Укажите ключевое слово для поиска заметки '
         'для обновления (или оставьте пустым)... '
-        )
+    )
 
     srch_str: str = input('Ваш выбор: ').strip().lower()
 
@@ -265,7 +269,6 @@ def get_search_input():
 
 
 def get_only_note(my_list_notes: list, action_str: str):
-
     iface.f_print_all(my_list_notes)
     print(f'\nУкажите номер # заметки, которую хотите {action_str}. | '
           '[X] Возврат в главное меню')
@@ -290,14 +293,14 @@ def get_only_note(my_list_notes: list, action_str: str):
         if srch_index == i:
             return n
 
-def filter_notes(my_list_notes):
 
+def filter_notes(my_list_notes):
     while not (
             list_for_update := d.apply_filter_to_list(my_list_notes, get_search_input())
-                ):
+    ):
         print('[X] Возврат | [Enter] Повторить ввод')
         if input('Ваш выбор: '
-                ).strip().lower() == 'x':
+                 ).strip().lower() == 'x':
             return my_list_notes
 
     return list_for_update

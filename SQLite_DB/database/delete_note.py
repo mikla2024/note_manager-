@@ -1,9 +1,7 @@
 import sqlite3
 
 
-
 def delete_note_from_db(note_id: int, db_path: str, io_table='notes', my_cn: sqlite3.Connection = None):
-
     if not my_cn:
         with sqlite3.connect(db_path) as cn:
             crsr = cn.cursor()
@@ -17,6 +15,6 @@ def delete_note_from_db(note_id: int, db_path: str, io_table='notes', my_cn: sql
     crsr.execute(sql_str)
     crsr.connection.commit()
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     delete_note_from_db(3, '../note_manager.db')

@@ -15,7 +15,7 @@ def f_status_update():
     print(
         '\nChoose new status of your note then press Enter...:'
         '\n1. In progress \n2. Postponed \n3. Done'
-        )
+    )
     while True:
         ans = input()
         if ans == '1':
@@ -30,10 +30,10 @@ def f_status_update():
         else:
             print('Error. Try one more time')
     print(
-         f'\nStatus is updated. New status is: '
-         f'{notes.get("status").upper()}'
-         )
-    
+        f'\nStatus is updated. New status is: '
+        f'{notes.get("status").upper()}'
+    )
+
     input("\nTo continue press Enter...")
     return True
 
@@ -63,11 +63,11 @@ notes['created_date'] = dt.today()
 while True:
     try:
         parsed_issue_date: dt = \
-                dt.strptime(input
-                     (
-                       'Enter deadline in DD.MM.YYYY format: '
-                     ),'%d.%m.%Y'
-                     )
+            dt.strptime(input
+                (
+                'Enter deadline in DD.MM.YYYY format: '
+            ), '%d.%m.%Y'
+            )
     except ValueError:
         print('Wrong date format, try one more time!')
     else:
@@ -77,9 +77,9 @@ notes['issue_date'] = parsed_issue_date
 # user can input any amounts of titles or exit if press enter with empty field
 while True:
     title_str = input(
-                      '\nEnter title or leave this field empty.'
-                      'To continue press Enter: '
-                      )
+        '\nEnter title or leave this field empty.'
+        'To continue press Enter: '
+    )
     if title_str != '':
         if f_uni(notes.get('titles'), title_str):
             # if key doesnt exist in dict it will be added as list
@@ -100,9 +100,9 @@ f_print_note_data(notes)
 # ask to change the status
 while True:
     choice = input(
-                   '\nDo you want to change the status of your '
-                   'note (yes/no)'
-                   ).lower()
+        '\nDo you want to change the status of your '
+        'note (yes/no)'
+    ).lower()
     if choice in ['yes', 'y'] and f_status_update():
         f_print_note_data(notes)
         # break

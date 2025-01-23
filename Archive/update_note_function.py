@@ -4,83 +4,79 @@ import uuid
 import sys
 
 
-
-def f_update_note (my_list_notes, srch_str):
-
-    
+def f_update_note(my_list_notes, srch_str):
     # search user keyword in titles and other values of notes
     for my_note in my_list_notes:
-        
+
         # search in dict. values
-        
+
         if srch_str in [a.lower() for a in my_note.get('titles')]:
             print('\nNote is found \n*********************')
-            
+
             while True:
                 f_print_note_data(my_note, 0)
-                
+
                 print(
                     '\nВведите название поля для обновления, '
                     'или оставьте пустым для обновления нескольких '
                     'полей. Для возврата введите "X"')
-                
+
                 ans = input('Ваш выбор: ').lower()
-                
+
                 if ans == '':
-                    
+
                     upd_list_notes = [
                         a for a in my_list_notes
                         if a.get('note_id') != my_note.get('note_id')
-                                    ]
+                    ]
                     my_note = f_add_new_note(upd_list_notes, my_note)
 
                     upd_list_notes.append(my_note)
 
                     return upd_list_notes
-                
+
                 elif ans == 'x':
                     return my_list_notes
-                    
-                
+
+
                 else:
                     if ans in [a for a in my_note.keys()]:
-                        
+
                         upd_list_notes = [
-                        a for a in my_list_notes
-                        if a.get('note_id') != my_note.get('note_id')
-                                    ]
-                        
+                            a for a in my_list_notes
+                            if a.get('note_id') != my_note.get('note_id')
+                        ]
+
                         my_note = f_add_new_note(
-                        	upd_list_notes, my_note, ans)
+                            upd_list_notes, my_note, ans)
                         upd_list_notes.append(my_note)
                         return upd_list_notes
-                    
-                    else:    
+
+                    else:
                         print('поле с таким названием не найдено...')
                         input('для продолжения нажмите Enter')
                         continue
-        
+
     print(
         '\nНичего не найдено. Поробуйте изменить поиск'
         '\nДля продолжения нажмите Enter...')
     input()
-    
-        
+
     return my_list_notes
+
 
 # ******************* end of update note ******************
 
 
 # update current status.
 def f_status_update(my_note):
-
     while True:
         print(
-        '\nChoose new status of your note then press Enter...:'
-        '\n1. In progress'
-        '\n2. Postponed'
-        '\n3. Done'
-                )
+            '\nChoose new status of your note then press Enter...:'
+            '\n1. In progress'
+            '\n2. Postponed'
+            '\n3. Done'
+        )
         ans = input('Ваш выбор: ')
         if ans == '1':
             my_note['status'] = 'In progress'
@@ -95,21 +91,23 @@ def f_status_update(my_note):
             print('Wrong status. Try one more time')
 
     print(f'\nStatus is updated. New status is: '
-    f'{my_note.get("status").upper()}')
+          f'{my_note.get("status").upper()}')
     input("\nTo continue press Enter...")
     return my_note
+
+
 # ****************** end status update *************
 
 
-    # print all note's data'
+# print all note's data'
 def f_print_note_data(my_note, my_count):
-    print(f'\nNote #{my_count+1}:')
+    print(f'\nNote #{my_count + 1}:')
     # output all values from dictionary
     for key, value in my_note.items():
         # additional format of dates
         if key == 'created_date' or key == 'issue_date':
             print(f'***{key.capitalize()}: '
-            f'{dt.strptime(value,"%d.%m.%Y").strftime("%d %b")}')
+                  f'{dt.strptime(value, "%d.%m.%Y").strftime("%d %b")}')
             continue
         elif type(value) == list:
             print(f'***{key.capitalize()}: {", ".join(value)}')
@@ -124,19 +122,20 @@ def f_print_note_data(my_note, my_count):
             f'{deadline_delta_days} days ago')
     elif deadline_delta_days < 0:
         print(f'\nYour deadline is in '
-        f'{str(deadline_delta_days)[1:]} days')
+              f'{str(deadline_delta_days)[1:]} days')
     elif deadline_delta_days == 0:
         print('\nYour deadline is TODAY!!!')
-    print ('****************************')
-    
+    print('****************************')
+
+
 # *********** end print note data *********************
 
 
 def f_parser_date(date_str):
     while True:
-        #user_date = input('Enter deadline in DD.MM.YYYY format '
-        #'---leave this field empty for default '
-        #'value (7 days from today---)')
+        # user_date = input('Enter deadline in DD.MM.YYYY format '
+        # '---leave this field empty for default '
+        # 'value (7 days from today---)')
         if date_str == '':
             parsed_issue_date = dt.today() + timedelta(days=7)
             break
@@ -148,48 +147,47 @@ def f_parser_date(date_str):
                 return False
     return parsed_issue_date.strftime('%d.%m.%Y')
 
-#****************** end parser date ***********************
+
+# ****************** end parser date ***********************
 
 
- # check how many days to deadline
+# check how many days to deadline
 def f_deadline_check(note):
     day_delta = dt.today() - \
-    dt.strptime(note.get('issue_date'),'%d.%m.%Y')
+                dt.strptime(note.get('issue_date'), '%d.%m.%Y')
     return day_delta.days
 
 
 # make dict. with note
 def f_add_new_note(my_list_notes, my_note=None, upd_key=None):
-
     if my_note is None:
-        my_note={
-                'note_id':'',
-                'username':'mikla',
-                'content':'',
-                'status':'in progress',
-                'create_date':dt.strftime(dt.today(),'%d.%m.%Y'),
-                'issue_date':dt.strftime(
-                    (dt.today()+timedelta(days=7)),'%d.%m.%Y'),
-                'titles':[]
-                }
-
+        my_note = {
+            'note_id': '',
+            'username': 'mikla',
+            'content': '',
+            'status': 'in progress',
+            'create_date': dt.strftime(dt.today(), '%d.%m.%Y'),
+            'issue_date': dt.strftime(
+                (dt.today() + timedelta(days=7)), '%d.%m.%Y'),
+            'titles': []
+        }
 
     print(
-            '\nПри вводе новых значений, если оставить '
-            'поле пустым, запишется [значение по умолчанию]. '
-            'Даты вводить в формате ДД.ММ.ГГГГ'
-            )
-    
+        '\nПри вводе новых значений, если оставить '
+        'поле пустым, запишется [значение по умолчанию]. '
+        'Даты вводить в формате ДД.ММ.ГГГГ'
+    )
+
     if upd_key is not None:
         upd_note = {
-            k: v for k,v in my_note.items() if k == upd_key}
+            k: v for k, v in my_note.items() if k == upd_key}
     else:
         upd_note = {
-        	k: v for k,v in my_note.items()
+            k: v for k, v in my_note.items()
         }
-    
+
     for key, value in upd_note.items():
-        #print(type(value))
+        # print(type(value))
         if not isinstance(value, list):
 
             if key == 'note_id':
@@ -201,17 +199,17 @@ def f_add_new_note(my_list_notes, my_note=None, upd_key=None):
 
                 else:
                     user_value = input(
-                    f'\nEnter new value or leave the original one [{key}]: '
-                    f'[{value}]...'
+                        f'\nEnter new value or leave the original one [{key}]: '
+                        f'[{value}]...'
                     )
 
                 if key in ['create_date', 'issue_date']:
                     new_value = f_parser_date(user_value)
                     if not new_value:
                         print(
-                                'Неправильный формат даты, '
-                                'попробуйте еще раз...'
-                                )
+                            'Неправильный формат даты, '
+                            'попробуйте еще раз...'
+                        )
                         continue
 
                 if user_value == '':
@@ -223,13 +221,13 @@ def f_add_new_note(my_list_notes, my_note=None, upd_key=None):
 
             # list of titles
         else:
-            new_value=[]
-            #print(len(new_value))
+            new_value = []
+            # print(len(new_value))
             while True:
                 user_value = input(
                     f'\nEnter any amount of new titles. '
                     f'For finish leave field empty {new_value}: '
-                                )
+                )
 
                 # if user_value not in [
                 #         a for n in my_list_notes if
@@ -250,39 +248,42 @@ def f_add_new_note(my_list_notes, my_note=None, upd_key=None):
         upd_note[key] = new_value
     # generator of random value
     upd_note['note_id'] = str(uuid.uuid4())
-    
-    for k,v in my_note.items():
-        my_note[k] = upd_note.get(k,v)
-    
-    return my_note
-# **************** end of add new_note ******************
 
+    for k, v in my_note.items():
+        my_note[k] = upd_note.get(k, v)
+
+    return my_note
+
+
+# **************** end of add new_note ******************
 
 
 def f_print_all(my_list_notes):
     print('\nYour notes:')
     if my_list_notes is None or len(my_list_notes) == 0:
         print(
-        	'There is no notes yet. But you can '
-        	'always add some...')
+            'There is no notes yet. But you can '
+            'always add some...')
         print('заглушка функция empty list')
     for index_, note in enumerate(my_list_notes):
-        if isinstance(note, dict) :
+        if isinstance(note, dict):
             f_print_note_data(note, index_)
-            #print('*************************')
+            # print('*************************')
     return my_list_notes
+
+
 # ******************** end f_print_all *******************
 
 note1 = {
-    'note_id':str(uuid.uuid4()),
-    'username':'mikla',
-    'content':'grocery list',
-    'status':'in progress',
-    'created_date':dt.strftime(dt.today(),'%d.%m.%Y'),
-    'issue_date':dt.strftime(
-        (dt.today()+timedelta(days=7)),'%d.%m.%Y'),
-     'titles':['bread','butter','sugar']
-                }
+    'note_id': str(uuid.uuid4()),
+    'username': 'mikla',
+    'content': 'grocery list',
+    'status': 'in progress',
+    'created_date': dt.strftime(dt.today(), '%d.%m.%Y'),
+    'issue_date': dt.strftime(
+        (dt.today() + timedelta(days=7)), '%d.%m.%Y'),
+    'titles': ['bread', 'butter', 'sugar']
+}
 
 my_list_notes = [note1]
 
@@ -292,18 +293,14 @@ srch_str = input(
     '\n Укажите заголовок для поиска заметки '
     'для обновления...Оставьте поле пустым для возврата '
     'в главное меню...'
-        ).lower()
+).lower()
 
 if srch_str == '':
     print('\nВы ничего не выбрали')
     input('\nДля возврата в главное меню нажмите Enter...')
     print('заглушка для меню')
-    sys.exit(1)        
+    sys.exit(1)
 
-
-my_list_notes =  f_update_note(my_list_notes, srch_str)
-
+my_list_notes = f_update_note(my_list_notes, srch_str)
 
 f_print_all(my_list_notes)
-
-        

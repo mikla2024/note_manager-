@@ -1,7 +1,7 @@
 import emoji
 
-def handle_error(err_type: str):
 
+def handle_error(err_type: str):
     errors = {
         'invalid_input': emoji.emojize(':warning:') + 'Ошибка: Введены некорректные данные.',
         'note_not_found': emoji.emojize(':warning:') + 'Ошибка: Заметка не найдена.',
@@ -16,5 +16,3 @@ if __name__ == '__main__':
     handle_error('invalid_input')
     handle_error('note_not_found')
     handle_error('unknown')
-
-    

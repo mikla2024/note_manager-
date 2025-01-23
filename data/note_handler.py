@@ -8,7 +8,6 @@ import data
 
 
 def f_add_new_note(my_note: dict = None, upd_field=None):
-
     if my_note is None:
         my_note = {
             'note_id': '',
@@ -98,6 +97,8 @@ def f_add_new_note(my_note: dict = None, upd_field=None):
         my_note[k] = upd_note.get(k, v)
 
     return my_note
+
+
 # **************** end of add new_note ******************
 
 
@@ -108,14 +109,14 @@ def f_del_note(my_list_notes, note_for_delete):
         input('Для продолжения нажмите Enter... ')
 
     except:
-        print ('f_del_note is fail')
+        print('f_del_note is fail')
         sys.exit(1)
+
 
 # ******************* end of del_note *********************
 
 
-def f_update_note(my_note:dict):
-
+def f_update_note(my_note: dict):
     while True:
         iface.f_print_note_data(my_note, 1)
 
@@ -141,11 +142,11 @@ def f_update_note(my_note:dict):
             print('\nполе с таким названием не найдено...')
             continue
 
+
 # ******************* end of update note ******************
 
 
 def apply_filter_to_list(my_list_notes, search_keys: dict):
-
     srch_str = search_keys.get('s_str')
     srch_status = search_keys.get('s_sts')
     srch_dt = search_keys.get('s_dt')
@@ -158,19 +159,18 @@ def apply_filter_to_list(my_list_notes, search_keys: dict):
                             [c.lower() for c in a.values() if type(c) != list]
                             ]
 
-
     if srch_status:
         list_notes_found = [a for a in list_notes_found if
-                           str(a.get('status')).lower() == srch_status]
+                            str(a.get('status')).lower() == srch_status]
 
     if srch_dt:
         list_notes_found = [a for a in list_notes_found if
-                            a.get('issue_date') == srch_dt ]
+                            a.get('issue_date') == srch_dt]
 
     if not list_notes_found:
         utils.handle_error('empty_list')
         return []
 
-    #iface.f_print_all(list_notes_found)
+    # iface.f_print_all(list_notes_found)
     return list_notes_found
 # ****************** end search note **********************

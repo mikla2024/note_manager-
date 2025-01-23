@@ -2,8 +2,8 @@ import sqlite3
 import interface
 import json
 
-def search_note_by_keyword (keyword: str, db_path: str, io_table='notes', my_cn: sqlite3.Connection = None):
 
+def search_note_by_keyword(keyword: str, db_path: str, io_table='notes', my_cn: sqlite3.Connection = None):
     if not my_cn:
         with sqlite3.connect(db_path) as cn:
             crsr = cn.cursor()
@@ -32,6 +32,7 @@ def search_note_by_keyword (keyword: str, db_path: str, io_table='notes', my_cn:
         })
     return my_list_notes
 
+
 def filter_notes_by_status(status, db_path, io_table='notes', my_cn: sqlite3.Connection = None):
     if not my_cn:
         with sqlite3.connect(db_path) as cn:
@@ -39,10 +40,9 @@ def filter_notes_by_status(status, db_path, io_table='notes', my_cn: sqlite3.Con
     else:
         crsr = my_cn.cursor()
 
-
     sql_str = (
-               f'SELECT * FROM {io_table} '
-               f'WHERE status = "{status}"; '
+        f'SELECT * FROM {io_table} '
+        f'WHERE status = "{status}"; '
     )
     crsr.execute(sql_str)
     rows = crsr.fetchall()
@@ -59,8 +59,8 @@ def filter_notes_by_status(status, db_path, io_table='notes', my_cn: sqlite3.Con
         })
     return my_list_notes
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     keyword = input('Введите ключевое слово для поиска: ')
     list_notes = search_note_by_keyword(keyword, '../note_manager.db')
     interface.f_print_all(list_notes)

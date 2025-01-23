@@ -1,1 +1,10 @@
-[{"username": "test1", "titles": ["one", "two", "three"]}]
+[
+  {
+    "username": "test1",
+    "titles": [
+      "one",
+      "two",
+      "three"
+    ]
+  }
+]

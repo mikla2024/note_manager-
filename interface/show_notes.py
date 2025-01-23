@@ -31,12 +31,12 @@ def f_print_note_data(my_note, index_):
         # additional format of dates
         if key == 'created_date' or key == 'issue_date':
             print(f'*** {key.capitalize()}: '
-            f'{dt.strptime(value,"%d.%m.%Y").strftime("%d %b")}')
+                  f'{dt.strptime(value, "%d.%m.%Y").strftime("%d %b")}')
             continue
         elif key == 'titles':
             str_value = f'*** {key.capitalize()}: {", ".join(value)}'
             print(
-                str_format(str_value, text_color= status_colors.get(my_note['status'],'blue'))
+                str_format(str_value, text_color=status_colors.get(my_note['status'], 'blue'))
             )
             continue
 
@@ -60,14 +60,13 @@ def f_print_note_data(my_note, index_):
     except TypeError:
         pass
 
-
     print('*' * 30)
 
-def str_format (str_text, text_color, style_= None):
+
+def str_format(str_text, text_color, style_=None):
     if text_color == 'red':
         return Fore.RED + f'{str_text}' + Style.RESET_ALL
     elif text_color == 'green':
         return Fore.GREEN + f'{str_text}' + Style.RESET_ALL
     else:
         return Fore.BLUE + f'{str_text}' + Style.RESET_ALL
-

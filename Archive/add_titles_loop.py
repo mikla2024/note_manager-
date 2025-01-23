@@ -21,9 +21,9 @@ while True:
     try:
         parsed_issue_date: dt = dt.strptime(input(
             'Enter deadline in DD.MM.YYYY format: '
-            ),'%d.%m.%Y'
-            )
-                                                                          
+        ), '%d.%m.%Y'
+        )
+
     except ValueError:
         print('Wrong date format, try one more time!')
     else:
@@ -35,8 +35,8 @@ while True:
     title_str = input(
         '\nEnter title or leave this field empty.'
         'To continue press Enter: '
-        )
-                                                                                                                                           
+    )
+
     if title_str != '':
         if f_uni(notes.get('titles'), title_str):
             # if key doesnt exist in dict it will be added as list
@@ -63,4 +63,3 @@ for key, value in notes.items():
         print(f'***{key.capitalize()}: {", ".join(value)}')
         continue
     print(f'***{key.capitalize()}: {value}')
-

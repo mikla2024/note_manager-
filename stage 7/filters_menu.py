@@ -3,9 +3,9 @@ import interface
 
 if __name__ == '__main__':
     search_keys: dict = {
-        's_str':str('content1').lower(),
-        's_sts':str('Важно').lower(),
-        's_dt':''
+        's_str': str('content1').lower(),
+        's_sts': str('Важно').lower(),
+        's_dt': ''
     }
 
     test_note_1 = {

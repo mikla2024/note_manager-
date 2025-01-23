@@ -4,8 +4,7 @@ import sys
 from json import JSONDecodeError
 
 
-def update_note_in_db(note_id:int, my_upd_d: dict, db_path: str, io_table='notes', my_cn: sqlite3.Connection = None):
-
+def update_note_in_db(note_id: int, my_upd_d: dict, db_path: str, io_table='notes', my_cn: sqlite3.Connection = None):
     if not my_cn:
         with sqlite3.connect(db_path) as cn:
             crsr = cn.cursor()
@@ -27,12 +26,11 @@ def update_note_in_db(note_id:int, my_upd_d: dict, db_path: str, io_table='notes
     my_exist_d['issue_date'] = row[6]
 
     try:
-        updates = {k:v for k,v in my_exist_d.items() if not k in my_upd_d.keys()}
+        updates = {k: v for k, v in my_exist_d.items() if not k in my_upd_d.keys()}
     except:
         print('Ошибка генератора словаря в модуле', __name__)
         sys.exit(1)
     my_upd_d.update(updates)
-
 
     sql_str = (
         f'UPDATE {io_table} '
@@ -41,13 +39,11 @@ def update_note_in_db(note_id:int, my_upd_d: dict, db_path: str, io_table='notes
                                    my_upd_d.get('status'), my_upd_d.get('issue_date'))
     )
 
-
     crsr.execute(sql_str[0], sql_str[1])
     crsr.connection.commit()
 
 
 if __name__ == '__main__':
-
     upd_note = {
         'username': 'miklka',
         'title': ['gym', 'learn math', 'classes'],
@@ -56,4 +52,4 @@ if __name__ == '__main__':
         'created_date': '17.01.2025',
         'issue_date': '15.02.2025'
     }
-    update_note_in_db(note_id= 3, updates= upd_note, db_path='../note_manager.db')
+    update_note_in_db(note_id=3, updates=upd_note, db_path='../note_manager.db')

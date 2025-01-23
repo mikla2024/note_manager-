@@ -2,7 +2,6 @@ import sqlite3
 import json
 
 
-
 def save_note_to_db(note: dict, db_path: str, io_table='notes', my_cn: sqlite3.Connection = None):
     if not my_cn:
         with sqlite3.connect(db_path) as cn:
@@ -11,9 +10,9 @@ def save_note_to_db(note: dict, db_path: str, io_table='notes', my_cn: sqlite3.C
         crsr = my_cn.cursor()
 
     sql_str = (f'INSERT INTO {io_table} (username, title, content, status, '
-                   'created_date, issue_date) '
-                   f'VALUES (?, ?, ?, ?, ?, ?)',
-               [note['username'], json.dumps(note['title'], ensure_ascii= False),
+               'created_date, issue_date) '
+               f'VALUES (?, ?, ?, ?, ?, ?)',
+               [note['username'], json.dumps(note['title'], ensure_ascii=False),
                 note['content'], note['status'], note['created_date'],
                 note['issue_date']
                 ])

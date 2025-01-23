@@ -12,7 +12,8 @@ def display_pages(my_list_notes, page_nr, notes_per_page=2):
     start_index = (page_nr - 1) * notes_per_page + 1
     interface.f_print_all(page_notes, start_index)
 
-def paginate_notes (my_list_notes):
+
+def paginate_notes(my_list_notes):
     page_nr = 1
     notes_per_page = 3
     total_pages = (len(my_list_notes) + notes_per_page - 1) // notes_per_page
@@ -32,6 +33,7 @@ def paginate_notes (my_list_notes):
 
         else:
             utils.handle_error('invalid_input')
+
 
 if __name__ == '__main__':
     my_list_notes = data.load_from_json_git()

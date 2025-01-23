@@ -10,4 +10,3 @@ def validate_user_status(value):
             raise Exception
     except:
         raise ValueError
-

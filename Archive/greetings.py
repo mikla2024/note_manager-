@@ -1,4 +1,5 @@
 from datetime import date  # import class 'date' from 'datetime' module
+
 # main variables
 username = 'mikla'
 title = 'title 1'
@@ -14,6 +15,3 @@ print('текущий статус: ', status)
 # returns string from date object
 print('дата создания: ', created_date.strftime('%d %b %Y'))
 print('дата истечения: ', issued_date.strftime('%d %b %Y'))
-
-
-

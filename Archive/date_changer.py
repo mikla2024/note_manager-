@@ -1,5 +1,6 @@
 # import classes 'date', 'datetime' from 'datetime' module
 from datetime import date, datetime
+
 # main variables
 username = 'mikla'
 title = 'Note 1'

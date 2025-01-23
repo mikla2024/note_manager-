@@ -3,6 +3,7 @@ from datetime import datetime as dt, timedelta
 import sys
 import os
 
+
 # check unique title when add: if title exists returns False
 def f_uni(list_, title_):
     if list_ is not None:
@@ -29,16 +30,16 @@ def f_status_update(note):
             break
         else:
             print('Error. Try one more time')
-    
+
     print(f'\nStatus is updated. New status is: '
           f'{note.get("status").upper()}')
-    
+
     input("\nTo continue press Enter...")
     return True
 
 
 # print all note's data' Arguments: note - dict, c - counter (optional)
-def f_print_note_data(note, c = ''):
+def f_print_note_data(note, c=''):
     print(f'\nNote #{note.get("note id")}:')
     # output all values from dictionary
     for key, value in note.items():
@@ -55,14 +56,14 @@ def f_print_note_data(note, c = ''):
         print(
             f'\nYou missed your deadline '
             f'{deadline_delta_days} days ago')
-    
+
     elif deadline_delta_days < 0:
         print(f'\nYour deadline is in '
               f'{str(deadline_delta_days)[1:]} days')
-    
+
     elif deadline_delta_days == 0:
         print('\nYour deadline is TODAY!!!')
-        
+
 
 # check how many days to deadline
 def f_deadline_check(note):
@@ -83,10 +84,10 @@ def f_add_new_note():
     while True:
         try:
             parsed_issue_date: dt = \
-                    dt.strptime(input(
-                      'Enter deadline in DD.MM.YYYY format:'
-                      ), '%d.%m.%Y')
-        
+                dt.strptime(input(
+                    'Enter deadline in DD.MM.YYYY format:'
+                ), '%d.%m.%Y')
+
         except ValueError:
             print('Wrong date format, try one more time!')
         else:
@@ -119,7 +120,7 @@ def f_add_new_note():
         choice = input(
             '\nDo you want to change the status of your '
             'note (yes/no)').lower()
-        
+
         if choice in ['yes', 'y'] and f_status_update(note):
             f_print_note_data(note)
             # break
@@ -130,9 +131,10 @@ def f_add_new_note():
             print('Error, try more time...')
     return note
 
+
 # make list with notes, every note as dict
 list_notes = []
-i = True # flag for welcome message
+i = True  # flag for welcome message
 
 while True:
     if i == True:
@@ -143,10 +145,10 @@ while True:
         '(yes/no)').lower()
     if choice in ['yes', 'y']:
         list_notes.append(f_add_new_note())
-            # break
+        # break
     elif choice in ['no', 'n']:
         if len(list_notes) < 1:
-        	continue 
+            continue
         else:
             sys.exit(1)
         print('\nYour notes:')

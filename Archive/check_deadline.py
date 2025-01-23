@@ -15,7 +15,7 @@ def f_status_update():
     print(
         '\nChoose new status of your note then press Enter...:'
         '\n1. In progress \n2. Postponed \n3. Done'
-        )
+    )
     while True:
         ans = input()
         if ans == '1':
@@ -81,7 +81,7 @@ while True:
         parsed_issue_date: dt = dt.strptime(
             input(
                 'Enter deadline in DD.MM.YYYY format: '
-                ), '%d.%m.%Y')
+            ), '%d.%m.%Y')
     except ValueError:
         print('Wrong date format, try one more time!')
     else:
@@ -93,7 +93,7 @@ while True:
     title_str = input(
         '\nEnter title or leave this field empty.'
         'To continue press Enter: '
-        )
+    )
     if title_str != '':
         if f_uni(notes.get('titles'), title_str):
             # if key doesnt exist in dict it will be added as list
