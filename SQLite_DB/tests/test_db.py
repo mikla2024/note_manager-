@@ -47,7 +47,7 @@ class TestDB(unittest.TestCase):
                 db.search_note_by_keyword('test_content', DB_PATH, IO_TABLE, cn),
                 [TEST_NOTE2])
 
-    def test_c_update_note(self):
+    def test_update_note(self):
         upd_dict = {'status': 'test', }
         with sqlite3.connect(DB_PATH) as cn:
             create_tmp_table(cn)
@@ -58,7 +58,7 @@ class TestDB(unittest.TestCase):
             list_for_assert = db.filter_notes_by_status('test', DB_PATH, IO_TABLE, cn)
             self.assertEqual(list_for_assert, [assert_note])
 
-    def test_d_delete_note(self):
+    def test_delete_note(self):
         with sqlite3.connect(DB_PATH) as cn:
             create_tmp_table(cn)
             db.delete_note_from_db(2, db_path=DB_PATH, io_table=IO_TABLE, my_cn=cn)
