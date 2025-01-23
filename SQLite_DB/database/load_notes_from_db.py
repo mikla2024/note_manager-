@@ -2,11 +2,15 @@ import sqlite3
 import interface
 import json
 
-def load_notes_from_db(db_path: str):
-    with sqlite3.connect('../note_manager.db') as cn:
-        crsr = cn.cursor()
+def load_notes_from_db(db_path: str, io_table = 'notes', my_cn: sqlite3.Connection = None):
 
-    sql_str = 'SELECT * FROM notes'
+    if not my_cn:
+        with sqlite3.connect(db_path) as cn:
+            crsr = cn.cursor()
+    else:
+        crsr = my_cn.cursor()
+
+    sql_str = f'SELECT * FROM {io_table}'
 
     crsr.execute(sql_str)
     rows = crsr.fetchall()

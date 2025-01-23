@@ -1,25 +1,30 @@
 import sqlite3
 import interface
+import json
 
+def search_note_by_keyword (keyword: str, db_path: str, io_table='notes', my_cn: sqlite3.Connection = None):
 
-def search_note_by_keyword (keyword: str, db_path: str):
-    with sqlite3.connect(db_path) as cn:
-        crsr = cn.cursor()
+    if not my_cn:
+        with sqlite3.connect(db_path) as cn:
+            crsr = cn.cursor()
+    else:
+        crsr = my_cn.cursor()
 
     sql_str = (
-        'SELECT * FROM notes '
+        f'SELECT * FROM {io_table} '
         f'WHERE title LIKE "%{keyword}%" '
         f'OR content LIKE "%{keyword}%";'
     )
 
     crsr.execute(sql_str)
+
     rows = crsr.fetchall()
     my_list_notes = []
     for r in rows:
         my_list_notes.append({
-            'id': r[0],
+            'id': int(r[0]),
             'username': r[1],
-            'title': r[2],
+            'title': json.loads(r[2]),
             'content': r[3],
             'status': r[4],
             'created_date': r[5],
@@ -27,11 +32,16 @@ def search_note_by_keyword (keyword: str, db_path: str):
         })
     return my_list_notes
 
-def filter_notes_by_status(status, db_path):
-    with sqlite3.connect(db_path) as cn:
-        crsr = cn.cursor()
+def filter_notes_by_status(status, db_path, io_table='notes', my_cn: sqlite3.Connection = None):
+    if not my_cn:
+        with sqlite3.connect(db_path) as cn:
+            crsr = cn.cursor()
+    else:
+        crsr = my_cn.cursor()
+
+
     sql_str = (
-               'SELECT * FROM notes '
+               f'SELECT * FROM {io_table} '
                f'WHERE status = "{status}"; '
     )
     crsr.execute(sql_str)
@@ -39,9 +49,9 @@ def filter_notes_by_status(status, db_path):
     my_list_notes = []
     for r in rows:
         my_list_notes.append({
-            'id': r[0],
+            'id': int(r[0]),
             'username': r[1],
-            'title': r[2],
+            'title': json.loads(r[2]),
             'content': r[3],
             'status': r[4],
             'created_date': r[5],

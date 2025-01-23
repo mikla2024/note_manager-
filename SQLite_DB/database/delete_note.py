@@ -2,17 +2,20 @@ import sqlite3
 
 
 
-def delete_note_from_db(note_id: int, db_path: str):
+def delete_note_from_db(note_id: int, db_path: str, io_table='notes', my_cn: sqlite3.Connection = None):
 
-    with sqlite3.connect(db_path) as cn:
-        crsr = cn.cursor()
+    if not my_cn:
+        with sqlite3.connect(db_path) as cn:
+            crsr = cn.cursor()
+    else:
+        crsr = my_cn.cursor()
 
     sql_str = (
-        f'DELETE FROM notes WHERE id = {note_id}'
+        f'DELETE FROM {io_table} WHERE id = {note_id}'
     )
 
     crsr.execute(sql_str)
-    cn.commit()
+    crsr.connection.commit()
 
 if __name__ == '__main__':
 

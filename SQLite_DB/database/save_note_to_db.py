@@ -3,12 +3,14 @@ import json
 
 
 
-def save_note_to_db(note: dict, db_path: str, db_table='notes'):
+def save_note_to_db(note: dict, db_path: str, io_table='notes', my_cn: sqlite3.Connection = None):
+    if not my_cn:
+        with sqlite3.connect(db_path) as cn:
+            crsr = cn.cursor()
+    else:
+        crsr = my_cn.cursor()
 
-    with sqlite3.connect(db_path) as cn:
-        crsr = cn.cursor()
-
-    sql_str = (f'INSERT INTO {db_table} (username, title, content, status, '
+    sql_str = (f'INSERT INTO {io_table} (username, title, content, status, '
                    'created_date, issue_date) '
                    f'VALUES (?, ?, ?, ?, ?, ?)',
                [note['username'], json.dumps(note['title'], ensure_ascii= False),
@@ -18,8 +20,8 @@ def save_note_to_db(note: dict, db_path: str, db_table='notes'):
 
     crsr.execute(sql_str[0], sql_str[1])
     added_id = crsr.lastrowid if crsr.lastrowid else None
+    crsr.connection.commit()
 
-    cn.commit()
     return added_id
 
 

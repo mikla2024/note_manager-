@@ -1,69 +1,102 @@
-import json
+
 import os
+import sqlite3
 import unittest
+from copy import deepcopy
+
 import SQLite_DB.database as db
 
-DB_PATH = r'C:\Users\BMW\PycharmProjects\note_manager-\SQLite_DB\note_manager.db'
-TEST_NOTE =   {
-            'username': 'test_name',
-            'title': ['eggs', 'coffee', 'sugar'],
-            'content': 'test_shopping_list',
-            'status': 'Важно',
-            'created_date': '17.01.2025',
-            'issue_date': '28.02.2025'
-        }
 TEST_ID = 0
 
-class TestDB (unittest.TestCase):
+TEST_NOTE = {
+    'id': 1,
+    'username': 'test_name',
+    'title': ['one', 'two', 'three'],
+    'content': 'test_shopping_list',
+    'status': 'Важно',
+    'created_date': '17.01.2025',
+    'issue_date': '28.02.2025'
+}
+
+TEST_NOTE2 = {
+    'id': 2,
+    'username': 'test_name2',
+    'title': ['three', 'four', 'five'],
+    'content': 'test_content',
+    'status': 'Выполнено',
+    'created_date': '17.01.2025',
+    'issue_date': '28.02.2025'
+}
+
+TEST_LIST_NOTES = [TEST_NOTE, TEST_NOTE2]
+DB_PATH = os.environ.get('db_path')
+IO_TABLE = os.environ.get('test_io_table')
 
 
 
-    def test_a_add_and_load(self):
-        global TEST_NOTE
-        global TEST_ID
+class TestDB(unittest.TestCase):
 
+    def test_add_and_load(self):
 
-        test_list = db.load_notes_from_db(db_path= DB_PATH)
+        with sqlite3.connect(DB_PATH) as cn:
+            create_tmp_table(cn)
+            self.assertEqual(
+                db.load_notes_from_db(DB_PATH, IO_TABLE, cn), TEST_LIST_NOTES)
 
-        TEST_ID = db.save_note_to_db(note= TEST_NOTE, db_path= DB_PATH, db_table='temp')
+    def test_search_note(self):
 
-        TEST_NOTE['id'] = TEST_ID
-
-        test_list.append(TEST_NOTE)
-        new_test_list = db.load_notes_from_db(DB_PATH)
-
-        self.assertEqual(new_test_list, test_list)
-
-    def test_b_search_note(self):
-
-        self.assertEqual(db.search_note_by_keyword('test_shopping_list', db_path= DB_PATH),
-                         [TEST_NOTE])
+        with sqlite3.connect(DB_PATH) as cn:
+            create_tmp_table(cn)
+            self.assertEqual(
+                db.search_note_by_keyword('test_content', DB_PATH, IO_TABLE, cn),
+                [TEST_NOTE2])
 
 
     def test_c_update_note(self):
 
+        upd_dict = {'status': 'test', }
+        with sqlite3.connect(DB_PATH) as cn:
+            create_tmp_table(cn)
+            db.update_note_in_db(1, upd_dict, DB_PATH, io_table=IO_TABLE, my_cn=cn)
+            assert_note = deepcopy(TEST_NOTE)
+            assert_note['status'] = 'test'
+            try:
+                list_for_assert = db.filter_notes_by_status('test', DB_PATH, IO_TABLE, cn)
 
-        upd_dict = {'Status': 'test'}
-        db.update_note_in_db(TEST_ID, upd_dict, DB_PATH)
+                self.assertEqual(list_for_assert,[assert_note])
 
-        self.assertEqual(db.filter_notes_by_status('test', DB_PATH), [TEST_NOTE])
+            except:
+                print('test_update fail ')
 
 
     def test_d_delete_note(self):
 
+        with sqlite3.connect(DB_PATH) as cn:
+            create_tmp_table(cn)
+            db.delete_note_from_db(2, db_path= DB_PATH, io_table=IO_TABLE, my_cn=cn)
 
-        db_path = r'C:\Users\BMW\PycharmProjects\note_manager-\SQLite_DB\note_manager.db'
-        test_list = db.load_notes_from_db(DB_PATH)
-        db.delete_note_from_db(TEST_ID, db_path= DB_PATH)
-        test_list.remove(TEST_NOTE)
-        new_test_list = db.load_notes_from_db(DB_PATH)
-        self.assertEqual(test_list, new_test_list)
+            self.assertEqual(db.load_notes_from_db(DB_PATH, IO_TABLE, cn), [TEST_NOTE])
 
 
+def create_tmp_table(my_cn: sqlite3.Connection):
+    my_sql_str = ( f'CREATE TEMPORARY TABLE {IO_TABLE} ('
+               'id INTEGER PRIMARY KEY AUTOINCREMENT,'
+               'username TEXT NOT NULL,'
+               'title TEXT NOT NULL,'
+               'content TEXT NOT NULL,'
+               'status TEXT NOT NULL,'
+               'created_date TEXT NOT NULL,'
+               'issue_date TEXT NOT NULL);')
+
+    my_crsr = my_cn.cursor()
+    my_crsr.execute(my_sql_str)
+    my_cn.commit()
+    for n in TEST_LIST_NOTES:
+        db.save_note_to_db(note=n, db_path=DB_PATH, io_table=IO_TABLE, my_cn=my_cn)
 
 
 
 
 if __name__ == '__main__':
-    TEST_ID = 0
+
     unittest.main()
