@@ -1,14 +1,17 @@
+import os
+import sqlite3
 import sys
 
 from copy import deepcopy
+
+import data
 import data as d
 import interface as iface
 import utils
+import SQLite_DB.database as db
 
 
-def main_menu(my_list_notes=None):
-    if my_list_notes is None:
-        my_list_notes = []
+def main_menu():
 
     while True:
         print('''
@@ -30,51 +33,31 @@ def main_menu(my_list_notes=None):
 ''')
 
         my_list_notes = (
-            iface.distrib_func(input('Ваш выбор: '), my_list_notes)
+            iface.distrib_func(input('Ваш выбор: '))
         )
 
         continue
 
 
-def distrib_func(my_choice, my_list_notes):
-    list_notes_local = deepcopy(my_list_notes)
+def distrib_func(my_choice):
 
-    # show all notes
-    if not my_list_notes:
-        iface.f_empty_list()
+
 
     # show all
     if my_choice == '2':
-
+        my_list_notes = db.load_notes_from_db()
         iface.f_print_all(my_list_notes)
-
         context_menu(my_list_notes)
-
-        if my_list_notes != list_notes_local and \
-                save_chg_cloud(my_list_notes):
-            return my_list_notes
-
-        return list_notes_local
-
-        # return
 
     # create new
     if my_choice == '1':
 
         print('\nНачало новой заметки')
-        my_list_notes.append(
-            d.f_add_new_note()
-        )
-
-        if my_list_notes != list_notes_local and \
-                save_chg_cloud(my_list_notes):
-            return my_list_notes
-
-        return list_notes_local
+        db.save_note_to_db(d.f_add_new_note())
 
     # update
     if my_choice == '3':
-
+        my_list_notes = db.load_notes_from_db()
         iface.f_print_all(my_list_notes)
 
         print('\n[F] Фильр заметок | '
@@ -88,14 +71,11 @@ def distrib_func(my_choice, my_list_notes):
 
         iface.f_print_all(list_for_update)
 
-        if (note_for_update := get_only_note(list_for_update, 'обновить')) is not None:
-            d.f_update_note(note_for_update)
 
-        if my_list_notes != list_notes_local and \
-                save_chg_cloud(my_list_notes):
-            return my_list_notes
+        if (note_update := get_only_note(list_for_update, 'обновить')) is not None:
+            d.f_update_note(note_update)
+            db.update_note_in_db(note_update.get('id'), note_update)
 
-        return list_notes_local
 
     # delete
     if my_choice == '4':
@@ -143,7 +123,7 @@ def distrib_func(my_choice, my_list_notes):
     if my_choice == '6':
         sys.exit(0)
 
-    return list_notes_local
+
 
 
 # ****************** end distrib func *****************
@@ -160,18 +140,18 @@ def context_menu(my_list_notes):
             if choice in ['del', 'd']:
 
                 if (my_note := get_only_note(my_list_notes, 'удалить')) is not None:
-                    d.f_del_note(my_list_notes, my_note)
-                    iface.f_print_all(my_list_notes)
+                    db.delete_note_from_db(my_note.get('id'))
+                    iface.f_print_all(db.load_notes_from_db())
                     continue
 
             elif choice in ['new', 'n']:
-                my_list_notes.append(d.f_add_new_note())
-                iface.f_print_all(my_list_notes)
+                db.save_note_to_db(data.f_add_new_note())
+                iface.f_print_all(db.load_notes_from_db())
                 continue
 
             elif choice in ['x', 'exit']:
 
-                return  # my_list_notes
+                return
 
             else:
                 raise ValueError

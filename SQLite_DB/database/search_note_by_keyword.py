@@ -1,9 +1,11 @@
 import sqlite3
 import interface
 import json
+import os
 
-
-def search_note_by_keyword(keyword: str, db_path: str, io_table='notes', my_cn: sqlite3.Connection = None):
+def search_note_by_keyword(keyword: str, db_path: str = '', io_table='notes', my_cn: sqlite3.Connection = None):
+    if not db_path:
+        db_path = os.environ.get('db_path')
     if not my_cn:
         with sqlite3.connect(db_path) as cn:
             crsr = cn.cursor()
@@ -33,7 +35,9 @@ def search_note_by_keyword(keyword: str, db_path: str, io_table='notes', my_cn: 
     return my_list_notes
 
 
-def filter_notes_by_status(status, db_path, io_table='notes', my_cn: sqlite3.Connection = None):
+def filter_notes_by_status(status, db_path: str = '', io_table='notes', my_cn: sqlite3.Connection = None):
+    if not db_path:
+        db_path = os.environ.get('db_path')
     if not my_cn:
         with sqlite3.connect(db_path) as cn:
             crsr = cn.cursor()

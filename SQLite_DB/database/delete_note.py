@@ -1,7 +1,11 @@
+import os
 import sqlite3
 
 
-def delete_note_from_db(note_id: int, db_path: str, io_table='notes', my_cn: sqlite3.Connection = None):
+def delete_note_from_db(note_id: int, db_path: str = '', io_table='notes',
+                        my_cn: sqlite3.Connection = None):
+    if not db_path:
+        db_path = os.environ.get('db_path')
     if not my_cn:
         with sqlite3.connect(db_path) as cn:
             crsr = cn.cursor()

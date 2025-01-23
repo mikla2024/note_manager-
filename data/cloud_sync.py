@@ -3,8 +3,6 @@ import json
 
 import requests
 
-ACCESS_TOKEN = 'github_pat_11BNS6T2Q0xo1KfeeMGoYb_' \
-               'MSHe1i90jgk6uZBmZgztqZa2j3dH1slzMKYRiWzf8MH44UKWY7P9dXGQeud'
 
 USERNAME = 'mikla2024'
 REPO_NAME = 'note_manager-'

@@ -154,9 +154,9 @@ def apply_filter_to_list(my_list_notes, search_keys: dict):
 
     if srch_str:
         list_notes_found = [a for a in my_list_notes if srch_str in
-                            [b.lower() for b in a.get('titles')]
+                            [b.lower() for b in a.get('title')]
                             or srch_str in
-                            [c.lower() for c in a.values() if type(c) != list]
+                            [c.lower() for c in a.values() if type(c) == str]
                             ]
 
     if srch_status:
