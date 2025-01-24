@@ -37,7 +37,7 @@ def f_add_new_note(my_note: dict = None, upd_field=None):
 
         if not isinstance(value, list):
 
-            if key == 'note_id':
+            if key == 'note_id' or key == 'id':
                 continue
 
             while True:
@@ -72,7 +72,7 @@ def f_add_new_note(my_note: dict = None, upd_field=None):
             # print(len(new_value))
             while True:
                 user_value = input(
-                    f'\nВведите любое количество заметок. '
+                    f'\nВведите любое количество заголовков. '
                     f'Для завершения оставьте поле пустым {new_value}: '
                 )
 
