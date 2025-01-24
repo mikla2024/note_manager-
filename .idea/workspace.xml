@@ -10,12 +10,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c7c6113-5edf-4f98-8239-3b055c26eee8" name="Changes" comment="update via pycharm">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQLite_DB/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQLite_DB/database/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQLite_DB/database/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQLite_DB/database/load_notes_from_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQLite_DB/database/load_notes_from_db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQLite_DB/database/save_note_to_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQLite_DB/database/save_note_to_db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQLite_DB/database/search_note_by_keyword.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQLite_DB/database/search_note_by_keyword.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQLite_DB/database/setup_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQLite_DB/database/setup_database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQLite_DB/database/update_note_in_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQLite_DB/database/update_note_in_db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQLite_DB/note_manager.db" beforeDir="false" afterPath="$PROJECT_DIR$/SQLite_DB/note_manager.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/cloud_sync.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/cloud_sync.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQLite_DB/tests/test_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/SQLite_DB/tests/test_db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/note_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/note_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interface/show_notes.py" beforeDir="false" afterPath="$PROJECT_DIR$/interface/show_notes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interface/user_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/interface/user_interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,8 +70,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Python tests.Python tests in test.py.executor": "Debug",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Python tests.Python tests in test.py.executor": "Run",
     "Python tests.Python tests in test_db.py.executor": "Run",
+    "Python.__init__.executor": "Run",
     "Python.abra_test.executor": "Run",
     "Python.color_output.executor": "Run",
     "Python.console_menu.executor": "Run",
@@ -74,20 +86,22 @@
     "Python.pagination.executor": "Run",
     "Python.save_note_to_db.executor": "Run",
     "Python.search_note_by_keyword.executor": "Run",
-    "Python.setup_database.executor": "Run",
+    "Python.setup_database.executor": "Debug",
     "Python.show_notes.executor": "Run",
-    "Python.update_note_in_db.executor": "Debug",
-    "Python.user_interface.executor": "Run",
+    "Python.update_note_in_db.executor": "Run",
+    "Python.user_interface.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/BMW/Downloads/4 модуль",
+    "last_opened_file_path": "C:/Users/BMW/PycharmProjects/note_manager-/Archive",
     "run.code.analysis.last.selected.profile": "aDefault",
     "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\BMW\PycharmProjects\note_manager-\Archive" />
       <recent name="C:\Users\BMW\PycharmProjects\note_manager-\utils" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -326,7 +340,31 @@
       <option name="project" value="LOCAL" />
       <updated>1737654741383</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="update via pycharm">
+      <option name="closed" value="true" />
+      <created>1737668446829</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1737668446829</updated>
+    </task>
+    <task id="LOCAL-00028" summary="update via pycharm">
+      <option name="closed" value="true" />
+      <created>1737710419632</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1737710419632</updated>
+    </task>
+    <task id="LOCAL-00029" summary="update via pycharm">
+      <option name="closed" value="true" />
+      <created>1737719197568</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1737719197568</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -345,9 +383,21 @@
     <option name="LAST_COMMIT_MESSAGE" value="update via pycharm" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SQLite_DB/tests/test_db.py</url>
+          <line>57</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="tests">
         <watch expression="TEST_NOTE" language="Python" />
+      </configuration>
+      <configuration name="PythonConfigurationType">
+        <watch expression="os.environ.get('db_path')" language="Python" />
       </configuration>
     </watches-manager>
   </component>

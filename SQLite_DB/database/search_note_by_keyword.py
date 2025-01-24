@@ -14,7 +14,7 @@ def search_note_by_keyword(keyword: str, db_path: str = '', io_table='notes', my
 
     sql_str = (
         f'SELECT * FROM {io_table} '
-        f'WHERE title LIKE "%{keyword}%" '
+        f'WHERE titles LIKE "%{keyword}%" '
         f'OR content LIKE "%{keyword}%";'
     )
 
@@ -26,16 +26,16 @@ def search_note_by_keyword(keyword: str, db_path: str = '', io_table='notes', my
         my_list_notes.append({
             'id': int(r[0]),
             'username': r[1],
-            'title': json.loads(r[2]),
+            'titles': json.loads(r[2]),
             'content': r[3],
             'status': r[4],
-            'created_date': r[5],
+            'create_date': r[5],
             'issue_date': r[6]
         })
     return my_list_notes
 
 
-def filter_notes_by_status(status, db_path: str = '', io_table='notes', my_cn: sqlite3.Connection = None):
+def filter_notes_by_status(status: str, db_path: str = '', io_table='notes', my_cn: sqlite3.Connection = None):
     if not db_path:
         db_path = os.environ.get('db_path')
     if not my_cn:
@@ -55,10 +55,10 @@ def filter_notes_by_status(status, db_path: str = '', io_table='notes', my_cn: s
         my_list_notes.append({
             'id': int(r[0]),
             'username': r[1],
-            'title': json.loads(r[2]),
+            'titles': json.loads(r[2]),
             'content': r[3],
             'status': r[4],
-            'created_date': r[5],
+            'create_date': r[5],
             'issue_date': r[6]
         })
     return my_list_notes

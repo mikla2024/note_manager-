@@ -36,9 +36,8 @@ def main_menu():
 def distrib_func(my_choice):
     # show all
     if my_choice == '2':
-        my_list_notes = db.load_notes_from_db()
-        iface.f_print_all(my_list_notes)
-        context_menu(my_list_notes)
+        iface.f_print_all(db.load_notes_from_db())
+        context_menu()
 
     # create new
     if my_choice == '1':
@@ -103,7 +102,7 @@ def distrib_func(my_choice):
 # ****************** end distrib func *****************
 
 # ****************** context menu ******************
-def context_menu(my_list_notes):
+def context_menu():
     while True:
         try:
             print('\n[D] Удаление | [N] Новая | [X] Выход в главное меню')
@@ -112,7 +111,7 @@ def context_menu(my_list_notes):
             ).strip().lower()
 
             if choice in ['del', 'd']:
-
+                my_list_notes = db.load_notes_from_db()
                 if (my_note := get_only_note(my_list_notes, 'удалить')) is not None:
                     db.delete_note_from_db(my_note.get('id'))
                     iface.f_print_all(db.load_notes_from_db())

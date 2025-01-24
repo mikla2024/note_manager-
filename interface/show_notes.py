@@ -33,7 +33,7 @@ def f_print_note_data(my_note, index_):
             print(f'*** {key.capitalize()}: '
                   f'{dt.strptime(value, "%d.%m.%Y").strftime("%d %b")}')
             continue
-        elif key == 'title':
+        elif key == 'titles':
             str_value = f'*** {key.capitalize()}: {", ".join(value)}'
             print(
                 str_format(str_value, text_color=status_colors.get(my_note['status'], 'blue'))

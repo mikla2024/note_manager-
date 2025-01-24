@@ -23,12 +23,12 @@ def load_notes_from_db(db_path: str = '', io_table='notes',
     my_list_notes = []
     for row in rows:
         my_list_notes.append({
-            "id": row[0],
+            "id": int(row[0]),
             "username": row[1],
-            "title": json.loads(row[2]),
+            "titles": json.loads(row[2]),
             "content": row[3],
             "status": row[4],
-            "created_date": row[5],
+            "create_date": row[5],
             "issue_date": row[6]
         })
 

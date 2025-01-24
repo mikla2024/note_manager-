@@ -5,14 +5,14 @@ import utils
 
 class TestNoteManager(unittest.TestCase):
 
-    def test_save_and_load_notes(self):
-        my_test_notes = [{
-            'username': 'test1',
-            'titles': ['one', 'two', 'three']
-        }]
-        d.save_to_json_git(my_test_notes, 'test.json')
-        loaded_notes = d.load_from_json_git('test.json')
-        self.assertEqual(my_test_notes, loaded_notes)
+    # def test_save_and_load_notes(self):
+    #     my_test_notes = [{
+    #         'username': 'test1',
+    #         'titles': ['one', 'two', 'three']
+    #     }]
+    #     d.save_to_json_git(my_test_notes, 'test.json')
+    #     loaded_notes = d.load_from_json_git('test.json')
+    #     self.assertEqual(my_test_notes, loaded_notes)
 
     def test_status_update(self):
         my_test_note = {

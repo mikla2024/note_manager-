@@ -22,7 +22,7 @@ def update_note_in_db(note_id: int, my_upd_d: dict, db_path: str = '', io_table=
     my_exist_d = {}
 
     my_exist_d['username'] = row[1]
-    my_exist_d['title'] = row[2]
+    my_exist_d['titles'] = json.loads(row[2])
     my_exist_d['content'] = row[3]
     my_exist_d['status'] = row[4]
     my_exist_d['issue_date'] = row[6]
@@ -36,8 +36,8 @@ def update_note_in_db(note_id: int, my_upd_d: dict, db_path: str = '', io_table=
 
     sql_str = (
         f'UPDATE {io_table} '
-        f'SET title = ?, content = ?, status = ?, issue_date = ? '
-        f'WHERE id = {note_id};', (json.dumps(my_upd_d.get('title'), ensure_ascii=False), my_upd_d.get('content'),
+        f'SET titles = ?, content = ?, status = ?, issue_date = ? '
+        f'WHERE id = {note_id};', (json.dumps(my_upd_d.get('titles'), ensure_ascii=False), my_upd_d.get('content'),
                                    my_upd_d.get('status'), my_upd_d.get('issue_date'))
     )
 
@@ -48,10 +48,10 @@ def update_note_in_db(note_id: int, my_upd_d: dict, db_path: str = '', io_table=
 if __name__ == '__main__':
     upd_note = {
         'username': 'miklka',
-        'title': ['gym', 'learn math', 'classes'],
+        'titles': ['gym', 'learn math', 'classes'],
         'content': 'upd to do list',
         'status': 'in progress',
-        'created_date': '17.01.2025',
+        'create_date': '17.01.2025',
         'issue_date': '15.02.2025'
     }
-    update_note_in_db(note_id=3, my_upd_d=upd_note, db_path='../note_manager.db')
+    update_note_in_db(note_id=3, my_upd_d=upd_note)

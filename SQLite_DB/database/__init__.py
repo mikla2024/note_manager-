@@ -22,10 +22,10 @@ try:
             'CREATE TABLE IF NOT EXISTS notes ('
             'id INTEGER PRIMARY KEY AUTOINCREMENT,'
             'username TEXT NOT NULL,'
-            'title TEXT NOT NULL,'
+            'titles TEXT NOT NULL,'
             'content TEXT NOT NULL,'
             'status TEXT NOT NULL,'
-            'created_date TEXT NOT NULL,'
+            'create_date TEXT NOT NULL,'
             'issue_date TEXT NOT NULL);')
 
         cursor.execute(sql_str)
@@ -42,4 +42,4 @@ if not rows:
     import data
     my_list = data.load_from_json_git()
     for n in my_list:
-        save_note_to_db(note=n, db_path=DB_PATH)
+        save_note_to_db(note=n)
