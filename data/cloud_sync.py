@@ -81,7 +81,7 @@ def save_to_json_git(json_content, filename='data.json'):
             f'{REPO_NAME}/contents/{PATH}/{filename}',
 
             headers={
-                'Authorization': f'Token {ACCESS_TOKEN}'
+                'Authorization': f'Token'
             },
 
             json={

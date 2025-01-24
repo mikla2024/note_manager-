@@ -40,6 +40,7 @@ except sqlite3.OperationalError as e:
 
 if not rows:
     import data
+
     my_list = data.load_from_json_git()
     for n in my_list:
         save_note_to_db(note=n)
