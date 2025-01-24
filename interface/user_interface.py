@@ -1,9 +1,4 @@
-import os
-import sqlite3
 import sys
-
-from copy import deepcopy
-
 import data
 import data as d
 import interface as iface
@@ -12,7 +7,6 @@ import SQLite_DB.database as db
 
 
 def main_menu():
-
     while True:
         print('''
 
@@ -40,9 +34,6 @@ def main_menu():
 
 
 def distrib_func(my_choice):
-
-
-
     # show all
     if my_choice == '2':
         my_list_notes = db.load_notes_from_db()
@@ -51,7 +42,6 @@ def distrib_func(my_choice):
 
     # create new
     if my_choice == '1':
-
         print('\nНачало новой заметки')
         db.save_note_to_db(d.f_add_new_note())
 
@@ -71,15 +61,13 @@ def distrib_func(my_choice):
 
         iface.f_print_all(list_for_update)
 
-
         if (note_update := get_only_note(list_for_update, 'обновить')) is not None:
             d.f_update_note(note_update)
             db.update_note_in_db(note_update.get('id'), note_update)
 
-
     # delete
     if my_choice == '4':
-
+        my_list_notes = db.load_notes_from_db()
         iface.f_print_all(my_list_notes)
         print('\n[F] Фильр заметок | '
               '[Enter] Продолжить без фильтра')
@@ -93,19 +81,13 @@ def distrib_func(my_choice):
         iface.f_print_all(list_for_delete)
 
         if (note_for_delete := get_only_note(list_for_delete, 'удалить')) is not None:
-            d.f_del_note(my_list_notes, note_for_delete)
+            db.delete_note_from_db(note_for_delete.get('id'))
 
-        iface.f_print_all(my_list_notes)
-
-        if my_list_notes != list_notes_local and \
-                save_chg_cloud(my_list_notes):
-            return my_list_notes
-
-        return list_notes_local
+        iface.f_print_all(db.load_notes_from_db())
 
     # search
     if my_choice == '5':
-
+        my_list_notes = db.load_notes_from_db()
         found_list_notes = filter_notes(my_list_notes)
 
         if found_list_notes:
@@ -114,16 +96,8 @@ def distrib_func(my_choice):
         else:
             utils.handle_error('empty_list')
 
-        if my_list_notes != list_notes_local and \
-                save_chg_cloud(my_list_notes):
-            return my_list_notes
-
-        return list_notes_local
-
     if my_choice == '6':
         sys.exit(0)
-
-
 
 
 # ****************** end distrib func *****************
@@ -196,14 +170,13 @@ def f_empty_list():
             ).strip().lower()
 
             if ans.lower() in ['n', 'add']:
-                my_list_notes.append(d.f_add_new_note())
-                iface.f_print_all(my_list_notes)
+                db.save_note_to_db(d.f_add_new_note())
+                iface.f_print_all(db.load_notes_from_db())
 
             elif ans.lower() in ['x', 'exit']:
-                if len(my_list_notes) > 0:
-                    iface.save_chg_cloud(my_list_notes)
-                iface.main_menu(my_list_notes)
-                # return my_list_notes
+
+                iface.main_menu()
+
             else:
                 raise ValueError
 
