@@ -4,7 +4,6 @@ from colorama import Fore, Style
 
 
 def f_print_all(my_list_notes: list, start_=1):
-    print('\nYour notes:')
     for index_, note in enumerate(my_list_notes, start=start_):
         if isinstance(note, dict):
             f_print_note_data(note, index_)
@@ -49,13 +48,14 @@ def f_print_note_data(my_note, index_):
         deadline_delta_days = utils.f_deadline_check(my_note)
         if deadline_delta_days > 0:
             print(
-                f'\nYou missed your deadline '
-                f'{deadline_delta_days} days ago')
+                str_format(f'\nВы пропустили контрольный срок '
+                           f'{deadline_delta_days} день/дней назад', 'yellow')
+            )
         elif deadline_delta_days < 0:
-            print(f'\nYour deadline is in '
-                  f'{str(deadline_delta_days)[1:]} days')
+            print(f'\nКонтрольный срок наступит через '
+                  f'{str(deadline_delta_days)[1:]} день/дней')
         elif deadline_delta_days == 0:
-            print('\nYour deadline is TODAY!!!')
+            print('\nКонтрольный  срок - сегодня!')
 
     except TypeError:
         pass
@@ -68,5 +68,9 @@ def str_format(str_text, text_color, style_=None):
         return Fore.RED + f'{str_text}' + Style.RESET_ALL
     elif text_color == 'green':
         return Fore.GREEN + f'{str_text}' + Style.RESET_ALL
+    elif text_color == 'cyan':
+        return Fore.CYAN + f'{str_text}' + Style.RESET_ALL
+    elif text_color == 'yellow':
+        return Fore.YELLOW + f'{str_text}' + Style.RESET_ALL
     else:
         return Fore.BLUE + f'{str_text}' + Style.RESET_ALL

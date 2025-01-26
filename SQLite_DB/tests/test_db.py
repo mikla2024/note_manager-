@@ -2,9 +2,8 @@ import os
 import sqlite3
 import unittest
 from copy import deepcopy
-
+from datetime import date as dt
 import SQLite_DB.database as db
-import interface
 
 TEST_NOTE_1 = {
     'id': 1,
@@ -13,7 +12,7 @@ TEST_NOTE_1 = {
     'content': 'test_shopping_list',
     'status': 'Важно',
     'create_date': '17.01.2025',
-    'issue_date': '28.02.2025'
+    'issue_date': '17.02.2025'
 }
 
 TEST_NOTE_2 = {
@@ -23,9 +22,8 @@ TEST_NOTE_2 = {
     'content': 'test_content',
     'status': 'Выполнено',
     'create_date': '17.01.2025',
-    'issue_date': '28.02.2025'
+    'issue_date': '17.02.2025'
 }
-
 TEST_LIST_NOTES = [TEST_NOTE_1, TEST_NOTE_2]
 DB_PATH = os.environ.get('db_path')
 IO_TABLE = os.environ.get('test_io_table')

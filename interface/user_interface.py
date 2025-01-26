@@ -20,9 +20,11 @@ def main_menu():
 
 4. Удалить заметку
 
-5. Найти заметки
+5. Найти 
 
-6. Выйти из программы
+6. Показать напоминания
+
+7. Выйти из программы
 
 ''')
 
@@ -91,36 +93,54 @@ def distrib_func(my_choice):
 
         if found_list_notes:
             iface.f_print_all(found_list_notes)
-            context_menu(my_list_notes)
+            context_menu(found_list_notes)
         else:
             utils.handle_error('empty_list')
 
-    if my_choice == '6':
+    if my_choice == '7':
         sys.exit(0)
+
+    if my_choice == '6':
+        reminder_notes = utils.check_reminders()
+        context_menu(reminder_notes)
 
 
 # ****************** end distrib func *****************
 
 # ****************** context menu ******************
-def context_menu():
+def context_menu(my_list_notes: list = None):
+    if not my_list_notes:
+        my_list_notes = db.load_notes_from_db()
+
     while True:
         try:
-            print('\n[D] Удаление | [N] Новая | [X] Выход в главное меню')
+            print('\n[D] Удаление | [E] Правка | [N] Новая | [X] Назад')
             choice = input(
                 'Ваш выбор: '
             ).strip().lower()
 
             if choice in ['del', 'd']:
-                my_list_notes = db.load_notes_from_db()
                 if (my_note := get_only_note(my_list_notes, 'удалить')) is not None:
                     db.delete_note_from_db(my_note.get('id'))
-                    iface.f_print_all(db.load_notes_from_db())
+                    my_list_notes.remove(my_note)
+                    iface.f_print_all(my_list_notes)
                     continue
 
             elif choice in ['new', 'n']:
-                db.save_note_to_db(data.f_add_new_note())
-                iface.f_print_all(db.load_notes_from_db())
+                my_note = data.f_add_new_note()
+                db.save_note_to_db(my_note)
+                my_list_notes.append(my_note)
+                iface.f_print_all(my_list_notes)
                 continue
+
+            elif choice == 'e':
+                if (note_update := get_only_note(my_list_notes, 'обновить')) is not None:
+                    my_list_notes.remove(note_update)
+                    d.f_update_note(note_update)
+                    db.update_note_in_db(note_update.get('id'), note_update)
+                    my_list_notes.append(note_update)
+                    iface.f_print_all(my_list_notes)
+                    continue
 
             elif choice in ['x', 'exit']:
 
@@ -221,7 +241,7 @@ def get_search_input():
 
 
 def get_only_note(my_list_notes: list, action_str: str):
-    iface.f_print_all(my_list_notes)
+    # iface.f_print_all(my_list_notes)
     print(f'\nУкажите номер # заметки, которую хотите {action_str}. | '
           '[X] Возврат в главное меню')
 

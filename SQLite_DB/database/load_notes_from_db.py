@@ -1,5 +1,7 @@
 import os
 import sqlite3
+from time import strptime
+
 import interface
 import json
 

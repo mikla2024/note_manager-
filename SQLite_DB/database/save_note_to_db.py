@@ -1,7 +1,7 @@
 import os
 import sqlite3
 import json
-
+from datetime import datetime as dt
 
 def save_note_to_db(note: dict, db_path: str = '', io_table='notes',
                     my_cn: sqlite3.Connection = None):
@@ -19,7 +19,7 @@ def save_note_to_db(note: dict, db_path: str = '', io_table='notes',
                f'VALUES (?, ?, ?, ?, ?, ?)',
                [note['username'], json.dumps(note['titles'], ensure_ascii=False),
                 note['content'], note['status'], note['create_date'],
-                note['issue_date']
+                note['issue_date'],
                 ])
 
     crsr.execute(sql_str[0], sql_str[1])
