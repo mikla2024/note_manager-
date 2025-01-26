@@ -6,7 +6,7 @@ from copy import deepcopy
 import SQLite_DB.database as db
 import interface
 
-TEST_NOTE = {
+TEST_NOTE_1 = {
     'id': 1,
     'username': 'test_name',
     'titles': ['one', 'two', 'three'],
@@ -16,7 +16,7 @@ TEST_NOTE = {
     'issue_date': '28.02.2025'
 }
 
-TEST_NOTE2 = {
+TEST_NOTE_2 = {
     'id': 2,
     'username': 'test_name2',
     'titles': ['three', 'four', 'five'],
@@ -26,7 +26,7 @@ TEST_NOTE2 = {
     'issue_date': '28.02.2025'
 }
 
-TEST_LIST_NOTES = [TEST_NOTE, TEST_NOTE2]
+TEST_LIST_NOTES = [TEST_NOTE_1, TEST_NOTE_2]
 DB_PATH = os.environ.get('db_path')
 IO_TABLE = os.environ.get('test_io_table')
 
@@ -44,14 +44,14 @@ class TestDB(unittest.TestCase):
             create_tmp_table(cn)
             self.assertEqual(
                 db.search_note_by_keyword('test_content', DB_PATH, IO_TABLE, cn),
-                [TEST_NOTE2])
+                [TEST_NOTE_2])
 
     def test_update_note(self):
         upd_dict = {'status': 'test', }
         with sqlite3.connect(DB_PATH) as cn:
             create_tmp_table(cn)
             db.update_note_in_db(1, upd_dict, io_table=IO_TABLE, my_cn=cn)
-            assert_note = deepcopy(TEST_NOTE)
+            assert_note = deepcopy(TEST_NOTE_1)
             assert_note['status'] = 'test'
 
             list_for_assert = db.filter_notes_by_status('test', io_table=IO_TABLE, my_cn=cn)
@@ -62,7 +62,7 @@ class TestDB(unittest.TestCase):
             create_tmp_table(cn)
             db.delete_note_from_db(2, io_table=IO_TABLE, my_cn=cn)
 
-            self.assertEqual(db.load_notes_from_db(io_table=IO_TABLE, my_cn=cn), [TEST_NOTE])
+            self.assertEqual(db.load_notes_from_db(io_table=IO_TABLE, my_cn=cn), [TEST_NOTE_1])
 
 
 def create_tmp_table(my_cn: sqlite3.Connection):
