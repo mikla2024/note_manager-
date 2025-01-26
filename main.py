@@ -1,9 +1,6 @@
-
 import interface as iface
 import utils
 import SQLite_DB.database as db
-
-
 
 if __name__ == '__main__':
 
