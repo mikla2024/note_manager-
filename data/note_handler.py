@@ -123,9 +123,9 @@ def f_update_note(my_note: dict):
         print(
             '\nВведите название поля для обновления, '
             'или оставьте пустым для обновления нескольких '
-            'полей. Для возврата введите "X"')
+            'полей | [X] Закончить')
         # choosing the key for update
-        ans = input('Ваш выбор: ').lower()
+        ans = input('Ваш выбор: ').strip().lower()
 
         if ans == '':
             f_add_new_note(my_note)

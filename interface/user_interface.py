@@ -1,3 +1,4 @@
+import sqlite3
 import sys
 import data
 import data as d
@@ -114,7 +115,7 @@ def context_menu(my_list_notes: list = None):
 
     while True:
         try:
-            print('\n[D] Удаление | [E] Правка | [N] Новая | [X] Назад')
+            print('\n[A] Показать все | [D] Удаление | [E] Правка | [N] Новая | [X] Назад')
             choice = input(
                 'Ваш выбор: '
             ).strip().lower()
@@ -128,19 +129,23 @@ def context_menu(my_list_notes: list = None):
 
             elif choice in ['new', 'n']:
                 my_note = data.f_add_new_note()
-                db.save_note_to_db(my_note)
+                new_id = db.save_note_to_db(my_note)
+                my_note.setdefault('id', new_id)
                 my_list_notes.append(my_note)
                 iface.f_print_all(my_list_notes)
                 continue
 
             elif choice == 'e':
                 if (note_update := get_only_note(my_list_notes, 'обновить')) is not None:
-                    my_list_notes.remove(note_update)
                     d.f_update_note(note_update)
                     db.update_note_in_db(note_update.get('id'), note_update)
-                    my_list_notes.append(note_update)
                     iface.f_print_all(my_list_notes)
                     continue
+
+            elif choice == 'a':
+                my_list_notes = db.load_notes_from_db()
+                iface.f_print_all(my_list_notes)
+                continue
 
             elif choice in ['x', 'exit']:
 
@@ -151,6 +156,10 @@ def context_menu(my_list_notes: list = None):
 
         except ValueError:
             utils.handle_error('invalid_input')
+
+        except sqlite3.OperationalError as e:
+            print('ошибка при обращении к БД ', e
+                  )
 
 
 #   ******************** end of context menu *************
@@ -241,7 +250,8 @@ def get_search_input():
 
 
 def get_only_note(my_list_notes: list, action_str: str):
-    # iface.f_print_all(my_list_notes)
+
+    iface.f_print_all(my_list_notes)
     print(f'\nУкажите номер # заметки, которую хотите {action_str}. | '
           '[X] Возврат в главное меню')
 
